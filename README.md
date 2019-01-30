@@ -1,7 +1,21 @@
 # ECSE321 Project Group 12
 
 Team Members:
-Gorkem Yalcinoz, Ishraq Hossain, Sameen Mahtab, Mahin Anwar, Mostafa Abdelwahab
+
+
+CTO: Ishraq Hossain
+
+
+Gorkem Yalcinoz
+
+
+Sameen Mahtab
+
+
+Mahin Anwar
+
+
+Mostafa Abdelwahab
 
 
 _This README.md is a fillable template for the project submissions. Use the table provided below to document the hours and the responsibilities of team members individually. Create a separate table for each deliverable. Remove this comment before the first submission._
