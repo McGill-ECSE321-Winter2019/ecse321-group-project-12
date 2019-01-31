@@ -6,7 +6,7 @@ Team Members:
 CTO: Ishraq Hossain
 
 
-Gorkem Yalcinoz
+Project Management: Gorkem Yalcinoz
 
 
 Sameen Mahtab
