@@ -9,6 +9,8 @@ CTO: Ishraq Hossain
 Project Management: Gorkem Yalcinoz
 
 
+Development Team: 
+
 Sameen Mahtab
 
 
