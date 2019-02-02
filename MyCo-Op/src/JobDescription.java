@@ -131,4 +131,20 @@ public class JobDescription {
       return this.jobOffers;
    }
    
+   /**
+    * <pre>
+    *           1..1     0..*
+    * JobDescription ------------------------- Application
+    *           jobDescription        &gt;       applications
+    * </pre>
+    */
+   private Set<Application> applications;
+   
+   public Set<Application> getApplications() {
+      if (this.applications == null) {
+         this.applications = new HashSet<Application>();
+      }
+      return this.applications;
+   }
+   
    }

@@ -2,26 +2,6 @@ import java.util.Set;
 import java.util.HashSet;
 
 public class Student extends UserRole {
-   private CV cv;
-   
-   private void setCv(CV value) {
-      this.cv = value;
-   }
-   
-   private CV getCv() {
-      return this.cv;
-   }
-   
-   private Transcript transcript;
-   
-   private void setTranscript(Transcript value) {
-      this.transcript = value;
-   }
-   
-   private Transcript getTranscript() {
-      return this.transcript;
-   }
-   
    private Year year;
    
    private void setYear(Year value) {
@@ -72,6 +52,22 @@ public class Student extends UserRole {
          this.jobOffers = new HashSet<JobOffer>();
       }
       return this.jobOffers;
+   }
+   
+   /**
+    * <pre>
+    *           1..1     0..*
+    * Student ------------------------- Application
+    *           applicant        &lt;       applications
+    * </pre>
+    */
+   private Set<Application> applications;
+   
+   public Set<Application> getApplications() {
+      if (this.applications == null) {
+         this.applications = new HashSet<Application>();
+      }
+      return this.applications;
    }
    
    }
