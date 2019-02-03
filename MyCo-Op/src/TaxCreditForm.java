@@ -1,13 +1,20 @@
 
 public class TaxCreditForm extends Document {
-   private JobOffer job;
+   /**
+    * <pre>
+    *           1..1     1..1
+    * TaxCreditForm ------------------------- CoOpJob
+    *           taxCreditForm        &lt;       coOpJob
+    * </pre>
+    */
+   private CoOpJob coOpJob;
    
-   private void setJob(JobOffer value) {
-      this.job = value;
+   public void setCoOpJob(CoOpJob value) {
+      this.coOpJob = value;
    }
    
-   private JobOffer getJob() {
-      return this.job;
+   public CoOpJob getCoOpJob() {
+      return this.coOpJob;
    }
    
    }

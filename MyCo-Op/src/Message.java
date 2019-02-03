@@ -1,3 +1,5 @@
+import java.util.Set;
+import java.util.HashSet;
 
 public class Message {
    private String content;
@@ -8,16 +10,6 @@ public class Message {
    
    private String getContent() {
       return this.content;
-   }
-   
-   private Document attachement;
-   
-   private void setAttachement(Document value) {
-      this.attachement = value;
-   }
-   
-   private Document getAttachement() {
-      return this.attachement;
    }
    
    /**
@@ -52,6 +44,22 @@ public class Message {
    
    public User getReciever() {
       return this.reciever;
+   }
+   
+   /**
+    * <pre>
+    *           1..1     0..*
+    * Message ------------------------> Document
+    *           message        &gt;       attachements
+    * </pre>
+    */
+   private Set<Document> attachements;
+   
+   public Set<Document> getAttachements() {
+      if (this.attachements == null) {
+         this.attachements = new HashSet<Document>();
+      }
+      return this.attachements;
    }
    
    }

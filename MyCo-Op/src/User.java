@@ -32,17 +32,17 @@ public class User {
    /**
     * <pre>
     *           1..1     1..1
-    * User ------------------------- Contact
+    * User ------------------------- Coordinates
     *           user        &gt;       contact
     * </pre>
     */
-   private Contact contact;
+   private Coordinates contact;
    
-   public void setContact(Contact value) {
+   public void setContact(Coordinates value) {
       this.contact = value;
    }
    
-   public Contact getContact() {
+   public Coordinates getContact() {
       return this.contact;
    }
    
