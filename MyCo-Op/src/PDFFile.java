@@ -1,20 +1,17 @@
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
+@Entity
 public class PDFFile {
-   /**
-    * <pre>
-    *           1..1     1..1
-    * PDFFile ------------------------- Document
-    *           pdf        &lt;       document
-    * </pre>
-    */
-   private Document document;
-   
-   public void setDocument(Document value) {
-      this.document = value;
-   }
-   
-   public Document getDocument() {
-      return this.document;
-   }
-   
-   }
+	private Document document;
+
+	@OneToOne(optional = false)
+	public Document getDocument() {
+		return this.document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+	}
+
+}

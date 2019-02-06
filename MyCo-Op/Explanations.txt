@@ -12,3 +12,7 @@ There is an association class CoOpJob between 1 employer and 1 student. It allow
 The Student class has 2 booleans to give students privacy settings and give them the choice to allow or not the employer to archive present and past interns' CV and transcript.
 
 The Message class has 2 subclasses to mark specific messages such as event notifications by managers/admins to employer or to mark the message sent by the student to the admin containing the employer email and the attached contract (so that the admin creates an emplyer account if he/she does not already have one and that the admin create a new coOpJob).
+
+Each class/parent-class (except PDFFILE, which ahs 1..1 relation with Document) has an attribute that will be used as a primary key for URM.
+
+The Datatypes Date and Time are imported so we can use them.

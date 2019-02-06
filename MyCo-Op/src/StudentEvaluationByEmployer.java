@@ -1,20 +1,17 @@
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
+@Entity
 public class StudentEvaluationByEmployer extends Document {
-   /**
-    * <pre>
-    *           1..1     1..1
-    * StudentEvaluationByEmployer ------------------------- CoOpJob
-    *           studentEvaluationByEmployer        &lt;       coOpJob
-    * </pre>
-    */
-   private CoOpJob coOpJob;
-   
-   public void setCoOpJob(CoOpJob value) {
-      this.coOpJob = value;
-   }
-   
-   public CoOpJob getCoOpJob() {
-      return this.coOpJob;
-   }
-   
-   }
+	private CoOpJob coOpJob;
+
+	@OneToOne(optional = false)
+	public CoOpJob getCoOpJob() {
+		return this.coOpJob;
+	}
+
+	public void setCoOpJob(CoOpJob coOpJob) {
+		this.coOpJob = coOpJob;
+	}
+
+}

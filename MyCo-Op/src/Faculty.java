@@ -1,5 +1,5 @@
+import javax.persistence.Entity;
 
+@Entity
 public enum Faculty {
-Engineering, Science, Education, Management, Arts, Other;
-
 }

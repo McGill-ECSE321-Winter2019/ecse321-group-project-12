@@ -1,97 +1,77 @@
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import java.util.Set;
-import java.util.HashSet;
+import javax.persistence.OneToMany;
 
+@Entity
 public class User {
-   private String username;
-   
-   private void setUsername(String value) {
-      this.username = value;
-   }
-   
-   private String getUsername() {
-      return this.username;
-   }
-   
-   /**
-    * <pre>
-    *           0..*     1..1
-    * User ------------------------- MyCoOp
-    *           users        &lt;       myCoOp
-    * </pre>
-    */
-   private MyCoOp myCoOp;
-   
-   public void setMyCoOp(MyCoOp value) {
-      this.myCoOp = value;
-   }
-   
-   public MyCoOp getMyCoOp() {
-      return this.myCoOp;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     1..1
-    * User ------------------------- Address
-    *           user        &gt;       contact
-    * </pre>
-    */
-   private Address contact;
-   
-   public void setContact(Address value) {
-      this.contact = value;
-   }
-   
-   public Address getContact() {
-      return this.contact;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     1..2
-    * User ------------------------> UserRole
-    *           user        &gt;       roles
-    * </pre>
-    */
-   private Set<UserRole> roles;
-   
-   public Set<UserRole> getRoles() {
-      if (this.roles == null) {
-         this.roles = new HashSet<UserRole>();
-      }
-      return this.roles;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     0..*
-    * User ------------------------- Message
-    *           sender        &gt;       sentMessages
-    * </pre>
-    */
-   private Set<Message> sentMessages;
-   
-   public Set<Message> getSentMessages() {
-      if (this.sentMessages == null) {
-         this.sentMessages = new HashSet<Message>();
-      }
-      return this.sentMessages;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     0..*
-    * User ------------------------- Message
-    *           reciever        &gt;       receivedMessages
-    * </pre>
-    */
-   private Set<Message> receivedMessages;
-   
-   public Set<Message> getReceivedMessages() {
-      if (this.receivedMessages == null) {
-         this.receivedMessages = new HashSet<Message>();
-      }
-      return this.receivedMessages;
-   }
-   
-   }
+	private String username;
+
+	private void setUsername(String value) {
+		this.username = value;
+	}
+
+	@Id
+	private String getUsername() {
+		return this.username;
+	}
+
+	private MyCoOp myCoOp;
+
+	@ManyToOne(optional = false)
+	public MyCoOp getMyCoOp() {
+		return this.myCoOp;
+	}
+
+	public void setMyCoOp(MyCoOp myCoOp) {
+		this.myCoOp = myCoOp;
+	}
+
+	private Address contact;
+
+	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, optional = false)
+	public Address getContact() {
+		return this.contact;
+	}
+
+	public void setContact(Address contact) {
+		this.contact = contact;
+	}
+
+	private Set<UserRole> roles;
+
+	@OneToMany
+	public Set<UserRole> getRoles() {
+		return this.roles;
+	}
+
+	public void setRoles(Set<UserRole> roless) {
+		this.roles = roless;
+	}
+
+	private Set<Message> sentMessages;
+
+	@OneToMany(mappedBy = "sender")
+	public Set<Message> getSentMessages() {
+		return this.sentMessages;
+	}
+
+	public void setSentMessages(Set<Message> sentMessagess) {
+		this.sentMessages = sentMessagess;
+	}
+
+	private Set<Message> receivedMessages;
+
+	@OneToMany(mappedBy = "reciever")
+	public Set<Message> getReceivedMessages() {
+		return this.receivedMessages;
+	}
+
+	public void setReceivedMessages(Set<Message> receivedMessagess) {
+		this.receivedMessages = receivedMessagess;
+	}
+
+}

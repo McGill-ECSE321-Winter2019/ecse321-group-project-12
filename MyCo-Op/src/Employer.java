@@ -1,37 +1,29 @@
+import javax.persistence.Entity;
 import java.util.Set;
-import java.util.HashSet;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Employer extends UserRole {
-   /**
-    * <pre>
-    *           1..1     1..*
-    * Employer ------------------------- CoOpJob
-    *           employer        &gt;       coOpJobs
-    * </pre>
-    */
-   private Set<CoOpJob> coOpJobs;
-   
-   public Set<CoOpJob> getCoOpJobs() {
-      if (this.coOpJobs == null) {
-         this.coOpJobs = new HashSet<CoOpJob>();
-      }
-      return this.coOpJobs;
-   }
-   
-   /**
-    * <pre>
-    *           1..1     0..*
-    * Employer ------------------------> Student
-    *           employer        &gt;       archivedInterns
-    * </pre>
-    */
-   private Set<Student> archivedInterns;
-   
-   public Set<Student> getArchivedInterns() {
-      if (this.archivedInterns == null) {
-         this.archivedInterns = new HashSet<Student>();
-      }
-      return this.archivedInterns;
-   }
-   
-   }
+	private Set<CoOpJob> coOpJobs;
+
+	@OneToMany(mappedBy = "employer")
+	public Set<CoOpJob> getCoOpJobs() {
+		return this.coOpJobs;
+	}
+
+	public void setCoOpJobs(Set<CoOpJob> coOpJobss) {
+		this.coOpJobs = coOpJobss;
+	}
+
+	private Set<Student> archivedInterns;
+
+	@OneToMany
+	public Set<Student> getArchivedInterns() {
+		return this.archivedInterns;
+	}
+
+	public void setArchivedInterns(Set<Student> archivedInternss) {
+		this.archivedInterns = archivedInternss;
+	}
+
+}

@@ -1,0 +1,3 @@
+com.yattasolutions.ecore.ui.preferences.EcorePreferences.useLocalSettings=true
+eclipse.preferences.version=1
+updateEcoreOnSave=true

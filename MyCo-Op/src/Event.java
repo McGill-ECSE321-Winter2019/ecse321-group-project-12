@@ -1,5 +1,5 @@
+import javax.persistence.Entity;
 
+@Entity
 public enum Event {
-Workshop, JobFair, Conference, Other;
-
 }

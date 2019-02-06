@@ -1,20 +1,17 @@
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
+@Entity
 public class ProgressReport extends Document {
-   /**
-    * <pre>
-    *           0..*     1..1
-    * ProgressReport ------------------------- CoOpJob
-    *           progressReports        &lt;       coOpJob
-    * </pre>
-    */
-   private CoOpJob coOpJob;
-   
-   public void setCoOpJob(CoOpJob value) {
-      this.coOpJob = value;
-   }
-   
-   public CoOpJob getCoOpJob() {
-      return this.coOpJob;
-   }
-   
-   }
+	private CoOpJob coOpJob;
+
+	@ManyToOne(optional = false)
+	public CoOpJob getCoOpJob() {
+		return this.coOpJob;
+	}
+
+	public void setCoOpJob(CoOpJob coOpJob) {
+		this.coOpJob = coOpJob;
+	}
+
+}
