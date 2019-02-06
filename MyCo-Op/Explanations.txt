@@ -1,0 +1,14 @@
+The MyCoOp class will be a singleton (a class having 1 instance maximum). It will be composed of the system users (to allow the admin accessing their informationas users) The MyCoOp is also composed of userRoles to allow information retrieval by role.  As this domain model represents only the company vviwepoint and to allow clarity, the associations of the Instructor, Manager and Administrator, and most of the Student’s relations have been omitted.
+
+
+Each user will have a unique username (used also as primary key in ORM) and willl have a reference to 1 or 2 userRole instances ( to allow the possibility of having the admin and manager as a same user). Each user will also be "composed" of 1 address class (containing attributes for address, email and mobile). Each user will also have 2 associations with multiple messages (sent and received) with the possibility of attaching documents to them.
+
+The UserRole class is an abstract class (so it cannot be instantiated).It has a password attribute and has 5 subclasses (Manager, Admin, Instructor Student, Employer).
+
+The Document class is an abstract classand has 9 subclasses specifying the types of documents needed for the system.
+
+There is an association class CoOpJob between 1 employer and 1 student. It allows the student to have any number of co-op jobs, the employer to have any number of coop positions. This association allows also 1 employer and 1 student to hae many coop terms together (multiple coOp instances possible for the same employer and the same student). It is composed of the documents the university requires for the co-op semester.
+
+The Student class has 2 booleans to give students privacy settings and give them the choice to allow or not the employer to archive present and past interns' CV and transcript.
+
+The Message class has 2 subclasses to mark specific messages such as event notifications by managers/admins to employer or to mark the message sent by the student to the admin containing the employer email and the attached contract (so that the admin creates an emplyer account if he/she does not already have one and that the admin create a new coOpJob).
