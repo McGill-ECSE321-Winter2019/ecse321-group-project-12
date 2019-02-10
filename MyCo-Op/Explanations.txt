@@ -1,9 +1,6 @@
-The MyCoOp class will be a singleton (a class having 1 instance maximum). It will be composed of the system users (to allow the admin accessing their informationas users) The MyCoOp is also composed of userRoles to allow information retrieval by role.  As this domain model represents only the company vviwepoint and to allow clarity, the associations of the Instructor, Manager and Administrator, and most of the Student’s relations have been omitted.
 
+Each user will have a unique username . Each user will also be "composed" of 1 address class (containing attributes for address, email and mobile). Each user will also have 2 associations with multiple messages (sent and received) with the possibility of attaching documents to them. Each user has a list of Documents he/she authored. User is an abstract class and can only be instantiated through one of its 5 subclasses (Student, Employer
 
-Each user will have a unique username (used also as primary key in ORM) and willl have a reference to 1 or 2 userRole instances ( to allow the possibility of having the admin and manager as a same user). Each user will also be "composed" of 1 address class (containing attributes for address, email and mobile). Each user will also have 2 associations with multiple messages (sent and received) with the possibility of attaching documents to them.
-
-The UserRole class is an abstract class (so it cannot be instantiated).It has a password attribute and has 5 subclasses (Manager, Admin, Instructor Student, Employer).
 
 The Document class is an abstract classand has 9 subclasses specifying the types of documents needed for the system.
 
@@ -13,6 +10,6 @@ The Student class has 2 booleans to give students privacy settings and give them
 
 The Message class has 2 subclasses to mark specific messages such as event notifications by managers/admins to employer or to mark the message sent by the student to the admin containing the employer email and the attached contract (so that the admin creates an emplyer account if he/she does not already have one and that the admin create a new coOpJob).
 
-Each class/parent-class (except PDFFILE, which ahs 1..1 relation with Document) has an attribute that will be used as a primary key for URM.
+Each non child-class has an attribute that will be used as a primary key for URM.
 
 The Datatypes Date and Time are imported so we can use them.
