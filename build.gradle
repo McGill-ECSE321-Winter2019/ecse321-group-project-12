@@ -1,4 +1,4 @@
 task stage () {
-    dependsOn ':Backend:assemble'
+    dependsOn ':Coop-Backend:assemble'
 }
 
