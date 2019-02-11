@@ -11,6 +11,17 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class CoOpJob {
+	private Student student;
+
+	@ManyToOne(optional = false)
+	public Student getStudent() {
+		return this.student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
 	private Date startDate;
 
 	private void setStartDate(Date value) {
@@ -171,3 +182,4 @@ public class CoOpJob {
 	}
 
 }
+
