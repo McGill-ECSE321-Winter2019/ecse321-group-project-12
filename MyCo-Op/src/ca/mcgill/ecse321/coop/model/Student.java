@@ -10,6 +10,16 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Student extends User {
+	private Set<CoOpJob> coOpJob;
+
+	@OneToMany(mappedBy = "student")
+	public Set<CoOpJob> getCoOpJob() {
+		return this.coOpJob;
+	}
+
+	public void setCoOpJob(Set<CoOpJob> coOpJobs) {
+		this.coOpJob = coOpJobs;
+	}
 
 	private boolean allowCV = false;
 
@@ -32,3 +42,4 @@ public class Student extends User {
 	}
 
 }
+
