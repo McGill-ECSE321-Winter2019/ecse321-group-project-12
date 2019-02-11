@@ -33,3 +33,6 @@ All functionality of the final system will be accessible via a web frontend for 
 |Sameen Mahtab     |    13            |Requirements & Testing Of Persistence Layer      |
 |Mahin Anwar       |    13            |Requirements & Build System/ContinuousIntegration|
 |Mostafa Abdelwahab|    15            |Requirements & Domain Model                      |
+
+Project Report for deliverable 1:
+_https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-1_
