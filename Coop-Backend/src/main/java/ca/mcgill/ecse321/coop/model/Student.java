@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.coop.model;
 
-import ca.mcgill.ecse321.coop.model.User;
+import ca.mcgill.ecse321.coop.model.CoopUser;
 
 import javax.persistence.Entity;
 import java.util.Set;
@@ -9,16 +9,27 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Student extends User {
-	private Set<CoOpJob> coOpJob;
+public class Student extends CoopUser {
+	private Set<Document> personalDocuments;
 
-	@OneToMany(mappedBy = "student")
-	public Set<CoOpJob> getCoOpJob() {
-		return this.coOpJob;
+	@OneToMany(mappedBy = "student", cascade = { CascadeType.ALL })
+	public Set<Document> getPersonalDocuments() {
+		return this.personalDocuments;
 	}
 
-	public void setCoOpJob(Set<CoOpJob> coOpJobs) {
-		this.coOpJob = coOpJobs;
+	public void setPersonalDocuments(Set<Document> personalDocumentss) {
+		this.personalDocuments = personalDocumentss;
+	}
+
+	private Set<CoopJob> coopJobs;
+
+	@OneToMany(mappedBy = "intern")
+	public Set<CoopJob> getCoopJobs() {
+		return this.coopJobs;
+	}
+
+	public void setCoopJobs(Set<CoopJob> coOpJobs) {
+		this.coopJobs = coOpJobs;
 	}
 
 	private boolean allowCV = false;

@@ -11,7 +11,18 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
-public abstract class User {
+public abstract class CoopUser {
+	private CoopSystem coopSystem;
+
+	@ManyToOne(optional = false)
+	public CoopSystem getCoopSystem() {
+		return this.coopSystem;
+	}
+
+	public void setCoopSystem(CoopSystem coopSystem) {
+		this.coopSystem = coopSystem;
+	}
+
 	private Set<Document> authoredDocuments;
 
 	@OneToMany(mappedBy = "author")
@@ -44,17 +55,6 @@ public abstract class User {
 		return this.username;
 	}
 
-	private Address contact;
-
-	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, optional = false)
-	public Address getContact() {
-		return this.contact;
-	}
-
-	public void setContact(Address contact) {
-		this.contact = contact;
-	}
-
 	private Set<Message> sentMessages;
 
 	@OneToMany(mappedBy = "sender")
@@ -68,7 +68,7 @@ public abstract class User {
 
 	private Set<Message> receivedMessages;
 
-	@OneToMany(mappedBy = "reciever")
+	@OneToMany(mappedBy = "receiver")
 	public Set<Message> getReceivedMessages() {
 		return this.receivedMessages;
 	}

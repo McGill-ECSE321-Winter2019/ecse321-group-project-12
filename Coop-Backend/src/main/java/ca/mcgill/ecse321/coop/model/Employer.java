@@ -5,27 +5,38 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Employer extends User {
-	private Set<Student> archivedIntern;
+public class Employer extends CoopUser {
+	private Set<EventNotification> eventNotifications;
 
 	@OneToMany
-	public Set<Student> getArchivedIntern() {
-		return this.archivedIntern;
+	public Set<EventNotification> getEventNotifications() {
+		return this.eventNotifications;
 	}
 
-	public void setArchivedIntern(Set<Student> archivedInterns) {
-		this.archivedIntern = archivedInterns;
+	public void setEventNotifications(Set<EventNotification> eventNotificationss) {
+		this.eventNotifications = eventNotificationss;
 	}
 
-	private Set<CoOpJob> coOpJobs;
+	private Set<Student> archivedInterns;
+
+	@OneToMany
+	public Set<Student> getArchivedInterns() {
+		return this.archivedInterns;
+	}
+
+	public void setArchivedInterns(Set<Student> archivedInterns) {
+		this.archivedInterns = archivedInterns;
+	}
+
+	private Set<CoopJob> coopJobs;
 
 	@OneToMany(mappedBy = "employer")
-	public Set<CoOpJob> getCoOpJobs() {
-		return this.coOpJobs;
+	public Set<CoopJob> getCoopJobs() {
+		return this.coopJobs;
 	}
 
-	public void setCoOpJobs(Set<CoOpJob> coOpJobss) {
-		this.coOpJobs = coOpJobss;
+	public void setCoopJobs(Set<CoopJob> coOpJobss) {
+		this.coopJobs = coOpJobss;
 	}
 
 }

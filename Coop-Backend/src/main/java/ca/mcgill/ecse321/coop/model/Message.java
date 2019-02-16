@@ -8,6 +8,17 @@ import javax.persistence.Id;
 
 @Entity
 public class Message {
+	private CoopSystem coopSystem;
+
+	@ManyToOne(optional = false)
+	public CoopSystem getCoopSystem() {
+		return this.coopSystem;
+	}
+
+	public void setCoopSystem(CoopSystem coopSystem) {
+		this.coopSystem = coopSystem;
+	}
+
 	private String content;
 
 	public void setContent(String value) {
@@ -18,26 +29,26 @@ public class Message {
 		return this.content;
 	}
 
-	private User sender;
+	private CoopUser sender;
 
 	@ManyToOne(optional = false)
-	public User getSender() {
+	public CoopUser getSender() {
 		return this.sender;
 	}
 
-	public void setSender(User sender) {
+	public void setSender(CoopUser sender) {
 		this.sender = sender;
 	}
 
-	private User reciever;
+	private CoopUser receiver;
 
 	@ManyToOne(optional = false)
-	public User getReciever() {
-		return this.reciever;
+	public CoopUser getReceiver() {
+		return this.receiver;
 	}
 
-	public void setReciever(User reciever) {
-		this.reciever = reciever;
+	public void setReceiver(CoopUser reciever) {
+		this.receiver = reciever;
 	}
 
 	private Set<Document> attachements;

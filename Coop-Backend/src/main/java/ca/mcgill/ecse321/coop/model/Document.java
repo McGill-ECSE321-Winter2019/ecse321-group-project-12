@@ -13,15 +13,67 @@ import javax.persistence.OneToOne;
 import javax.persistence.Id;
 
 @Entity
-public abstract class Document {
-	private User author;
+public class Document {
+	private Student student;
 
 	@ManyToOne(optional = false)
-	public User getAuthor() {
+	public Student getStudent() {
+		return this.student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	private DocumentType type;
+
+	public void setType(DocumentType value) {
+		this.type = value;
+	}
+
+	public DocumentType getType() {
+		return this.type;
+	}
+
+	private CoopSystem coopSystem;
+
+	@ManyToOne(optional = false)
+	public CoopSystem getCoopSystem() {
+		return this.coopSystem;
+	}
+
+	public void setCoopSystem(CoopSystem coopSystem) {
+		this.coopSystem = coopSystem;
+	}
+
+	private Date submissionDate;
+
+	public void setSubmissionDate(Date value) {
+		this.submissionDate = value;
+	}
+
+	public Date getSubmissionDate() {
+		return this.submissionDate;
+	}
+
+	private Time submissionTime;
+
+	public void setSubmissionTime(Time value) {
+		this.submissionTime = value;
+	}
+
+	public Time getSubmissionTime() {
+		return this.submissionTime;
+	}
+
+	private CoopUser author;
+
+	@ManyToOne(optional = false)
+	public CoopUser getAuthor() {
 		return this.author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(CoopUser author) {
 		this.author = author;
 	}
 
@@ -33,26 +85,6 @@ public abstract class Document {
 
 	public int getSize() {
 		return this.size;
-	}
-
-	private Date submissionDate;
-
-	private void setSubmissionDate(Date value) {
-		this.submissionDate = value;
-	}
-
-	private Date getSubmissionDate() {
-		return this.submissionDate;
-	}
-
-	private Time submissionTime;
-
-	private void setSubmissionTime(Time value) {
-		this.submissionTime = value;
-	}
-
-	private Time getSubmissionTime() {
-		return this.submissionTime;
 	}
 
 	private String documentId;
