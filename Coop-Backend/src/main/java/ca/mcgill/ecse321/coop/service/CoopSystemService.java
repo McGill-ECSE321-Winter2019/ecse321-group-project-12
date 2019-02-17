@@ -553,4 +553,16 @@ public class CoopSystemService {
 		if(job==null || d==null) {return;}
 		job.getCoopJobDocuments().add(d);
 	}
+	
+	@Transactional
+	public ArrayList<CoopJob> getAllCoopJobs()
+	{
+		Set<CoopJob> set= getCoopSystem().getCoopJobs();
+		ArrayList<CoopJob> list= new ArrayList<CoopJob>();
+		for(CoopJob j: set)
+		{
+			list.add(j);
+		}
+		return list;
+	}
 }
