@@ -57,7 +57,7 @@ public class CoopSystemService {
 	{
 		if(coopSystemRepository.existsById("Main data"))
 		{
-			coopSystemRepository.findById("Main data").get();
+			return coopSystemRepository.findById("Main data").get();
 		}
 		return null;
 	}
