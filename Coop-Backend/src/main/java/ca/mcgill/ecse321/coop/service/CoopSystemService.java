@@ -51,6 +51,7 @@ public class CoopSystemService {
 		return coopSystem;
 	}
 	
+	
 	@Transactional
 	public CoopSystem getCoopSystem() // we want to make sure that we only have one coop system....
 									// we always look for one with the String id "Main data"
@@ -101,6 +102,29 @@ public class CoopSystemService {
 		
 		return e;
 	}
+	
+	@Transactional
+	public void setPassword(CoopUser a, String password)
+	{
+		if(a!=null && password!=null) {a.setPassword(password);}
+	}
+	
+	@Transactional
+	public void setStudentPermissions(Student s, boolean allowCV, boolean allowTranscript)
+	{
+		if(s!=null)
+		{
+			if(allowCV || !allowTranscript)
+			{
+				s.setAllowCV(allowCV); s.setAllowTranscript(allowTranscript); return;
+			}
+			else { //if the parameters allow Transcript but forbid cv, change nothing
+				
+			}
+		}
+	}
+	
+	
 	
 	@Transactional
 	public ArrayList<CoopUser> getAllCoopUsers() //get list of all users
@@ -207,6 +231,19 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
+	public void setPersonalDocuments(Student stu, ArrayList<Document> docs)
+	{
+		if(stu!=null && docs!=null && stu.getPersonalDocuments().size()< 3)
+		{
+			for(Document doc: docs)
+			{
+				stu.getPersonalDocuments().add(doc);
+				doc.setStudent(stu);
+			}
+		}
+	}
+	
+	@Transactional
 	public Document createDocument(String documentId, CoopUser author)
 	{
 		if(documentId==null || documentRepository.existsById(documentId) || author ==null)
@@ -219,6 +256,8 @@ public class CoopSystemService {
 		d.setDocumentId(documentId); //set its id
 		d.setAuthor(author);   //set its author
 		d.setCoopSystem(c); // set its top-level class to the coop system we are currently using
+		d.setSubmissionDate(new Date(System.currentTimeMillis()));
+		d.setSubmissionTime(new Time(System.currentTimeMillis()));
 		
 		//documentRepository.save(d);
 		author.getAuthoredDocuments().add(d); //add this document to the list this user authored
@@ -288,6 +327,20 @@ public class CoopSystemService {
 		return e;
 	}
 	
+	@Transactional
+	public void setEventNotificationSettings(EventNotification e, Event typeEvent, String location, Date date, Time startTime, Time endTime)
+	{
+		if(e==null) {return;}
+		if(endTime.compareTo(startTime)>=0 && date.compareTo(new Date(System.currentTimeMillis()))>=0) //change only if endTime>=startTime and the date is after the day we are setting this
+		{
+			if(location!=null) {e.setLocation(location);}
+			e.setDate(date);
+			e.setEndTime(endTime);
+			e.setStartTime(startTime);
+			e.setType(typeEvent);
+		}
+	}
+	
 	
 	@Transactional
 	public EventNotification findEventNotificationByName (String name)
@@ -319,7 +372,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public Message createMessage(String messageId, CoopUser sender, CoopUser receiver)
+	public Message createMessage(String messageId, CoopUser sender, CoopUser receiver, String content, ArrayList<Document> attachements)
 	{
 		if(messageId==null || sender== null ||  receiver==null || messageRepository.existsById(messageId))
 		{
@@ -331,6 +384,16 @@ public class CoopSystemService {
 		m.setSender(sender);
 		m.setReceiver(receiver);
 		m.setCoopSystem(getCoopSystem());
+		m.setDate(new Date(System.currentTimeMillis()));
+		m.setTime(new Time(System.currentTimeMillis()));
+		if(content!=null) {m.setContent(content);}
+		if(attachements!=null)
+		{
+			for(Document doc: attachements)
+			{
+				m.getAttachements().add(doc);
+			}
+		}
 		//messageRepository.save(m);
 		
 		getCoopSystem().getMessages().add(m);
@@ -469,5 +532,25 @@ public class CoopSystemService {
 	@Transactional
 	public void deleteCoopJob(CoopJob job) {
 		if(job!=null) {coopJobRepository.delete(job);}
+	}
+	
+	@Transactional
+	public void setCoopJobSettings(CoopJob job, Date startDate, Date endDate, String name, CoopState state) {
+		if(job==null || endDate.compareTo(startDate)<=0) { //chnage nothing if job is null, or enddate<=startDate
+			return;
+		}
+		job.setStartDate(startDate);
+		job.setEndDate(endDate);
+		
+		if(name!=null) {job.setName(name);}
+		if(state!=null) {job.setState(state);}
+		
+	}
+	
+	@Transactional
+	public void addDocumentToCoopJob(CoopJob job, Document d)
+	{
+		if(job==null || d==null) {return;}
+		job.getCoopJobDocuments().add(d);
 	}
 }
