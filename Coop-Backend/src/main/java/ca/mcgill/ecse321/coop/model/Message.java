@@ -5,6 +5,8 @@ import javax.persistence.ManyToOne;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
+import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 public class Message {
@@ -71,5 +73,25 @@ public class Message {
 	@Id
 	public String getMessageId() {
 		return this.messageId;
+	}
+	
+	private Date date;
+
+	public void setDate(Date value) {
+		this.date = value;
+	}
+
+	public Date getDate() {
+		return this.date;
+	}
+
+	private Time time;
+
+	public void setTime(Time value) {
+		this.time = value;
+	}
+
+	public Time getTime() {
+		return this.time;
 	}
 }
