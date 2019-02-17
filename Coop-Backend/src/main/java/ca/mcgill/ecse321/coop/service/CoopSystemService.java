@@ -79,7 +79,7 @@ public class CoopSystemService {
 		s.setUsername(username);
 		CoopSystem coopSystem= getCoopSystem();
 		s.setCoopSystem(coopSystem);  //set its top level containing class to the one we are using
-		studentRepository.save(s); //add it to the student repository
+		//studentRepository.save(s); //add it to the student repository
 		coopSystem.getCoopUsers().add(s); // add it to the list of users in the system isntance
 		
 		return s;
@@ -96,7 +96,7 @@ public class CoopSystemService {
 		e.setUsername(username);
 		CoopSystem coopSystem= getCoopSystem();
 		e.setCoopSystem(coopSystem);
-		employerRepository.save(e);
+		//employerRepository.save(e);
 		coopSystem.getCoopUsers().add(e);
 		
 		return e;
@@ -220,7 +220,7 @@ public class CoopSystemService {
 		d.setAuthor(author);   //set its author
 		d.setCoopSystem(c); // set its top-level class to the coop system we are currently using
 		
-		documentRepository.save(d);
+		//documentRepository.save(d);
 		author.getAuthoredDocuments().add(d); //add this document to the list this user authored
 		c.getDocuments().add(d); // add this document to the list of documents in the top level class
 		
@@ -277,7 +277,7 @@ public class CoopSystemService {
 		CoopSystem s= getCoopSystem();
 		e.setCoopSystem(s);
 		
-		eventNotificationRepository.save(e);
+		//eventNotificationRepository.save(e);
 		s.getEventNotifications().add(e);
 		for(Employer em: this.getAllEmployers())
 		{
@@ -331,7 +331,7 @@ public class CoopSystemService {
 		m.setSender(sender);
 		m.setReceiver(receiver);
 		m.setCoopSystem(getCoopSystem());
-		messageRepository.save(m);
+		//messageRepository.save(m);
 		
 		getCoopSystem().getMessages().add(m);
 		sender.getSentMessages().add(m);
@@ -406,7 +406,7 @@ public class CoopSystemService {
 		job.setEmployer(employer);
 		job.setIntern(student);
 		job.setCoopSystem(getCoopSystem());
-		coopJobRepository.save(job);
+		//coopJobRepository.save(job);
 		
 		employer.getCoopJobs().add(job);
 		student.getCoopJobs().add(job);
