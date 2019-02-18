@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 public class CoopJob {
 	private Set<Document> coopJobDocuments;
 
-	@ManyToMany
+	@OneToMany
 	public Set<Document> getCoopJobDocuments() {
 		return this.coopJobDocuments;
 	}
