@@ -1,4 +1,0 @@
-com.yattasolutions.codegen.common.GenerateCodeOnSave=true
-com.yattasolutions.codegen.common.PrettyPrintAfterGeneratingCode=true
-com.yattasolutions.codegen.common.ui.preferences.CodeGenerationPreferences.useLocalSettings=true
-eclipse.preferences.version=1
