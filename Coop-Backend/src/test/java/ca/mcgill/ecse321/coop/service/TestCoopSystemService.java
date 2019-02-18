@@ -151,53 +151,33 @@ public class TestCoopSystemService {
 	    }
 	    
 	    
-	    @Test
-	    public void testPassword(){
-	      u.setPassword("mmm");
-	      assertEquals("mmm",u.getPassword());
-	    }
-	    @Test
-	    public void testUsername(){
-	        
-	      u.setUsername("Sam");
-	      assertEquals("Sam",u.getUsername());
-	    }
-	    @Test
-	    public void testCoopSystem(){
-	        
-	      CoopSystem system = new CoopSystem();
-	      u.setCoopSystem(system);
-	      assertEquals(system,u.getCoopSystem());
-	    }
-	    @Test
-	    public void testAuthoredDocuments(){
-	      Set<Document> authored;
-	      Document d = new Document();
-	      d.setAuthor(u);
-	      authored.add(d);
-	      u.setAuthoredDocuments(authored);
-	      assertEquals(true,u.getAuthoredDocuments().contains(d));
-	        
-	    }
-	    @Test
-	    public void testSentMessages(){
-	      Set<Message> sent;
-	      Message m = new Message();
-	      m.setSender(u);
-	      sent.add(m);
-	      u.setSentMessages(sent);
-	      assertEquals(true,u.getSentMessages().contains(m));
-	    }
-	    @Test
-	    public void testReceivedMessages(){
-	      Set<Message> received;
-	      Message m1 = new Message();
-	      m1.setReceiver(u);
-	      received.add(m1);
-	      u.setReceivedMessages(received);
-	      assertEquals(true,u.getReceivedMessages().contains(m1));
-	        
-	    }
+	@Test
+public void testgetAllCoopUsers(){
+
+	Employer e = service.createEmployer("Sam");
+	assertEquals(true,service.getAllCoopUsers().contains(e));
+}
+
+@Test
+public void testFindCoopUserByUsername(){
+
+	Student s = service.createStudent("B");
+
+    ArrayList<CoopUser> setOfUsers = service.getAllCoopUsers();
+
+    assertEquals(true,setOfUsers.contains(service.FindCoopUserByUsername("B")));
+
+}
+
+@Test
+public void deleteCoopUser() {
+
+	Employer e1 = service.createEmployer("E");
+	service.deleteCoopUser(e1);
+	ArrayList<CoopUser> setOfUsers = service.getAllCoopUsers();
+    assertEquals(false,setOfUsers.contains(e1));
+}    
+	
 	    public void testCreateStudent() {
 	        assertEquals(0, service.getAllStudents().size());
 	        String username = "Oscar";
