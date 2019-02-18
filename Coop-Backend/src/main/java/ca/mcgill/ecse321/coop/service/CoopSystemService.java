@@ -563,4 +563,16 @@ public class CoopSystemService {
 		}
 		return list;
 	}
+	
+	@Transactional
+	public ArrayList<Document> getAllDocuments()
+	{
+		Set<Document> set= getCoopSystem().getDocuments();
+		ArrayList<Document> list= new ArrayList<Document>();
+		for(Document j: set)
+		{
+			list.add(j);
+		}
+		return list;
+	}
 }
