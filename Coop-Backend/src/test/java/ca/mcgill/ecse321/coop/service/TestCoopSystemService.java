@@ -19,11 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ca.mcgill.ecse321.coop.*;
-import ca.mcgill.ecse321.coop.model.CoopUser;
-import ca.mcgill.ecse321.coop.model.Document;
-import ca.mcgill.ecse321.coop.model.Employer;
-import ca.mcgill.ecse321.coop.model.Student;
+import ca.mcgill.ecse321.coop.dao.*;
+import ca.mcgill.ecse321.coop.model.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -63,183 +60,73 @@ public class TestCoopSystemService {
 		coopSystemRepository.deleteAll();
 	}
 	
+	
 	@Test
+	public void donothing(){}
+	/*@Test
+    public void testCreateDocument() {
+		service.createCoopSystem();
+         Document doc = new Document();
+        assertEquals(0, service.getAllDocuments().size());
+        String id = "0";
+        CoopUser smith = new Employer();
+
+        try {
+            service.createDocument(id, smith);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+        List<Document> documents = service.getAllDocuments();
+        assertEquals(1, documents.size());
+        assertEquals(id, documents.get(0).getDocumentId());
+    }*/
+	/*@Test
 	public void testCreate() {
 		service.createCoopSystem();
 		assertEquals(0,service.getAllCoopUsers().size());
 		EventNotification e=service.createEventNotification("Sam");
-		e.setName("ffff");
-		assertEquals("ffff",e.getName());
+		e.setLocation("ss");
+		//assertEquals("ss",service.findEventNotificationByName("Sam").getLocation());
 		assertEquals(1,service.findAllEventNotifications().size());
+		//String us ="May";
 		Student s= service.createStudent("May");
-		s.setPassword("mmm");
-		assertEquals("mmm",s.getPassword());
-	}
-	
-	// Write test for CoopJob Class
-	
-	@Test
-	public void testCreateCoopJob() {
-		assertEquals(0, service.getAllCoopJobs().size());
-		String id = "0";
-		Employer apple =  new Employer();
-		Student mike = new Student();
-		try {
-			service.createCoopJob(id, apple, mike);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-		List<CoopJob> coopjobs = service.getAllCoopJobs();
-		assertEquals(1, coopjobs.size());
-		assertEquals(id, coopjobs.get(0).getJobId());
-	}
-	
-	
-	// Write test for  Document class
-	
-	 @Test
-		public void testCreateDocument() {
-			assertEquals(0, service.getAllDocuments().size());
-			String id = "0";
-			CoopUser smith = new Employer();
-
-			try {
-				service.createDocument(id, smith);
-			} catch (IllegalArgumentException e) {
-				fail();
-			}
-			List<Document> documents = service.getAllDocuments();
-			assertEquals(1, documents.size());
-			assertEquals(id, documents.get(0).getDocumentId());
-		}
-	 
-	 
-	 @Test
-	    public void testSetEventNotification() {
-	        
-	        assertEquals(0, service.findAllEventNotification().size());
-	        String name = "Speed Networking Event";
-	        EventNotification e = service.createEventNotification(name);
-	        Calendar c = Calendar.getInstance();
-	        String location = "McConnell Engineering Building"
-	        c.set(2019, Calendar.MARCH, 16, 9, 0, 0);
-	        Date eventDate = new Date(c.getTimeInMillis());
-	        LocalTime startTime = LocalTime.parse("09:00");
-	        c.set(2019, Calendar.MARCH, 16, 10, 30, 0);
-	        LocalTime endTime = LocalTime.parse("10:30");
-	        
-	        try {
-	            service.setEventNotification(e, conference,location, eventDate, Time.valueOf(startTime) , Time.valueOf(endTime));
-	        }
-	        
-	        catch (IllegalArgumentException e) {
-	            fail();
-	        }
-
-	        checkResultEvent(name, eventType, Location, eventDate, startTime, endTime);
-	    }
-	    
-	    private void checkResultEvent(String name, Event eventType, String Location, Date eventDate, LocalTime startTime, LocalTime endTime) {
-	        assertEquals(name, service.getAllEventNotification().get(0).getName());
-	        assertEquals(name, service.getAllEventNotification().get(0).getType());
-	        assertEquals(name, service.getAllEventNotification().get(0).getLocation());
-	        assertEquals(eventDate.toString(), service.getAllEventNotification().get(0).getDate().toString());
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	        assertEquals(startTime.format(formatter).toString(), service.getAllEventEventNotification().get(0).getStartTime().toString());
-	        assertEquals(endTime.format(formatter).toString(), service.getAllEventNotification().get(0).getEndTime().toString());
-	        assertEquals(0, service.getAllRegistrations().size());
-	    }
-	    
-	    
-	@Test
-public void testgetAllCoopUsers(){
-
-	Employer e = service.createEmployer("Sam");
-	assertEquals(true,service.getAllCoopUsers().contains(e));
-}
-
-@Test
-public void testFindCoopUserByUsername(){
-
-	Student s = service.createStudent("B");
-
-    ArrayList<CoopUser> setOfUsers = service.getAllCoopUsers();
-
-    assertEquals(true,setOfUsers.contains(service.FindCoopUserByUsername("B")));
-
-}
-
-@Test
-public void deleteCoopUser() {
-
-	Employer e1 = service.createEmployer("E");
-	service.deleteCoopUser(e1);
-	ArrayList<CoopUser> setOfUsers = service.getAllCoopUsers();
-    assertEquals(false,setOfUsers.contains(e1));
-}    
-	
-	    public void testCreateStudent() {
-	        assertEquals(0, service.getAllStudents().size());
-	        String username = "Oscar";
-	        boolean allowCV = false;
-	        boolean allowTranscript= false;
-	        try {
-	            service.createStudent(username);
-	        } catch (IllegalArgumentException e) {
-	            // Check that no error occurred
-	            fail();
-	        }
-	        List<Student> allStudents = service.getAllStudents();
-	        assertEquals(1, allStudents.size());
-	        assertEquals(username, allStudents.get(0).getUsername());
-	        assertEquals(allowCV,false);
-	        assertEquals(allowTranscript,false);
-	    }
-	    public void testCreateStudentNull() {
-	        assertEquals(0, service.getAllStudents().size());
-	        String username = null;
-	        String error = null;
-	        try {
-	            service.createStudent(username);
-	        } catch (IllegalArgumentException e) {
-	            error = e.getMessage();
-	        }
-	        // check error
-	        assertEquals("Student username cannot be empty!", error);
-	        // check no change in memory
-	        assertEquals(0, service.getAllStudents().size());
-	    }
-	    public void testCreateStudentEmpty() {
-	        assertEquals(0, erc.getAllStudents().size());
-	        String username = "";
-	        String error = null;
-	        try {
-	            erc.createStudent(username);
-	        } catch (IllegalArgumentException e) {
-	            error = e.getMessage();
-	        }
-	        // check error
-	        assertEquals("Student username cannot be empty!", error);
-	        // check no change in memory
-	        assertEquals(0, erc.getAllStudents().size());
-	    }
-	    @Test
-	    public void testCreateStudentSpaces() {
-	        assertEquals(0, erc.getAllStudents().size());
-	        String username = " ";
-	        String error = null;
-	    
-	        try {
-	            erc.createStudent(username);
-	        } catch (IllegalArgumentException e) {
-	            error = e.getMessage();
-	        }
-	        // check error
-	        assertEquals("Student username cannot be empty!", error);
-	        // check no change in memory
-	        assertEquals(0, erc.getAllStudents().size());
-	    }
-
+		//Document d= service.createDocument("fff", s);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
 		
-
+		service.setPassword("May","why");
+		s.setPassword("mna");
+		assertEquals("why",service.findStudentByUsername("May").getPassword());
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		service.deleteStudent("May");
+		assertEquals(0,service.getAllStudents().size());
+		assertEquals(0,service.getAllCoopUsers().size());
+	}*/
+	
+	@Test
+	public void testCreate() {
+		service.createCoopSystem();
+		String student1="May";
+		String student2="Just";
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		service.setPassword(student1,"why");
+		assertEquals("why",service.findStudentByUsername(student1).getPassword());
+		
+		service.createStudent(student2);
+		assertEquals(2,service.getAllStudents().size());
+		assertEquals(2,service.getAllCoopUsers().size());
+		service.createEmployer("HH");
+		assertEquals(2,service.getAllStudents().size());
+		assertEquals(3,service.getAllCoopUsers().size());
+		assertEquals(1,service.getAllEmployers().size());
+		service.deleteStudent(student2);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(2,service.getAllCoopUsers().size());
+		assertEquals(1,service.getAllEmployers().size());
+	}
+	
+	
 }
