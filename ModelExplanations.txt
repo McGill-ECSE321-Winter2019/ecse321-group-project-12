@@ -5,7 +5,7 @@ we have only one instance with primary key "Main data"
 CoopUser is an abstract class with the username as primary key. It has 2 child classes (Student and Employer).
 CoopUser has a bidrectional relationship with Documents the user authored, 2 biderctional relationships with Message (sent and received)
 
-Student contains a set of Documents (personal Docuemtns like CV and tanscript) so that if a student is delteted, these docuemtns are deleted with him.
+Student has a uniderectional relationship to Document (to store the personal documents like CV and Transcript)
 It also has 2 booleans indicating whether the student accepts his documents to be availabele on the system to to the employers who hired him.
 
 Employer has a unidirectional relationship to Student indicating the students who interned with this employer.
