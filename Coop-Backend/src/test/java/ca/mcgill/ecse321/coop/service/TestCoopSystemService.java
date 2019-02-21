@@ -50,6 +50,9 @@ public class TestCoopSystemService {
 	@Autowired
 	private StudentRepository studentRepository;
 	
+	@Autowired
+	CoopUserRepository coopUserRepository;
+	
 	@After
 	public void clearDatabase() {
 		eventNotificationRepository.deleteAll();
@@ -58,6 +61,7 @@ public class TestCoopSystemService {
 		documentRepository.deleteAll();
 		employerRepository.deleteAll();
 		studentRepository.deleteAll();
+		coopUserRepository.deleteAll();
 		coopSystemRepository.deleteAll();
 	}
 	
