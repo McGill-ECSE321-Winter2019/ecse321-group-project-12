@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -109,16 +110,21 @@ public class TestCoopSystemService {
 		service.createCoopSystem();
 		String student1="May";
 		String student2="Just";
-		service.createStudent(student1);
+		Student a=service.createStudent(student1);
 		assertEquals(1,service.getAllStudents().size());
 		assertEquals(1,service.getAllCoopUsers().size());
 		service.setPassword(student1,"why");
+		
 		assertEquals("why",service.findStudentByUsername(student1).getPassword());
 		
 		service.createStudent(student2);
 		assertEquals(2,service.getAllStudents().size());
 		assertEquals(2,service.getAllCoopUsers().size());
 		service.createEmployer("HH");
+		service.setPassword("HH","how");
+		
+		assertEquals("how",service.findEmployerByUsername("HH").getPassword());
+		assertEquals("how",service.findCoopUserByUsername("HH").getPassword());
 		assertEquals(2,service.getAllStudents().size());
 		assertEquals(3,service.getAllCoopUsers().size());
 		assertEquals(1,service.getAllEmployers().size());
@@ -126,6 +132,35 @@ public class TestCoopSystemService {
 		assertEquals(1,service.getAllStudents().size());
 		assertEquals(2,service.getAllCoopUsers().size());
 		assertEquals(1,service.getAllEmployers().size());
+		service.deleteCoopUser("HH");
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		assertEquals(0,service.getAllEmployers().size());
+		
+	}
+	
+	@Test
+	public void TestCreate2() {
+		service.createCoopSystem();
+		String student1="May";
+		String  employer1="De";
+		service.createStudent(student1);
+		service.createEmployer(employer1);
+		assertEquals(false,service.findStudentByUsername(student1).isAllowCV());
+		assertEquals(false,service.findStudentByUsername(student1).isAllowTranscript());
+		service.setStudentPermissions(student1, true, true);
+		assertEquals(true,service.findStudentByUsername(student1).isAllowCV());
+		assertEquals(true,service.findStudentByUsername(student1).isAllowTranscript());
+		
+		
+		service.createDocument("doc1", student1, DocumentType.CV);
+		assertEquals(1,service.getAllDocuments().size());
+		assertEquals("doc1",service.findDocumentByDocumentId("doc1").getDocumentId());
+		assertEquals(DocumentType.CV,service.findDocumentByDocumentId("doc1").getType());
+		
+		
+		assertEquals(1,service.getAuthoredDocuments(student1).size());
+		
 	}
 	
 	
