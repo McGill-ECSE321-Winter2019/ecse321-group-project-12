@@ -466,10 +466,11 @@ public class CoopSystemService {
 		CoopUser receiver= getCoopUser(receiverName);
 		
 		Message m= new Message();
+		CoopSystem c=getCoopSystem();
 		m.setMessageId(messageId);
 		m.setSender(sender);
 		m.setReceiver(receiver);
-		m.setCoopSystem(getCoopSystem());
+		m.setCoopSystem(c);
 		m.setDate(new Date(System.currentTimeMillis()));
 		m.setTime(new Time(System.currentTimeMillis()));
 		m.setAttachements(new HashSet<Document>());
@@ -482,7 +483,6 @@ public class CoopSystemService {
 				if(doc!=null) {m.getAttachements().add(doc);}
 			}
 		}
-		CoopSystem c=getCoopSystem();
 		c.getMessages().add(m);
 		sender.getSentMessages().add(m); //add this message to the list of messages for each user
 		receiver.getReceivedMessages().add(m);
@@ -592,7 +592,7 @@ public class CoopSystemService {
 	public CoopJob findCoopJobByJobId(String id)
 	{
 		if(id==null) {return null;}
-		if(coopJobRepository.existsById(id)) {coopJobRepository.findById(id);}
+		if(coopJobRepository.existsById(id)) {return coopJobRepository.findById(id).get();}
 		return null;
 	}
 	
@@ -693,6 +693,61 @@ public class CoopSystemService {
 		for(Document j: set)
 		{
 			list.add(j);
+		}
+		return list;
+	}
+	
+	@Transactional
+	public ArrayList<Document> getPersonalDocumentsByStudent(String studentName){
+		Student s= getStudent(studentName);
+		if(s==null) {return null;}
+		Set<Document> set=s.getPersonalDocuments();
+		ArrayList<Document> list= new ArrayList<Document>();
+		for(Document d: set)
+		{
+			list.add(d);
+		}
+		return list;
+	}
+	
+	@Transactional
+	public ArrayList<Document> getAuthoredDocuments(String username)
+	{
+		CoopUser user= getCoopUser(username);
+		if(user==null) {return null;}
+		Set<Document> set=user.getAuthoredDocuments();
+		ArrayList<Document> list= new ArrayList<Document>();
+		for(Document d: set)
+		{
+			list.add(d);
+		}
+		return list;
+	}
+	
+	@Transactional
+	public ArrayList<Document> getAttachements(String messageId)
+	{
+		Message m= findMessageByMessageId(messageId);
+		if(m==null) {return null;}
+		Set<Document> set=m.getAttachements();
+		ArrayList<Document> list= new ArrayList<Document>();
+		for(Document d: set)
+		{
+			list.add(d);
+		}
+		return list;
+	}
+	
+	@Transactional
+	public ArrayList<Document> getCoopJobDocuments(String jobId)
+	{
+		CoopJob job= findCoopJobByJobId(jobId);
+		if(job==null) {return null;}
+		Set<Document> set=job.getCoopJobDocuments();
+		ArrayList<Document> list= new ArrayList<Document>();
+		for(Document d: set)
+		{
+			list.add(d);
 		}
 		return list;
 	}
