@@ -9,8 +9,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import java.util.Set;
 import javax.persistence.OneToMany;
-
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class CoopUser {
 	private CoopSystem coopSystem;
 

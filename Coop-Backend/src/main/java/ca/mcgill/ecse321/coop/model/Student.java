@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class Student extends CoopUser {
 	private Set<Document> personalDocuments;
 
-	@OneToMany(mappedBy = "student", cascade = { CascadeType.ALL })
+	@OneToMany
 	public Set<Document> getPersonalDocuments() {
 		return this.personalDocuments;
 	}
