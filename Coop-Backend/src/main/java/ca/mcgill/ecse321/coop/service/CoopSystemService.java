@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.HashMap;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -530,6 +530,15 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
+	public ArrayList<Message> getAllMessages(){
+		ArrayList<Message> list= new ArrayList<Message>();
+		for(Message m: messageRepository.findAll()) {
+			list.add(m);
+		}
+		return list;
+	}
+	
+	@Transactional
 	public ArrayList<Message> findMessagesBySenderAndReceiver(String senderName, String receiverName)
 	{
 		if(receiverName==null || senderName==null) {return null;}
@@ -664,6 +673,18 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
+	public void setCoopJobState(String jobId, CoopState state) {
+		CoopJob job=findCoopJobByJobId(jobId);
+		if(job==null ) { //chnage nothing if job is null, or enddate<=startDate
+			return;
+		}
+		
+		if(state!=null) {job.setState(state);}
+		coopJobRepository.save(job);
+		
+	}
+	
+	@Transactional
 	public void addDocumentToCoopJob(String jobId, String documentId)
 	{
 		CoopJob job=findCoopJobByJobId(jobId);
@@ -751,4 +772,57 @@ public class CoopSystemService {
 		}
 		return list;
 	}
+	
+	@Transactional
+	public ArrayList<Student> getArchivedInterns (String employerUserName){
+		Employer em= getEmployer(employerUserName);
+		if(em==null) {return null;}
+		ArrayList<Student> list= new ArrayList<Student>();
+		for(Student s: em.getArchivedInterns()) {
+			list.add(s);
+		}
+		return list;
+	}
+	
+	@Transactional
+	public HashMap<String,ArrayList<Document>> getInternsDocuments (String employerUserName){
+		ArrayList<Student> interns =getArchivedInterns(employerUserName);
+		if(interns==null ) {return null;}
+		HashMap<String,ArrayList<Document>> map= new HashMap<String,ArrayList<Document>>();
+		
+		for(Student intern: interns) {
+			if(intern.isAllowCV() && intern.isAllowTranscript()) {
+				map.put(intern.getUsername(),getPersonalDocumentsByStudent(intern.getUsername()));
+			}
+			else if (intern.isAllowCV()) {
+				ArrayList<Document> docs=getPersonalDocumentsByStudent(intern.getUsername());
+				Document CVdoc=null;
+				for(Document d: docs){
+					if(d.getType()==DocumentType.CV) {CVdoc=d;break;}
+				}
+				ArrayList<Document> toAdd= new ArrayList<Document>();
+				toAdd.add(CVdoc);
+				map.put(intern.getUsername(),toAdd);
+				
+			}
+		}
+		return map;
+	}
+	
+	@Transactional
+	public ArrayList<Document> getInternDocuments(String employerUserName, String studentUserName){
+		if(employerUserName==null || studentUserName==null) {return null;}
+		
+		return getInternsDocuments(employerUserName).get(studentUserName);
+	}
+	
+	@Transactional
+	public boolean login(String username, String password) {
+		CoopUser u=findCoopUserByUsername(username);
+		if(u==null) {return false;}
+		if(u.getPassword().equals(password)) {return true;}
+		return false;
+	}
+	
+	
 }
