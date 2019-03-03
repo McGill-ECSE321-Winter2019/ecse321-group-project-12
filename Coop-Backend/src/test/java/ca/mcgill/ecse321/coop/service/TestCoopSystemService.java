@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.ArrayList;
 
 import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,18 @@ public class TestCoopSystemService {
 	
 	@Autowired
 	private CoopUserRepository coopUserRepository; 
+	
+	@BeforeClass
+	public void clearDatabaseB() {
+		eventNotificationRepository.deleteAll();
+		messageRepository.deleteAll();
+		coopJobRepository.deleteAll();
+		documentRepository.deleteAll();
+		employerRepository.deleteAll();
+		studentRepository.deleteAll();
+		coopUserRepository.deleteAll();
+		coopSystemRepository.deleteAll();
+	}
 	
 	@After
 	public void clearDatabase() {
