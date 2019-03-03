@@ -24,38 +24,24 @@ import java.util.HashSet;
 @CrossOrigin(origins = "*")
 @RestController
 public class CoopController {
-	@Autowired
-	private CoopSystemService service;
 	
-	@Autowired
-	private CoopJobRepository coopJobRepository;
+	 @Autowired
+	 private CoopSystemService service;
 	
-	@Autowired
-	private CoopSystemRepository coopSystemRepository;
-	
-	@Autowired
-	private DocumentRepository documentRepository;
-	
-	@Autowired
-	private EmployerRepository employerRepository;
-	
-	@Autowired
-	private EventNotificationRepository eventNotificationRepository;
-	
-	@Autowired
-	private MessageRepository messageRepository;
-	
-	@Autowired
-	private StudentRepository studentRepository;
-	
-	@Autowired
-	private CoopUserRepository coopUserRepository;
 	
 	
 	@RequestMapping("/")
-	  public String greeting(){
-	    return "Hello world!";
+	  public CoopSystemDto greeting(){
+	    return convertToDto(service.createCoopSystem());
 	  }
+	
+	@GetMapping(value = { "/login", "/login/" })
+	public boolean login( @RequestParam(name = "username") String username,
+			@RequestParam(name = "password") String password) throws IllegalArgumentException {
+		// @formatter:on
+		return service.login(username,password);
+		
+	}
 	
 	@PostMapping(value = { "/coopsystem", "/coopsystem/" })
 	public CoopSystemDto createCoopSystem() throws IllegalArgumentException {
@@ -269,13 +255,7 @@ public class CoopController {
 		
 	}
 	
-	@GetMapping(value = { "/login", "/login/" })
-	public boolean login( @RequestParam(name = "username") String username,
-			@RequestParam(name = "password") String password) throws IllegalArgumentException {
-		// @formatter:on
-		return service.login(username,password);
-		
-	}
+	
 	
 	private CoopSystemDto convertToDto(CoopSystem sys) {
 		if(sys==null) {return null;}
