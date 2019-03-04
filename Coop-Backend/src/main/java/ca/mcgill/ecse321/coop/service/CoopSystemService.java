@@ -624,7 +624,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional //find coopobs by student
+	@Transactional //find coopjobs by student
 	public ArrayList<CoopJob> findCoopJobsByStudent(String studentName)
 	{
 		if(studentName==null) {return null;}
@@ -829,7 +829,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional //find a coopjob between an employer and a student
-	public CoopJob findCoopJobByEmployerAndStudent(String employerName, String studentName, Date endDate)
+	public CoopJob findCoopJobByEmployerAndStudentAndEndDate(String employerName, String studentName, Date endDate)
 	{
 		if(studentName==null|| employerName==null) {return null;}
 		Student s=getStudent(studentName);
