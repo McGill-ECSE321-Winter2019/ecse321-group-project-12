@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -330,9 +331,177 @@ public class CoopController {
 	}
 	
 	
+	@PostMapping(value = { "/newJob", "/newJob/" }) //create a new coopjob
+	public CoopJobDto createJob(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "EmployerName") String employerName, @RequestParam(name = "StudentName") String studentName
+			) throws IllegalArgumentException {
+		// @formatter:on
+		return convertToDto(service.createCoopJob(jobId,employerName,studentName));	
+		
+	}
+	
+	@GetMapping(value = { "/CoopJob", "/CoopJob/" }) //get a coopjob by id
+	public CoopJobDto getJob(@RequestParam(name = "JobId") String jobId) throws IllegalArgumentException {
+		// @formatter:on
+		return convertToDto(service.findCoopJobByJobId(jobId));
+		
+	}
+	
+	@GetMapping(value = { "/JobsByEmployer", "/JobsByEmployer/" }) //get coopjobs by employer
+	public ArrayList<CoopJobDto> getCoopJobsByEmployer(@RequestParam(name = "EmployerName") String employerName) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<CoopJobDto> list= new ArrayList<CoopJobDto>();
+		for(CoopJob j: service.findCoopJobsByEmployer(employerName)) {
+			list.add(convertToDto(j));
+		}
+		return list;
+	}
 	
 	
+	@GetMapping(value = { "/JobsByStudent", "/JobsByStudent/" }) //get coopjobs by employer
+	public ArrayList<CoopJobDto> getCoopJobsByStudent(@RequestParam(name = "StudentName") String studentName) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<CoopJobDto> list= new ArrayList<CoopJobDto>();
+		for(CoopJob j: service.findCoopJobsByStudent(studentName)) {
+			list.add(convertToDto(j));
+		}
+		return list;
+	}
 	
+	@GetMapping(value = { "/JobsByEmployerAndStudent", "/JobsByEmployerAndStudent/" }) //get coopjobs by employer
+	public ArrayList<CoopJobDto> getCoopJobsByEmployerAndStudent(@RequestParam(name = "EmployerName") String employerName,
+			@RequestParam(name = "StudentName") String studentName) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<CoopJobDto> list= new ArrayList<CoopJobDto>();
+		for(CoopJob j: service.findCoopJobsByEmployerAndStudent(employerName,studentName)) {
+			list.add(convertToDto(j));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/CoopJob", "/CoopJob/" }) //get a coopjob by id
+	public CoopJobDto getJobByEmployerAndStudentAndEndDate(@RequestParam(name = "EmployerName") String employerName,
+			@RequestParam(name = "StudentName") String studentName,
+			@RequestParam(name = "EndDate") String endDate) throws IllegalArgumentException{
+			// @formatter:on
+		return convertToDto(service.findCoopJobByEmployerAndStudentAndEndDate(employerName,studentName,Date.valueOf(endDate)));
+		
+	}
+	
+	@PostMapping(value = { "/JobSettings", "/JobSettings/" }) //set the coopjob settings
+	public void setJobSettings(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "StartDate") String startDate, @RequestParam(name = "EndDate") String endDate,
+			@RequestParam(name = "JobName") String name,
+			@RequestParam(name = "State") CoopState state
+			) throws IllegalArgumentException {
+		// @formatter:on
+		service.setCoopJobSettings(jobId,Date.valueOf(startDate),Date.valueOf(endDate),name,state);	
+		
+	}
+	
+	@PostMapping(value = { "/JobState", "/JobState/" }) //set the coopjob state
+	public void setJobState(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "State") CoopState state
+			) throws IllegalArgumentException {
+		// @formatter:on
+		service.setCoopJobState(jobId,state);	
+		
+	}
+	
+	@PostMapping(value = { "/addDocumentToJob", "/addDocumentToJob/" }) //add document to coop job
+	public void setJobStte(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "DocumentId") String documentId
+			) throws IllegalArgumentException {
+		// @formatter:on
+		service.addDocumentToCoopJob(jobId,documentId);	
+		
+	}
+	
+	@GetMapping(value = { "/AuthoredDocuments", "/AuthoredDocuments/" }) //get list of authored documents
+	public ArrayList<DocumentDto> getAuthoredDocuments(@RequestParam(name = "userName") String username) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
+		for(Document d: service.getAuthoredDocuments(username)) {
+			list.add(convertToDto(d));
+		}
+		return list;
+	}
+	
+	
+	@GetMapping(value = { "/Attachements", "/Attachements/" }) //get list of attachements in message
+	public ArrayList<DocumentDto> getAttachements(@RequestParam(name = "MessageId") String messageId) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
+		for(Document d: service.getAttachements(messageId)) {
+			list.add(convertToDto(d));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/CoopJobDocuments", "/CoopJobDocuments/" }) //get list of documents of coopjob
+	public ArrayList<DocumentDto> getCoopJobDocuments(@RequestParam(name = "JobId") String jobId) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
+		for(Document d: service.getCoopJobDocuments(jobId)) {
+			list.add(convertToDto(d));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/CoopJobDocuments", "/CoopJobDocuments/" }) //get list of specific-type documents of coopjob
+	public ArrayList<DocumentDto> getCoopJobDocumentsType(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "DocumentType") DocumentType type) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
+		for(Document d: service.getCoopJobDocuments(jobId)) {
+			if(d.getType()==type) {list.add(convertToDto(d));}
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/ArchivedInterns", "/ArchivedInterns/" }) //get list of students who worked at this emplyoer
+	public ArrayList<StudentDto> getArchivedInterns(@RequestParam(name = "EmloyerName") String employerName
+			) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<StudentDto> list= new ArrayList<StudentDto>();
+		for(Student t: service.getArchivedInterns(employerName)) {
+			list.add(convertToDtob(t));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/ArchivedInternDocuments", "/ArchivedInternDocuments/" }) //get personal documents of a tsudent who worked at this employer
+	public ArrayList<DocumentDto> getArchivedInternDocuments(@RequestParam(name = "EmloyerName") String employerName,
+			
+			@RequestParam(name = "StudentName") String studentName) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
+		for(Document d: service.getInternDocuments(employerName,studentName)) {
+			list.add(convertToDto(d));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/ArchivedInternsDocuments", "/ArchivedInternsDocuments/" }) //get personal documents of all students who worked at this employer
+	public ArrayList<ArrayList<DocumentDto>> getArchivedInternsDocuments(@RequestParam(name = "EmloyerName") String employerName
+			) throws IllegalArgumentException{
+			// @formatter:on
+		ArrayList<ArrayList<DocumentDto>> list= new ArrayList<ArrayList<DocumentDto>>();
+		ArrayList<DocumentDto> dl=new ArrayList<DocumentDto>();
+		for(ArrayList<Document> d: service.getInternsDocuments(employerName).values()) {
+			if(d!=null) {
+				dl=new ArrayList<DocumentDto>();
+				for(Document doc: d) {
+					if(doc!=null) {dl.add(convertToDto(doc));}
+				}
+				list.add(dl);
+			}
+		}
+		return list;
+	}
+	
+	
+
 	private CoopSystemDto convertToDto(CoopSystem sys) { //convert the coopsystem to a dto
 		if(sys==null) {return null;}
 		CoopSystemDto sysD= new CoopSystemDto();
@@ -396,14 +565,14 @@ public class CoopController {
 		return jobD;
 	}
 	
-	private CoopUserDto convertToDtoa(CoopUser user) {
+	private CoopUserDto convertToDtoa(CoopUser user) { //convert to a dto
 		if(user==null) {return null;}
 		else if(user instanceof Student) {return (CoopUserDto) convertToDtob((Student) user);}
 		else {return (CoopUserDto) convertToDtoc((Employer) user);}
 		
 	}
 	
-	private DocumentDto convertToDto(Document doc) {
+	private DocumentDto convertToDto(Document doc) { //convert to a dto
 		if(doc==null) {return null;}
 		DocumentDto docD=new DocumentDto();
 		docD.documentId=doc.getDocumentId();
@@ -416,7 +585,7 @@ public class CoopController {
 		return docD;
 	}
 	
-	private EmployerDto convertToDtoc(Employer u) {
+	private EmployerDto convertToDtoc(Employer u) { //convert to a dto
 		if(u==null) {return null;}
 		EmployerDto uD= new EmployerDto();
 		uD.coopSystemName=u.getCoopSystem().getId();
@@ -455,7 +624,7 @@ public class CoopController {
 		return uD;
 	}
 	
-	private MessageDto convertToDto(Message m) {
+	private MessageDto convertToDto(Message m) { //convert to a dto
 		if(m==null) {return null;}
 		MessageDto mD=new MessageDto();
 		mD.coopSystemName=m.getCoopSystem().getId();
@@ -474,7 +643,7 @@ public class CoopController {
 		return mD;
 	}
 	
-	private StudentDto convertToDtob(Student u) {
+	private StudentDto convertToDtob(Student u) { //convert to a dto
 		if(u==null) {return null;}
 		StudentDto uD= new StudentDto();
 		uD.coopSystemName=u.getCoopSystem().getId();
