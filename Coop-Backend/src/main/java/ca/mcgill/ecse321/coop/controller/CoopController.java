@@ -31,11 +31,11 @@ public class CoopController {
 	
 	
 	@RequestMapping("/")
-	  public CoopSystemDto greeting(){
+	  public CoopSystemDto greeting(){ //create the coopsystem
 	    return convertToDto(service.createCoopSystem());
 	  }
 	
-	@GetMapping(value = { "/login", "/login/" })
+	@GetMapping(value = { "/login", "/login/" }) //login
 	public boolean login( @RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password) throws IllegalArgumentException {
 		// @formatter:on
@@ -43,7 +43,7 @@ public class CoopController {
 		
 	}
 	
-	@PostMapping(value = { "/coopsystem", "/coopsystem/" })
+	@PostMapping(value = { "/coopsystem", "/coopsystem/" }) // create a coopsystem
 	public CoopSystemDto createCoopSystem() throws IllegalArgumentException {
 		// @formatter:on
 		CoopSystem sys=service.createCoopSystem();
@@ -51,7 +51,7 @@ public class CoopController {
 		return convertToDto(sys); 
 	}
 	
-	@GetMapping(value = { "/coopsystem", "/coopsystem/" })
+	@GetMapping(value = { "/coopsystem", "/coopsystem/" }) //retrive the info from a coopsystem
 	public CoopSystemDto getCoopSystem() throws IllegalArgumentException {
 		// @formatter:on
 		CoopSystem sys=service.getCoopSystem(); 
@@ -59,13 +59,13 @@ public class CoopController {
 		return convertToDto(sys); 
 	}
 	
-	@DeleteMapping(value = { "/coopsystem", "/coopsystem/" })
+	@DeleteMapping(value = { "/coopsystem", "/coopsystem/" }) //delete the system (clear the database)
 	public void deleteSystem() throws IllegalArgumentException {
 		// @formatter:on
 		service.deleteSystem();  
 	}
 	
-	@PostMapping(value = { "/students/{userName}", "/students/{userName}/" })
+	@PostMapping(value = { "/students/{userName}", "/students/{userName}/" }) //create a new student
 	public StudentDto createStudent(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		Student s=service.createStudent(userName);
@@ -73,7 +73,7 @@ public class CoopController {
 		return convertToDtob(s); 
 	}
 	
-	@GetMapping(value = { "/students/{userName}", "/students/{userName}/" })
+	@GetMapping(value = { "/students/{userName}", "/students/{userName}/" }) // retieve a student by its username
 	public StudentDto getStudent(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		Student sys=service.findStudentByUsername(userName);
@@ -81,7 +81,7 @@ public class CoopController {
 		return convertToDtob(sys); 
 	}
 	
-	@GetMapping(value = { "/coopusers/{userName}", "/coopusers/{userName}/" })
+	@GetMapping(value = { "/coopusers/{userName}", "/coopusers/{userName}/" }) //retrieve a user by its username
 	public CoopUserDto getCoopUser(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		CoopUser sys=service.findCoopUserByUsername(userName);
@@ -89,7 +89,7 @@ public class CoopController {
 		return convertToDtoa(sys); 
 	}
 	
-	@GetMapping(value = { "/students", "/students/" })
+	@GetMapping(value = { "/students", "/students/" }) //retrieve all students
 	public ArrayList<StudentDto> getStudents() throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<StudentDto> sys=new ArrayList<StudentDto>();
@@ -99,7 +99,7 @@ public class CoopController {
 		return sys; 
 	}
 	
-	@GetMapping(value = { "/coopusers", "/coopusers/" })
+	@GetMapping(value = { "/coopusers", "/coopusers/" }) //retieve allcoopusers
 	public ArrayList<CoopUserDto> getCoopUsers() throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<CoopUserDto> sys=new ArrayList<CoopUserDto>();
@@ -109,7 +109,7 @@ public class CoopController {
 		return sys; 
 	}
 	
-	@PostMapping(value = { "/employers/{userName}", "/employers/{userName}/" })
+	@PostMapping(value = { "/employers/{userName}", "/employers/{userName}/" }) //create a new employer
 	public EmployerDto createEmployer(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		Employer e=service.createEmployer(userName);
@@ -117,7 +117,7 @@ public class CoopController {
 		return convertToDtoc(e); 
 	}
 	
-	@GetMapping(value = { "/employers/{userName}", "/employers/{userName}/" })
+	@GetMapping(value = { "/employers/{userName}", "/employers/{userName}/" }) //retrive an employer by itsudername
 	public EmployerDto getEmployer(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		Employer e=service.findEmployerByUsername(userName);
@@ -125,7 +125,7 @@ public class CoopController {
 		return convertToDtoc(e); 
 	}
 	
-	@GetMapping(value = { "/employers", "/employers/" })
+	@GetMapping(value = { "/employers", "/employers/" }) //retiee all employers
 	public ArrayList<EmployerDto> getEmloyers() throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<EmployerDto> sys=new ArrayList<EmployerDto>();
@@ -135,25 +135,25 @@ public class CoopController {
 		return sys; 
 	}
 	
-	@DeleteMapping(value = { "/students/{username}", "/students/{username}/" })
+	@DeleteMapping(value = { "/students/{username}", "/students/{username}/" }) //delete a student
 	public void deleteStudent(@PathVariable("username") String username) throws IllegalArgumentException {
 		// @formatter:on
 		service.deleteStudent(username);  
 	}
 	
-	@DeleteMapping(value = { "/employers/{username}", "/employers/{username}/" })
+	@DeleteMapping(value = { "/employers/{username}", "/employers/{username}/" }) //delete an employer
 	public void deleteEmployer(@PathVariable("username") String username) throws IllegalArgumentException {
 		// @formatter:on
 		service.deleteEmployer(username);  
 	}
 	
-	@DeleteMapping(value = { "/coopusers/{username}", "/coopusers/{username}/" })
+	@DeleteMapping(value = { "/coopusers/{username}", "/coopusers/{username}/" }) //delete a user
 	public void deleteCoopUser(@PathVariable("username") String username) throws IllegalArgumentException {
 		// @formatter:on
 		service.deleteCoopUser(username);  
 	}
 	
-	@PostMapping(value = { "/setPassword", "/setPassword/" })
+	@PostMapping(value = { "/setPassword", "/setPassword/" }) //set the password
 	public CoopUserDto setPassword(@RequestParam(name = "Username") String userName,
 			@RequestParam(name = "Password") String password) throws IllegalArgumentException {
 		// @formatter:on
@@ -163,7 +163,7 @@ public class CoopController {
 		return convertToDtoa(s); 
 	}
 	
-	@PostMapping(value = { "/studentPreferences", "/studentPreferences/" })
+	@PostMapping(value = { "/studentPreferences", "/studentPreferences/" }) //set privacy settings
 	public StudentDto setPreferences(@RequestParam(name = "StudentName") String studentName,
 			@RequestParam(name = "AllowCV") boolean a,
 			@RequestParam(name = "AllowTranscript") boolean b) throws IllegalArgumentException {
@@ -174,7 +174,7 @@ public class CoopController {
 		return convertToDtob(s); 
 	}
 	
-	@PostMapping(value = { "/studentPersonal", "/studentPersonal/" })
+	@PostMapping(value = { "/studentPersonal", "/studentPersonal/" }) //set the student personal documents
 	public StudentDto setPreferences(@RequestParam(name = "StudentName") String studentName,
 			@RequestParam(name = "PersonalDocumentsIds") ArrayList<String> personalDocumentsIds) throws IllegalArgumentException {
 		// @formatter:on
@@ -184,7 +184,7 @@ public class CoopController {
 		return convertToDtob(s); 
 	}
 	
-	@PostMapping(value = { "/createDocument", "/createDocument/" })
+	@PostMapping(value = { "/createDocument", "/createDocument/" }) //create a document
 	public void createDocument(@RequestParam(name = "DocumentId") String docId,
 			@RequestParam(name = "UserName") String userName,
 			@RequestParam(name = "Type") DocumentType type
@@ -193,14 +193,14 @@ public class CoopController {
 		service.createDocument(docId,userName,type);	
 	}
 	
-	@GetMapping(value = { "/getDocument", "/getDocument/" })
+	@GetMapping(value = { "/getDocument", "/getDocument/" }) //get a documet by its id
 	public DocumentDto getDocument(@RequestParam(name = "DocumentId") String docId) throws IllegalArgumentException {
 		// @formatter:on
 		return convertToDto(service.findDocumentByDocumentId(docId));
 		
 	}
 	
-	@GetMapping(value = { "/getDocuments", "/getDocuments/" })
+	@GetMapping(value = { "/getDocuments", "/getDocuments/" }) //get a lost of documents by the author
 	public ArrayList<DocumentDto> getDocuments(@RequestParam(name = "AuthorId") String authorId) throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<DocumentDto> list= new ArrayList<DocumentDto>();
@@ -211,7 +211,7 @@ public class CoopController {
 		
 	}
 	
-	@DeleteMapping(value = { "/deleteDocument", "/deleteDocument/" })
+	@DeleteMapping(value = { "/deleteDocument", "/deleteDocument/" }) //delete a document
 	public void deleteDocument(@RequestParam(name = "DocumentId") String docId) throws IllegalArgumentException {
 		// @formatter:on
 		service.deleteDocument(docId);
@@ -237,7 +237,7 @@ public class CoopController {
 		
 	}
 	
-	@GetMapping(value = { "/getEventNotifications", "/getEventNotifications/" })
+	@GetMapping(value = { "/getEventNotifications", "/getEventNotifications/" }) //get all theevent notifications
 	public ArrayList<EventNotificationDto> getEventNotifcations() throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<EventNotificationDto> list= new ArrayList<EventNotificationDto>();
@@ -248,22 +248,98 @@ public class CoopController {
 		
 	}
 	
-	@GetMapping(value = { "/getEventNotification", "/getEventNotification/" })
+	@GetMapping(value = { "/getEventNotification", "/getEventNotification/" }) //get an event notification by id
 	public EventNotificationDto getEventNotification(@RequestParam(name = "EventNotificationId") String eventNotificationId) throws IllegalArgumentException {
 		// @formatter:on
 		return convertToDto(service.findEventNotificationByName(eventNotificationId));
 		
 	}
 	
+	@GetMapping(value = { "/getEventNotificationsinXdays", "/getEventNotificationsinXdays/" }) //get an event notification in the coming x days
+	public ArrayList<EventNotificationDto> getEventNotificationinXdays(@RequestParam(name = "Number of days") int x) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<EventNotificationDto> list= new ArrayList<EventNotificationDto>();
+		for(EventNotification d: service.getEventsInXDays(x)) {
+			list.add(convertToDto(d));
+		}
+		return list;
+	}
+	
+	@DeleteMapping(value = { "/Event", "/Event/" }) //delete an event notification from the database
+	public void deleteEventNotification(@RequestParam(name = "EentId") String mId) throws IllegalArgumentException {
+		// @formatter:on
+		service.deleteEventNotification(mId);
+		
+	}
 	
 	
-	private CoopSystemDto convertToDto(CoopSystem sys) {
+	@PostMapping(value = { "/newMessage", "/newMessage/" }) //create a message
+	public void createAndSendMessage(@RequestParam(name = "MessageId") String mId,
+			@RequestParam(name = "SenderName") String sender, @RequestParam(name = "ReceiverName") String receiver,
+			@RequestParam(name = "Content") String content, @RequestParam(name = "ListofAttachementsIds") ArrayList<String> attachementsIds
+			) throws IllegalArgumentException {
+		// @formatter:on
+		service.createMessage(mId,sender,receiver,content,attachementsIds);	
+		
+	}
+	
+	@GetMapping(value = { "/Message", "/Message/" }) //get a message by id
+	public MessageDto getMessage(@RequestParam(name = "MessageId") String mId) throws IllegalArgumentException {
+		// @formatter:on
+		return convertToDto(service.findMessageByMessageId(mId));
+		
+	}
+	
+	
+	@DeleteMapping(value = { "/Message", "/Message/" }) //delete a message by id
+	public void deleteMessage(@RequestParam(name = "MessageId") String mId) throws IllegalArgumentException {
+		// @formatter:on
+		service.deleteMessage(mId);
+		
+	}
+	
+	@GetMapping(value = { "/SentMessages", "/SentMessages/" }) //get messages by sender
+	public ArrayList<MessageDto> getSentMessages(@RequestParam(name = "SenderName") String sender) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<MessageDto> list= new ArrayList<MessageDto>();
+		for(Message m: service.findMessagesBySender(sender)) {
+			list.add(convertToDto(m));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/ReceivedMessages", "/ReceivedMessages/" }) //get messages by receiver
+	public ArrayList<MessageDto> getReceivedMessages(@RequestParam(name = "ReceiverName") String receiver) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<MessageDto> list= new ArrayList<MessageDto>();
+		for(Message m: service.findMessagesByReceiver(receiver)) {
+			list.add(convertToDto(m));
+		}
+		return list;
+	}
+	
+	@GetMapping(value = { "/OneWayMessages", "/OneWayMessages/" }) //get messages by sender and receiver
+	public ArrayList<MessageDto> getOneWay(@RequestParam(name = "SenderName") String sender,
+			@RequestParam(name = "ReceiverName") String receiver) throws IllegalArgumentException {
+		// @formatter:on
+		ArrayList<MessageDto> list= new ArrayList<MessageDto>();
+		for(Message m: service.findMessagesBySenderAndReceiver(sender,receiver)) {
+			list.add(convertToDto(m));
+		}
+		return list;
+	}
+	
+	
+	
+	
+	
+	private CoopSystemDto convertToDto(CoopSystem sys) { //convert the coopsystem to a dto
 		if(sys==null) {return null;}
 		CoopSystemDto sysD= new CoopSystemDto();
 		sysD.id= sys.getId();
 		
-		sysD.eventNotificationsNames=new HashSet<String>();
-		for(EventNotification en: service.findAllEventNotifications()) {
+		sysD.eventNotificationsNames=new HashSet<String>(); 
+		for(EventNotification en: service.findAllEventNotifications()) { //create an arraylist containing the ids
 			sysD.eventNotificationsNames.add(en.getName());
 		}
 		
@@ -289,7 +365,7 @@ public class CoopController {
 		return sysD;
 	}
 	
-	private EventNotificationDto convertToDto(EventNotification e) {
+	private EventNotificationDto convertToDto(EventNotification e) { //convert to a dto
 		if(e==null) {return null;}
 		EventNotificationDto eD=new EventNotificationDto();
 		eD.coopSystemName=e.getCoopSystem().getId();
@@ -302,7 +378,7 @@ public class CoopController {
 		return eD;
 	}
 	
-	private CoopJobDto convertToDto(CoopJob job) {
+	private CoopJobDto convertToDto(CoopJob job) { //convert to a dto
 		if(job==null) {return null;}
 		CoopJobDto jobD=new CoopJobDto();
 		jobD.internName=job.getIntern().getUsername();
@@ -363,7 +439,7 @@ public class CoopController {
 		}
 		
 		uD.coopJobsIds= new HashSet<String>();
-		for(CoopJob j : service.findCoopJobsByStudent(u.getUsername())){
+		for(CoopJob j : service.findCoopJobsByEmployer(u.getUsername())){
 			uD.coopJobsIds.add(j.getJobId());
 		}
 		
