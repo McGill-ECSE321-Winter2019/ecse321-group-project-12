@@ -257,7 +257,7 @@ public class CoopController {
 	}
 	
 	@GetMapping(value = { "/getEventNotificationsinXdays", "/getEventNotificationsinXdays/" }) //get an event notification in the coming x days
-	public ArrayList<EventNotificationDto> getEventNotificationinXdays(@RequestParam(name = "Number of days") int x) throws IllegalArgumentException {
+	public ArrayList<EventNotificationDto> getEventNotificationinXdays(@RequestParam(name = "NumberOfDays") int x) throws IllegalArgumentException {
 		// @formatter:on
 		ArrayList<EventNotificationDto> list= new ArrayList<EventNotificationDto>();
 		for(EventNotification d: service.getEventsInXDays(x)) {
