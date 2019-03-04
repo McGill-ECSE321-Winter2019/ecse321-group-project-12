@@ -73,7 +73,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public void deleteSystem()
+	public void deleteSystem() //delete the only system we have
 	{
 		coopSystemRepository.deleteAll();
 	}
@@ -138,7 +138,7 @@ public class CoopSystemService {
 		saveCoopUser(s);
 	}
 	
-	@Transactional
+	@Transactional  //find a coopuser by its username
 	public CoopUser getCoopUser(String username) {
 		if(username==null) {return null;}
 		if(studentRepository.existsById(username)) {return studentRepository.findById(username).get();}
@@ -146,7 +146,7 @@ public class CoopSystemService {
 		return null;
 	}
 	
-	@Transactional
+	@Transactional //find a student by its username
 	public Student getStudent(String username) {
 		if(username==null) {return null;}
 		if(studentRepository.existsById(username)) {return studentRepository.findById(username).get();}
@@ -160,14 +160,14 @@ public class CoopSystemService {
 		return null;
 	}
 	
-	@Transactional
+	@Transactional  //save a coopuser to the corresponding repository
 	public void saveCoopUser (CoopUser s) {
 		if(s==null) {return;}
 		if(s instanceof Student) {coopUserRepository.save(s);studentRepository.save((Student) s);}
 		else {coopUserRepository.save(s);employerRepository.save((Employer) s);}
 	}
 	
-	@Transactional
+	@Transactional  //set the privacy settings for the student
 	public void setStudentPermissions(String username, boolean allowCV, boolean allowTranscript)
 	{
 		if(username==null) {return;}
@@ -268,14 +268,14 @@ public class CoopSystemService {
 	public void deleteStudent(String username)
 	{
 		Student a= getStudent(username);
-		if(a!=null) {studentRepository.delete(a);}//coopUserRepository.delete(a);
+		if(a!=null) {studentRepository.delete(a);}
 	}
 	
 	@Transactional
 	public void deleteEmployer(String username)
 	{
 		Employer a =getEmployer(username);
-		if(a!=null) {employerRepository.delete(a);}//coopUserRepository.delete(a);
+		if(a!=null) {employerRepository.delete(a);}
 	}
 	
 	@Transactional
@@ -296,7 +296,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public void setPersonalDocuments(String username, ArrayList<String> docIds)
+	public void setPersonalDocuments(String username, ArrayList<String> docIds) //set the persona
 	{
 		if(username==null) {return;}
 		Student stu =getStudent(username);
@@ -305,8 +305,10 @@ public class CoopSystemService {
 			stu.setPersonalDocuments(new HashSet<Document>());
 			for(String id: docIds)
 			{
-				Document doc=findDocumentByDocumentId(id);
-				if(doc!=null) {stu.getPersonalDocuments().add(doc);}
+				Document doc=findDocumentByDocumentId(id); //set only CVs and transcripts authored by the student
+				if(doc!=null && doc.getAuthor().getUsername().contentEquals(username)
+					&& (doc.getType()==DocumentType.CV || doc.getType()==DocumentType.Transcript)	)
+{stu.getPersonalDocuments().add(doc);}
 				
 			}
 		}
@@ -314,7 +316,7 @@ public class CoopSystemService {
 		studentRepository.save(stu);
 	}
 	
-	@Transactional
+	@Transactional  //create a new document
 	public Document createDocument(String documentId, String authorUsername, DocumentType type)
 	{	//unique id
 		if(documentId==null || documentRepository.existsById(documentId) || authorUsername ==null)
@@ -344,7 +346,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public Document findDocumentByDocumentId(String id)
+	public Document findDocumentByDocumentId(String id) //find documents by id
 	{
 		if(id==null) {return null;}
 		if(documentRepository.existsById(id))
@@ -355,7 +357,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public ArrayList<Document> findDocumentsByAuthor(String authorUsername)
+	public ArrayList<Document> findDocumentsByAuthor(String authorUsername) //find documents by author
 	{
 		if(authorUsername==null) {return null;}
 		CoopUser author= getCoopUser(authorUsername);
@@ -369,7 +371,7 @@ public class CoopSystemService {
 	
 	
 	@Transactional
-	public void deleteDocument(String id)
+	public void deleteDocument(String id) //delete the document
 	{
 		if(id==null) {return;}
 		Document d= findDocumentByDocumentId(id);
@@ -383,7 +385,7 @@ public class CoopSystemService {
 	}
 	
 	@Transactional
-	public EventNotification createEventNotification(String id)
+	public EventNotification createEventNotification(String id) //new event notification
 	{	//unique id
 		if (id==null || eventNotificationRepository.existsById(id))
 		{
@@ -455,7 +457,7 @@ public class CoopSystemService {
 		if (e!=null) {eventNotificationRepository.delete(e);}
 	}
 	
-	@Transactional
+	@Transactional  //new message
 	public Message createMessage(String messageId, String senderName, String receiverName, String content, ArrayList<String> attachementNames)
 	{	//unique id, sender and receiver exist
 		if(messageId==null || senderName== null ||  receiverName==null || messageRepository.existsById(messageId))
@@ -492,7 +494,7 @@ public class CoopSystemService {
 		return m;
 	}
 	
-	@Transactional
+	@Transactional  //find a specific message
 	public Message findMessageByMessageId(String id)
 	{
 		if(id==null) {return null;}
@@ -500,7 +502,7 @@ public class CoopSystemService {
 		return null;
 	}
 	
-	@Transactional
+	@Transactional  // sent messages
 	public ArrayList<Message> findMessagesBySender(String senderName)
 	{
 		if(senderName==null) {return null;}
@@ -515,7 +517,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional  //received messages
 	public ArrayList<Message> findMessagesByReceiver(String receiverName)
 	{
 		if(receiverName==null) {return null;}
@@ -529,7 +531,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //all messages
 	public ArrayList<Message> getAllMessages(){
 		ArrayList<Message> list= new ArrayList<Message>();
 		for(Message m: messageRepository.findAll()) {
@@ -538,7 +540,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //messages between sender and receiver
 	public ArrayList<Message> findMessagesBySenderAndReceiver(String senderName, String receiverName)
 	{
 		if(receiverName==null || senderName==null) {return null;}
@@ -557,7 +559,9 @@ public class CoopSystemService {
 		return listn;
 	}
 	
-	@Transactional
+	
+	
+	@Transactional // delete a message
 	public void deleteMessage(String messageId)
 	{
 		if(messageId==null) {return;}
@@ -565,7 +569,7 @@ public class CoopSystemService {
 		if(m!=null) {messageRepository.delete(m);}
 	}
 	
-	@Transactional
+	@Transactional // create a coopob
 	public CoopJob createCoopJob(String jobId, String employerName, String studentName)
 	{
 		if(jobId==null|| employerName==null || studentName==null || coopJobRepository.existsById(jobId) ) {
@@ -597,7 +601,7 @@ public class CoopSystemService {
 		return job;
 	}
 	
-	@Transactional
+	@Transactional // find a specific coopob
 	public CoopJob findCoopJobByJobId(String id)
 	{
 		if(id==null) {return null;}
@@ -605,7 +609,7 @@ public class CoopSystemService {
 		return null;
 	}
 	
-	@Transactional
+	@Transactional //find coopobs by employer
 	public ArrayList<CoopJob> findCoopJobsByEmployer(String employerName)
 	{
 		if(employerName==null) {return null;}
@@ -620,7 +624,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //find coopobs by student
 	public ArrayList<CoopJob> findCoopJobsByStudent(String studentName)
 	{
 		if(studentName==null) {return null;}
@@ -635,7 +639,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //find the coopjobs between an employer and a student
 	public ArrayList<CoopJob> findCoopJobsByEmployerAndStudent(String employerName, String studentName)
 	{
 		if(studentName==null|| employerName==null) {return null;}
@@ -657,7 +661,7 @@ public class CoopSystemService {
 		if(job!=null) {coopJobRepository.delete(job);}
 	}
 	
-	@Transactional
+	@Transactional //set the settings
 	public void setCoopJobSettings(String jobId, Date startDate, Date endDate, String name, CoopState state) {
 		CoopJob job=findCoopJobByJobId(jobId);
 		if(job==null || endDate.compareTo(startDate)<=0) { //chnage nothing if job is null, or enddate<=startDate
@@ -672,7 +676,7 @@ public class CoopSystemService {
 		
 	}
 	
-	@Transactional
+	@Transactional //set the state
 	public void setCoopJobState(String jobId, CoopState state) {
 		CoopJob job=findCoopJobByJobId(jobId);
 		if(job==null ) { //chnage nothing if job is null, or enddate<=startDate
@@ -684,7 +688,7 @@ public class CoopSystemService {
 		
 	}
 	
-	@Transactional
+	@Transactional //upload documents to the coopob
 	public void addDocumentToCoopJob(String jobId, String documentId)
 	{
 		CoopJob job=findCoopJobByJobId(jobId);
@@ -773,7 +777,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //get the list of students who wprked for an employer
 	public ArrayList<Student> getArchivedInterns (String employerUserName){
 		Employer em= getEmployer(employerUserName);
 		if(em==null) {return null;}
@@ -784,7 +788,7 @@ public class CoopSystemService {
 		return list;
 	}
 	
-	@Transactional
+	@Transactional //get the personal documents of all interns
 	public HashMap<String,ArrayList<Document>> getInternsDocuments (String employerUserName){
 		ArrayList<Student> interns =getArchivedInterns(employerUserName);
 		if(interns==null ) {return null;}
@@ -822,6 +826,36 @@ public class CoopSystemService {
 		if(u==null) {return false;}
 		if(u.getPassword().equals(password)) {return true;}
 		return false;
+	}
+	
+	@Transactional //find a coopjob between an employer and a student
+	public CoopJob findCoopJobByEmployerAndStudent(String employerName, String studentName, Date endDate)
+	{
+		if(studentName==null|| employerName==null) {return null;}
+		Student s=getStudent(studentName);
+		Employer em=getEmployer(employerName);
+		if(s==null || em==null) {return null;}
+		Set<CoopJob> set= s.getCoopJobs();
+		CoopJob j=null;
+		for (CoopJob job: set)
+		{
+			if(job.getEmployer().equals(em) && endDate.equals(job.getEndDate())) {j=job;break;}
+		}
+		return j;
+	}
+	
+	@Transactional
+	public ArrayList<EventNotification> getEventsInXDays(int x){
+		if(x<=0) {return null;}
+		List<EventNotification>list1= findAllEventNotifications();
+		ArrayList<EventNotification>list2= new ArrayList<EventNotification>();
+		Date limit= new Date(System.currentTimeMillis()+(x+1)*86400000); //current date + (x+1) days
+		for(EventNotification e : list1) {
+			if(e.getDate().compareTo(limit)<0) {
+				list2.add(e);
+			}
+		}
+		return list2;
 	}
 	
 	
