@@ -448,7 +448,7 @@ public class CoopController {
 		return list;
 	}
 	
-	@GetMapping(value = { "/CoopJobDocuments", "/CoopJobDocuments/" }) //get list of specific-type documents of coopjob
+	@GetMapping(value = { "/CoopJobDocumentsType", "/CoopJobDocumentsType/" }) //get list of specific-type documents of coopjob
 	public ArrayList<DocumentDto> getCoopJobDocumentsType(@RequestParam(name = "JobId") String jobId,
 			@RequestParam(name = "DocumentType") DocumentType type) throws IllegalArgumentException{
 			// @formatter:on
