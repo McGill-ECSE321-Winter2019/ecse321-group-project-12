@@ -379,7 +379,7 @@ public class CoopController {
 		return list;
 	}
 	
-	@GetMapping(value = { "/CoopJob", "/CoopJob/" }) //get a coopjob by id
+	@GetMapping(value = { "/JobByEmployerAndStudentAndEndDate", "/JobByEmployerAndStudentAndEndDate/" }) //get a coopjob by id
 	public CoopJobDto getJobByEmployerAndStudentAndEndDate(@RequestParam(name = "EmployerName") String employerName,
 			@RequestParam(name = "StudentName") String studentName,
 			@RequestParam(name = "EndDate") String endDate) throws IllegalArgumentException{
@@ -409,7 +409,7 @@ public class CoopController {
 	}
 	
 	@PostMapping(value = { "/addDocumentToJob", "/addDocumentToJob/" }) //add document to coop job
-	public void setJobStte(@RequestParam(name = "JobId") String jobId,
+	public void addDocumentJob(@RequestParam(name = "JobId") String jobId,
 			@RequestParam(name = "DocumentId") String documentId
 			) throws IllegalArgumentException {
 		// @formatter:on
