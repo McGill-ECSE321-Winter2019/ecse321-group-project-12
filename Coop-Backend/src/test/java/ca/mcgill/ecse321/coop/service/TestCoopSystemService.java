@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.*;
 
 import org.junit.After;
 import org.junit.Test;
@@ -19,13 +20,34 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+//
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import ca.mcgill.ecse321.coop.controller.*;
+import ca.mcgill.ecse321.coop.dto.*;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import  org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
+//
 import ca.mcgill.ecse321.coop.dao.*;
 import ca.mcgill.ecse321.coop.model.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TestCoopSystemService {
+	
 	@Autowired
 	private CoopSystemService service;
 	
@@ -53,6 +75,27 @@ public class TestCoopSystemService {
 	@Autowired
 	private CoopUserRepository coopUserRepository; 
 	
+	@Mock
+	private CoopUserRepository serviceMock;
+	 
+	@Autowired
+	private  CoopController controller;
+	
+	
+	private CoopJob coopjob;
+	private Student student;
+	private Employer employer;
+	
+	private static final String USERNAME  = "ALI";
+	private static final String PASSWORD = "12345";
+	
+	@Before
+	public void setupMock() {
+		coopjob = mock(CoopJob.class);
+		student = mock(Student.class);
+		employer = mock(Employer.class);
+		
+	}
 	
 	@After
 	public void clearDatabase() {
@@ -64,6 +107,553 @@ public class TestCoopSystemService {
 		studentRepository.deleteAll();
 		coopUserRepository.deleteAll();
 		coopSystemRepository.deleteAll();
+	}
+	
+	@Test
+	public void testLogin() {
+		service.createCoopSystem();
+		String student1="May";
+		String student2="Just";
+		String pass = PASSWORD;
+		Student a=service.createStudent(student1);
+		service.setPassword(student1, PASSWORD);
+		
+		// service.login(student1, PASSWORD);
+		assertEquals(true,service.login(student1, PASSWORD));
+	}
+	
+	@Test
+	public void testGetCoopSystem() {
+		service.createCoopSystem();
+		assertNotNull(service.getCoopSystem());
+		
+	}
+	
+	@Test
+	public void testDeleteCoopSystem() {
+		service.createCoopSystem();
+		assertNotNull(service.getCoopSystem());
+		
+		service.deleteSystem();
+		assertNull(service.getCoopSystem());
+		
+	}
+	
+	@Test
+	public void testCreateStudent() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+	}
+	
+	@Test
+	public void testGetStudent() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.getStudent(student1).getUsername());
+		
+	}
+	
+	@Test
+	public void testGetCoopUser() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.getCoopUser(student1).getUsername());
+	}
+	
+	@Test
+	public void testGetAllStudents() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(student1,service.getAllStudents().get(0).getUsername());
+	}
+	
+	
+	@Test
+	public void testGetAllCoopUsers() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(1,service.getAllCoopUsers().size());
+		assertEquals(student1,service.getAllCoopUsers().get(0).getUsername());
+		
+	}
+	
+	@Test
+	public void testCreateEmployer() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
+		
+		
+	}
+	
+	@Test
+	public void testGetEmployer() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.getEmployer(employer1).getUsername());
+		
+		
+	}
+	
+	@Test
+	public void testGetAllEmployers() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(1,service.getAllEmployers().size());
+		assertEquals(employer1,service.getAllEmployers().get(0).getUsername());
+		
+	}
+	
+	@Test
+	public void testDeleteStudent() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+		service.deleteStudent(student1);
+		assertNull(service.getStudent(student1));
+	}
+	
+	@Test
+	public void testDeleteEmployer() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
+		service.deleteEmployer(employer1);
+		assertNull(service.getEmployer(employer1));
+	}
+	
+	@Test
+	public void testSetPassword() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+		service.setPassword(student1, PASSWORD);
+		assertEquals(PASSWORD,service.getStudent(student1).getPassword());
+	}
+	
+	/*
+	@Test
+	public void testSaveCoopUser() {
+		service.createCoopSystem();
+		service.saveCoopUser(student);
+
+		assertEquals(1,service.getAllCoopUsers().size());
+	}
+	*/
+	
+	@Test
+	public void testSetStudentPermissions() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+		service.setStudentPermissions(student1, false, false);
+		assertEquals(false,service.getStudent(student1).isAllowCV());
+		assertEquals(false,service.getStudent(student1).isAllowTranscript());
+		
+	}
+	
+
+	@Test
+	public void testFindCoopUserByUsername() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findCoopUserByUsername(student1).getUsername());
+	}
+	
+	@Test
+	public void testFindStudentByUsername() {
+		service.createCoopSystem();
+		String student1="May";
+		
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+	}
+	
+	@Test
+	public void testFindEmployertByUsername() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
+	}
+	
+	@Test
+	public void testDeleteCoopuser() {
+		service.createCoopSystem();
+		String employer1="May";
+		
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.findCoopUserByUsername(employer1).getUsername());
+		service.deleteCoopUser(employer1);
+		assertNull(service.getCoopUser(employer1));
+	}
+	
+	@Test
+	public void testFindEventNotificationByName() {
+		service.createCoopSystem();
+		String eventNotif = "Meeting Soon";
+		service.createEventNotification(eventNotif);
+		assertEquals(1,service.findAllEventNotifications().size());
+		assertEquals(eventNotif, service.findEventNotificationByName(eventNotif).getName());
+	
+	}
+	
+	@Test
+	public void testFindAllEventNotifications() {
+		service.createCoopSystem();
+		String eventNotif = "Meeting Soon";
+		service.createEventNotification(eventNotif);
+		assertEquals(1,service.findAllEventNotifications().size());
+		assertEquals(eventNotif, service.findAllEventNotifications().get(0).getName());
+	
+	}
+	
+	
+	@Test
+	public void testCreateMessage() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessageByMessageId(USERNAME).getMessageId());
+	}
+	
+	@Test
+	public void testFindMessageById() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessageByMessageId(USERNAME).getMessageId());
+	}
+	
+	@Test
+	public void testFindMessagesBySender() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessagesBySender(employer1).get(0).getMessageId());
+	}
+	
+	@Test
+	public void testFindMessagesByReceiver() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessagesByReceiver(employer2).get(0).getMessageId());
+	}
+	
+	@Test
+	public void testGetAllMessages() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.getAllMessages().get(0).getMessageId());
+	}
+	
+	@Test
+	public void testFindMessagesBySenderAndReceiver() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessagesBySenderAndReceiver(employer1, employer2).get(0).getMessageId());
+	}
+
+	@Test
+	public void testDeleteMessage() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME, null);
+		assertEquals(USERNAME, service.findMessageByMessageId(USERNAME).getMessageId());
+		service.deleteMessage(USERNAME);
+		assertNull(service.findMessageByMessageId(USERNAME));
+	}
+	
+	
+	@Test
+	public void testFindCoopJobById() {
+		service.createCoopSystem();
+		String student1="May";
+		String employerName = "Mike";
+		String jobId = "Cleaning";
+		
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		
+		service.createEmployer(employerName);
+		assertEquals(1,service.getAllEmployers().size());
+		assertEquals(2,service.getAllCoopUsers().size());
+		
+		service.createCoopJob(jobId, employerName, student1);
+		assertEquals(student1, service.getStudent(student1).getUsername());
+
+		assertEquals(1, service.getAllCoopJobs().size());
+		
+		assertEquals(employerName, service.getEmployer(employerName).getUsername());
+		assertEquals(jobId, service.findCoopJobByJobId(jobId).getJobId());
+		
+	}
+	
+	@Test
+	public void testSetCoopJobState() {
+		service.createCoopSystem();
+		String student1="May";
+		String employerName = "Mike";
+		String jobId = "Cleaning";
+		CoopState state1 = CoopState.completed;
+		
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		
+		service.createEmployer(employerName);
+		assertEquals(1,service.getAllEmployers().size());
+		assertEquals(2,service.getAllCoopUsers().size());
+		
+		service.createCoopJob(jobId, employerName, student1);
+		assertEquals(student1, service.getStudent(student1).getUsername());
+
+		assertEquals(1, service.getAllCoopJobs().size());
+		
+		assertEquals(employerName, service.getEmployer(employerName).getUsername());
+		assertEquals(jobId, service.findCoopJobByJobId(jobId).getJobId());
+		
+		service.setCoopJobState(jobId, state1);
+		assertEquals(state1, service.findCoopJobByJobId(jobId).getState());
+	}
+	
+	@Test
+	public void testGetAllDocuments() {
+		service.createCoopSystem();
+		String 	authorName = "holo";
+		String docId = "1";
+		DocumentType type = DocumentType.CV;
+		service.createEmployer(authorName);
+		service.createDocument(docId, authorName, type);
+
+		assertEquals(1,service.getAllDocuments().size());
+		
+		
+	}
+	/*
+	@Test
+	public void testGetPersonalDocumentsByStudent() {
+		service.createCoopSystem();
+		String 	authorName = "holo";
+		String docId = "1";
+		String student = "Mike";
+		DocumentType type = DocumentType.CV;
+		ArrayList<String> documents = new ArrayList<>();
+		documents.add("13");
+		
+		service.createStudent(student);
+		service.createEmployer(authorName);
+		service.createDocument(docId, authorName, type);
+
+		assertEquals(1,service.getAllDocuments().size());
+		
+		service.setPersonalDocuments(student, documents);
+		assertEquals(student,service.getPersonalDocumentsByStudent(student));
+	}
+	*/
+	
+	@Test
+	public void testGetAuthoredDocuments() {
+		service.createCoopSystem();
+		String 	authorName = "holo";
+		String docId = "1";
+		DocumentType type = DocumentType.CV;
+		service.createEmployer(authorName);
+		service.createDocument(docId, authorName, type);
+
+		assertEquals(1,service.getAllDocuments().size());
+		assertEquals(authorName,service.getAuthoredDocuments(authorName).get(0).getAuthor().getUsername());
+		
+		
+	}
+	/*
+	@Test
+	public void testGetAttachments() {
+		service.createCoopSystem();
+		String employer1="May";
+		service.createEmployer(employer1);
+		String employer2="May2";
+		service.createEmployer(employer2);
+		
+		String 	authorName = "holo";
+		String docId = "1";
+		DocumentType type = DocumentType.CV;
+		service.createEmployer(authorName);
+		service.createDocument(docId, authorName, type);
+
+		assertEquals(1,service.getAllDocuments().size());
+		
+		ArrayList<String> docs = new ArrayList();
+		docs.add(service.getAllDocuments().get(0).getDocumentId());
+		
+		service.createMessage(USERNAME, employer1, employer2, USERNAME,docs);
+		assertEquals(USERNAME, service.getAllMessages().get(0).getAttachements().toString());
+		
+	}
+	*/
+	
+	@Test
+	public void testGetCoopJobDocuments() {
+		service.createCoopSystem();
+		String student1="May";
+		String employerName = "Mike";
+		String jobId = "Cleaning";
+		String 	authorName = "holo";
+		String docId = "1";
+		DocumentType type = DocumentType.CV;
+		service.createEmployer(authorName);
+		service.createDocument(docId, authorName, type);
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		service.createEmployer(employerName);
+		service.createCoopJob(jobId, employerName, student1);
+		service.addDocumentToCoopJob(jobId, docId);
+		
+		assertEquals(docId,service.getCoopJobDocuments(jobId).get(0).getDocumentId());
+		
+		
+	}
+	/*
+	@Test
+	public void testGetArchivedInterns() {
+		service.createCoopSystem();
+		String student1="May";
+		service.createStudent(student1);
+		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
+		
+		String employer1="May2";
+		service.createEmployer(employer1);
+		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
+		
+		Student student111 = service.getStudent(student1);
+		HashSet<Student> stud = new HashSet<Student>();
+		stud.add(student111);
+		Employer employer66 =service.getEmployer(employer1);
+		employer66.setArchivedInterns(stud);
+		assertEquals(student1,service.getArchivedInterns(employer1).get(0).getUsername());
+		
+		
+		
+		
+	}
+	*/
+	
+	/*
+	@Test
+	public void testGetInternDocuments() {
+		service.createCoopSystem();
+		String student1="May";
+		service.createStudent(student1);
+
+		String employer1="May2";
+		service.createEmployer(employer1);
+		
+		String docId = "1";
+		DocumentType type = DocumentType.CV;
+		service.createDocument(docId, student1, type);
+
+		assertEquals(1,service.getAllDocuments().size());
+		
+		HashSet<Document> doc= new HashSet<Document>();
+		doc.add(service.findDocumentByDocumentId(docId));
+		
+		service.getInternDocuments(employer1, student1);
+		service.findStudentByUsername(student1).setPersonalDocuments(doc);
+		assertEquals(docId,service.getInternDocuments(employer1, student1).get(0).getDocumentId());
+	}
+	*/
+	
+	@Test
+	public void testFindCoopJobByEmployerAndStudentAndDate() {
+		service.createCoopSystem();
+		String student1="May";
+		String employerName = "Mike";
+		String jobId = "Cleaning";
+		
+		service.createStudent(student1);
+		assertEquals(1,service.getAllStudents().size());
+		assertEquals(1,service.getAllCoopUsers().size());
+		
+		service.createEmployer(employerName);
+		assertEquals(1,service.getAllEmployers().size());
+		assertEquals(2,service.getAllCoopUsers().size());
+		
+		service.createCoopJob(jobId, employerName, student1);
+		assertEquals(student1, service.getStudent(student1).getUsername());
+
+		assertEquals(1, service.getAllCoopJobs().size());
+		
+		assertEquals(employerName, service.getEmployer(employerName).getUsername());
+		
+		@SuppressWarnings("deprecation")
+		Date d1 = new Date(111, 100, 100);
+		Date d2 = new Date(111, 102, 100);
+		CoopState state1 = CoopState.completed;
+		
+		service.setCoopJobSettings(jobId, d1, d2, USERNAME, state1);
+		
+		assertEquals(d2.toString(), service.findCoopJobByEmployerAndStudentAndEndDate(employerName, student1, d2).getEndDate().toString());
 	}
 	
 	
@@ -212,7 +802,7 @@ public class TestCoopSystemService {
 	}
 
 	@Test
-	public void testDeleteCoopJobs() {
+	public void testDeleteCoopJob() {
 		service.createCoopSystem();
 		String student1="May";
 		String employerName = "Mike";
@@ -250,14 +840,8 @@ public class TestCoopSystemService {
 		
 		assertEquals(jobId, service.findCoopJobByJobId(jobId).getJobId());
 		
-		/* I keep getting a silly error for date tests since name and state are added 
-		 * we know that the time is added and you can see that it is not nul,
-		 * it receives the time. Even if the dates are the same it doesnt pass 
-		 * the test. I dont know why.
-		*/
-		
-	assertEquals(start.toString(), service.findCoopJobByJobId(jobId).getStartDate().toString());
-	//	assertEquals(end, service.findCoopJobByJobId(jobId).getEndDate());
+		assertEquals(start.toString(), service.findCoopJobByJobId(jobId).getStartDate().toString());
+		assertEquals(end.toString(), service.findCoopJobByJobId(jobId).getEndDate().toString());
 		
 		assertEquals(name, service.findCoopJobByJobId(jobId).getName());
 		assertEquals(state1, service.findCoopJobByJobId(jobId).getState());
@@ -462,9 +1046,9 @@ public class TestCoopSystemService {
 		assertEquals(location, service.findEventNotificationByName(eventNotif).getLocation());
 	// Same issue I had for date and time...
 		
-	//	assertEquals(date, service.findEventNotificationByName(eventNotif).getDate());
-	//	assertEquals(timeStart, service.findEventNotificationByName(eventNotif).getStartTime());
-	//	assertEquals(timeEnd, service.findEventNotificationByName(eventNotif).getEndTime());
+	assertEquals(date.toString(), service.findEventNotificationByName(eventNotif).getDate().toString());
+	assertEquals(timeStart.toString(), service.findEventNotificationByName(eventNotif).getStartTime().toString());
+	assertEquals(timeEnd.toString(), service.findEventNotificationByName(eventNotif).getEndTime().toString());
 		
 		
 	
@@ -472,3 +1056,4 @@ public class TestCoopSystemService {
 	
 	
 }
+
