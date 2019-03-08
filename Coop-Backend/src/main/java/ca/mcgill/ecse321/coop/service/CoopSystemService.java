@@ -306,14 +306,15 @@ public class CoopSystemService {
 			for(String id: docIds)
 			{
 				Document doc=findDocumentByDocumentId(id); //set only CVs and transcripts authored by the student
-				if(doc!=null && doc.getAuthor().getUsername().contentEquals(username)
+				if(doc!=null && doc.getAuthor().getUsername().equals(username)
 					&& (doc.getType()==DocumentType.CV || doc.getType()==DocumentType.Transcript)	)
 {stu.getPersonalDocuments().add(doc);}
 				
 			}
+			coopUserRepository.save(stu);
+			studentRepository.save(stu);
 		}
-		coopUserRepository.save(stu);
-		studentRepository.save(stu);
+		
 	}
 	
 	@Transactional  //create a new document
