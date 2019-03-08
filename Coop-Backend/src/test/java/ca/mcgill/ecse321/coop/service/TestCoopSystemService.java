@@ -491,27 +491,23 @@ public class TestCoopSystemService {
 		
 		
 	}
-	/*
 	@Test
 	public void testGetPersonalDocumentsByStudent() {
 		service.createCoopSystem();
-		String 	authorName = "holo";
 		String docId = "1";
 		String student = "Mike";
 		DocumentType type = DocumentType.CV;
-		ArrayList<String> documents = new ArrayList<>();
-		documents.add("13");
+		ArrayList<String> documentIds = new ArrayList<>();
+		documentIds.add(docId);
 		
 		service.createStudent(student);
-		service.createEmployer(authorName);
-		service.createDocument(docId, authorName, type);
-
+		service.createDocument(docId, student, type);
 		assertEquals(1,service.getAllDocuments().size());
 		
-		service.setPersonalDocuments(student, documents);
-		assertEquals(student,service.getPersonalDocumentsByStudent(student));
+		service.setPersonalDocuments(student, documentIds);
+		assertEquals(1,service.getPersonalDocumentsByStudent(student).size());
+		assertEquals(docId,service.getPersonalDocumentsByStudent(student).get(0).getDocumentId());
 	}
-	*/
 	
 	@Test
 	public void testGetAuthoredDocuments() {
