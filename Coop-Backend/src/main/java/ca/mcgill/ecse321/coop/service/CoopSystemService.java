@@ -60,6 +60,18 @@ public class CoopSystemService {
 		return coopSystem;
 	}
 	
+	@Transactional
+	public void clear() {
+		deleteAllEventNotifications();
+		deleteAllDocuments();
+		messageRepository.deleteAll();
+		coopJobRepository.deleteAll();
+		deleteAllStudents();
+		employerRepository.deleteAll();
+		coopUserRepository.deleteAll();
+		coopSystemRepository.deleteAll();
+		
+	}
 	
 	@Transactional
 	public CoopSystem getCoopSystem() // we want to make sure that we only have one coop system....
@@ -268,7 +280,23 @@ public class CoopSystemService {
 	public void deleteStudent(String username)
 	{
 		Student a= getStudent(username);
-		if(a!=null) {studentRepository.delete(a);}
+		if(a==null) {return;}
+		for(Employer e: employerRepository.findAll()) {
+			if(e.getArchivedInterns().contains(a)) {
+				e.getArchivedInterns().remove(a);
+				saveCoopUser(e);
+			}
+		}
+		studentRepository.delete(a);
+	}
+	
+	@Transactional
+	public void deleteAllStudents()
+	{
+		
+		for(Student s: studentRepository.findAll()) {
+			deleteStudent(s.getUsername());
+		}
 	}
 	
 	@Transactional
@@ -313,6 +341,7 @@ public class CoopSystemService {
 			}
 			coopUserRepository.save(stu);
 			studentRepository.save(stu);
+			
 		}
 		
 	}
@@ -372,17 +401,38 @@ public class CoopSystemService {
 	
 	
 	@Transactional
-	public void deleteDocument(String id) //delete the document
+	public void deleteDocument(String id) //delete the document, taking into account referential integrity
 	{
 		if(id==null) {return;}
 		Document d= findDocumentByDocumentId(id);
-		if(d!=null) {documentRepository.delete(d);}
+		if(d==null) {return;}
+		for(Message m: messageRepository.findAll()) {
+			if(m.getAttachements().contains(d)) {
+				m.getAttachements().remove(d);
+				messageRepository.save(m);
+			}
+		}
+		for(Student s:  studentRepository.findAll()) {
+			if(s.getPersonalDocuments().contains(d)) {
+				s.getPersonalDocuments().remove(d);
+				saveCoopUser(s);
+			}
+		}
+		for(CoopJob j:  coopJobRepository.findAll()) {
+			if(j.getCoopJobDocuments().contains(d)) {
+				j.getCoopJobDocuments().remove(d);
+				coopJobRepository.save(j);
+			}
+		}
+		documentRepository.delete(d);
 	}
 	
 	@Transactional
 	public void deleteAllDocuments()
 	{
-		documentRepository.deleteAll();
+		for(Document d: documentRepository.findAll()) {
+			deleteDocument(d.getDocumentId());
+		}
 	}
 	
 	@Transactional
@@ -454,8 +504,24 @@ public class CoopSystemService {
 	@Transactional
 	public void deleteEventNotification(String eventname)
 	{
+		if(eventname==null) {return;}
 		EventNotification e = findEventNotificationByName(eventname);
-		if (e!=null) {eventNotificationRepository.delete(e);}
+		if (e==null) {return;}
+		for(Employer em: employerRepository.findAll()) {
+			em.getEventNotifications().remove(e);
+			saveCoopUser(em);
+		}
+		eventNotificationRepository.delete(e);
+		
+	}
+	
+	@Transactional
+	public void deleteAllEventNotifications()
+	{
+		for(EventNotification e: eventNotificationRepository.findAll()) {
+			deleteEventNotification(e.getName());
+		}
+		
 	}
 	
 	@Transactional  //new message
