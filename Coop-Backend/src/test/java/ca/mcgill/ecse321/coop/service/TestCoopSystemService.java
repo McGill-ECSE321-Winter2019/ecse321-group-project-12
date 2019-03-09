@@ -99,14 +99,7 @@ public class TestCoopSystemService {
 	
 	@After
 	public void clearDatabase() {
-		eventNotificationRepository.deleteAll();
-		messageRepository.deleteAll();
-		coopJobRepository.deleteAll();
-		documentRepository.deleteAll();
-		employerRepository.deleteAll();
-		studentRepository.deleteAll();
-		coopUserRepository.deleteAll();
-		coopSystemRepository.deleteAll();
+		service.clear();
 	}
 	
 	@Test
