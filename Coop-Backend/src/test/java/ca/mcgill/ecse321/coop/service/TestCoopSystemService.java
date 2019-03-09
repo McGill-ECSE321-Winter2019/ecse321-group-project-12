@@ -516,7 +516,6 @@ public class TestCoopSystemService {
 		
 		
 	}
-	/*
 	@Test
 	public void testGetAttachments() {
 		service.createCoopSystem();
@@ -525,22 +524,20 @@ public class TestCoopSystemService {
 		String employer2="May2";
 		service.createEmployer(employer2);
 		
-		String 	authorName = "holo";
 		String docId = "1";
+		String messageId="m1";
 		DocumentType type = DocumentType.CV;
-		service.createEmployer(authorName);
-		service.createDocument(docId, authorName, type);
-
+		service.createEmployer(employer1);
+		service.createDocument(docId, employer1, type);
 		assertEquals(1,service.getAllDocuments().size());
 		
-		ArrayList<String> docs = new ArrayList();
+		ArrayList<String> docs = new ArrayList<String>();
 		docs.add(service.getAllDocuments().get(0).getDocumentId());
 		
-		service.createMessage(USERNAME, employer1, employer2, USERNAME,docs);
-		assertEquals(USERNAME, service.getAllMessages().get(0).getAttachements().toString());
+		service.createMessage(messageId, employer1, employer2, "content",docs);
+		assertEquals(docId, service.getAttachements(messageId).get(0).getDocumentId());
 		
 	}
-	*/
 	
 	@Test
 	public void testGetCoopJobDocuments() {
@@ -563,7 +560,7 @@ public class TestCoopSystemService {
 		
 		
 	}
-	/*
+	
 	@Test
 	public void testGetArchivedInterns() {
 		service.createCoopSystem();
@@ -575,43 +572,32 @@ public class TestCoopSystemService {
 		service.createEmployer(employer1);
 		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
 		
-		Student student111 = service.getStudent(student1);
-		HashSet<Student> stud = new HashSet<Student>();
-		stud.add(student111);
-		Employer employer66 =service.getEmployer(employer1);
-		employer66.setArchivedInterns(stud);
-		assertEquals(student1,service.getArchivedInterns(employer1).get(0).getUsername());
-		
-		
-		
-		
+		String jobId="job1";
+		service.createCoopJob(jobId,employer1,student1);
+		assertEquals(student1,service.getArchivedInterns(employer1).get(0).getUsername());	
 	}
-	*/
 	
-	/*
 	@Test
 	public void testGetInternDocuments() {
 		service.createCoopSystem();
 		String student1="May";
 		service.createStudent(student1);
-
+		service.setStudentPermissions(student1, true, true);
 		String employer1="May2";
 		service.createEmployer(employer1);
 		
 		String docId = "1";
 		DocumentType type = DocumentType.CV;
 		service.createDocument(docId, student1, type);
-
 		assertEquals(1,service.getAllDocuments().size());
+		ArrayList<String> docs=new ArrayList<String>();
+		docs.add(docId);
+		service.setPersonalDocuments(student1,docs );
+		String jobId="job1";
+		service.createCoopJob(jobId, employer1, student1);
 		
-		HashSet<Document> doc= new HashSet<Document>();
-		doc.add(service.findDocumentByDocumentId(docId));
-		
-		service.getInternDocuments(employer1, student1);
-		service.findStudentByUsername(student1).setPersonalDocuments(doc);
 		assertEquals(docId,service.getInternDocuments(employer1, student1).get(0).getDocumentId());
 	}
-	*/
 	
 	@Test
 	public void testFindCoopJobByEmployerAndStudentAndDate() {
@@ -656,29 +642,23 @@ public class TestCoopSystemService {
 		assertEquals("May",s.getUsername());
 	}
 	
-	/*@Test
+	@Test
 	public void testCreate() {
 		service.createCoopSystem();
 		assertEquals(0,service.getAllCoopUsers().size());
 		EventNotification e=service.createEventNotification("Sam");
-		e.setLocation("ss");
-		//assertEquals("ss",service.findEventNotificationByName("Sam").getLocation());
 		assertEquals(1,service.findAllEventNotifications().size());
-		//String us ="May";
 		Student s= service.createStudent("May");
-		//Document d= service.createDocument("fff", s);
 		assertEquals(1,service.getAllStudents().size());
 		assertEquals(1,service.getAllCoopUsers().size());
 		
 		service.setPassword("May","why");
 		s.setPassword("mna");
 		assertEquals("why",service.findStudentByUsername("May").getPassword());
-		assertEquals(1,service.getAllStudents().size());
-		assertEquals(1,service.getAllCoopUsers().size());
 		service.deleteStudent("May");
 		assertEquals(0,service.getAllStudents().size());
 		assertEquals(0,service.getAllCoopUsers().size());
-	}*/
+	}
 	
 	@Test
 	public void TestCreate3() {
@@ -836,35 +816,29 @@ public class TestCoopSystemService {
 		assertEquals(state1, service.findCoopJobByJobId(jobId).getState());
 		
 	}
+	
 	@Test 
 	public void testAddDocumentToCoopJob() {
 		service.createCoopSystem();
 		String jobId = "Cleaning2";
 		String student1="May";
 		String employerName = "Mike";
-		String name = "holo";
 		String docId = "1";
-		DocumentType type = DocumentType.CV;
-	//	Document doc = new Document();
+		DocumentType type = DocumentType.Other;
 		
 		service.createStudent(student1);
 		service.createEmployer(employerName);
-		CoopJob coopjob1 = service.createCoopJob(jobId, employerName, student1);
+		service.createCoopJob(jobId, employerName, student1);
 		service.createDocument(docId, employerName, type);
 		service.addDocumentToCoopJob(jobId, docId);
 		
-		List<Document> documents = service.getAllDocuments();
 		assertEquals(1, service.getAllDocuments().size());
-		
-		Set<Document> docsSet = new HashSet<>(documents);
 		
 		assertEquals(jobId,service.findCoopJobByJobId(jobId).getJobId());
 
-		/* Here I tried to convert list of documents into set of documents since
-		 * the return value for getCoopJobDocuments is a set of documents
-		 * however, I kept getting lazy error in the test.
-		 */
-	//	assertEquals(docsSet, service.findCoopJobByJobId(jobId).getCoopJobDocuments());
+		
+		assertEquals(docId, service.getCoopJobDocuments(jobId).get(0).getDocumentId());
+		assertEquals(1, service.getCoopJobDocuments(jobId).size());
 		
 	}
 	
@@ -901,24 +875,24 @@ public class TestCoopSystemService {
 	@Test
 	public void testSetPersonalDocument() {
 		service.createCoopSystem();
-		String 	authorName = "holo";
+		String 	employer = "holo";
 		String docId = "1";
 		String student = "Mike";
 		DocumentType type = DocumentType.CV;
 		ArrayList<String> documents = new ArrayList<>();
-		documents.add("13");
+		documents.add(docId);
 		
 		service.createStudent(student);
-		service.createEmployer(authorName);
-		service.createDocument(docId, authorName, type);
+		service.createEmployer(employer);
+		service.createDocument(docId, student, type);
 
 		assertEquals(1,service.getAllDocuments().size());
 		
 		service.setPersonalDocuments(student, documents);
 
-	// The same lazy initialization exception issue
-	//	Hibernate.initialize(ca.mcgill.ecse321.coop.model.Student.personalDocuments);;
-	//	assertEquals(documents, service.findStudentByUsername(student).getPersonalDocuments());
+	
+	assertEquals(docId, service.getPersonalDocumentsByStudent(student).get(0).getDocumentId());
+	assertEquals(1, service.getPersonalDocumentsByStudent(student).size());
 		
 		
 	}
@@ -943,16 +917,17 @@ public class TestCoopSystemService {
 		service.createCoopSystem();
 		String 	authorName = "holo";
 		String docId = "1";
-		DocumentType type = DocumentType.CV;
+		DocumentType type = DocumentType.Other;
 
 		service.createEmployer(authorName);
 		service.createDocument(docId, authorName, type);
 		
 		ArrayList<Document> docs = service.getAllDocuments();
+		ArrayList<Document> authored=service.findDocumentsByAuthor(authorName);
 		assertEquals(1, docs.size());
+		assertEquals(1,authored.size());
 		
-	//  It sees them as different lists	
-	//	 assertEquals(docs, service.findDocumentsByAuthor(authorName));
+		assertEquals(docs.get(0).getDocumentId(), authored.get(0).getDocumentId());
 	}
 	
 	@Test
@@ -1033,7 +1008,6 @@ public class TestCoopSystemService {
 		assertEquals(eventNotif,service.findEventNotificationByName(eventNotif).getName());
 		assertEquals(event,service.findEventNotificationByName(eventNotif).getType());
 		assertEquals(location, service.findEventNotificationByName(eventNotif).getLocation());
-	// Same issue I had for date and time...
 		
 	assertEquals(date.toString(), service.findEventNotificationByName(eventNotif).getDate().toString());
 	assertEquals(timeStart.toString(), service.findEventNotificationByName(eventNotif).getStartTime().toString());
