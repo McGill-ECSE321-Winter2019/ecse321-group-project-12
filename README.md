@@ -36,3 +36,16 @@ All functionality of the final system will be accessible via a web frontend for 
 
 Project Report for deliverable 1:
 _https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-1_
+
+
+## Deliverable 2
+
+|Team member's name|Total hours Approx|Main Responsibility                              |
+|------------------|------------------|-------------------------------------------------|
+|Ishraq Hossain    |    17            |SQA, Build System, & Project Management          |
+|Gorkem Yalcinoz   |    18            |Unit Testing                                     |
+|Sameen Mahtab     |    17            |Integration Testing                              |
+|Mostafa Abdelwahab|    18            |Backend                                          |
+
+Project Report for deliverable 2:
+_https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-2_
