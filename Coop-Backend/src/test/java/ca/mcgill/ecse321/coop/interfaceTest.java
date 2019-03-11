@@ -23,23 +23,35 @@ class interfaceTest {
 		testCreate("https://ecse321-group12.herokuapp.com/students/Mahtab");
 		testDelete("https://ecse321-group12.herokuapp.com/students/Mahtab");
 	}
+	
+	
 	@Test
 	void testCreateEmployer() {
 		testCreate("https://ecse321-group12.herokuapp.com/employers/Brown");
 		testDelete("https://ecse321-group12.herokuapp.com/employers/Brown");
-	}
+	}	
+	
+
+	
 	@Test
 	void testSetPassword() {
 		testCreate("https://ecse321-group12.herokuapp.com/students/Richard");
 		testCreate("https://ecse321-group12.herokuapp.com/setPassword?Username=Richard&Password=1234");
-		queryService("https://ecse321-group12.herokuapp.com/students/Richard");
+		//queryService("https://ecse321-group12.herokuapp.com/students/Richard");
 		testDelete("https://ecse321-group12.herokuapp.com/students/Richard");
 	}	
 	@Test
-	void createDocument() {
-		testCreate("https://ecse321-group12.herokuapp.com/createDocument?UserName=Bloch&DocumentId=moon&Type=CV");
-		testDelete("https://ecse321-group12.herokuapp.com/students/Bloch");
+	void testCreateDocument() {
+		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");
+		testCreate("https://ecse321-group12.herokuapp.com/students/Cat");
+		testCreate("https://ecse321-group12.herokuapp.com/createDocument?DocumentId=moon&UserName=Cat&Type=CV");
+		testDelete("https://ecse321-group12.herokuapp.com/students/Cat");
 	}	
+	
+	@Test
+	void testDeleteDocument() {
+		testDelete("https://ecse321-group12.herokuapp.com/deleteDocument?DocumentId=moon");
+	}
 	@Test
 	void testSetPreferencesStudentPreferences() {
 		testCreate("https://ecse321-group12.herokuapp.com/students/John1");
@@ -53,19 +65,46 @@ class interfaceTest {
         testDelete("https://ecse321-group12.herokuapp.com/students/Johnny1");
 	}	
 	
-	/*@Test
+	@Test
+	void testGetCoopuser() {
+		testCreate("https://ecse321-group12.herokuapp.com/employers/blue");
+		testGet("https://ecse321-group12.herokuapp.com/coopusers/blue");  
+		
+	}
+	
+	
+	@Test
 	void testCreateAndSendMessage() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/John2");
-		//testCreate("https://ecse321-group12.herokuapp.com/students/Johnny2");
-		testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Aga1&SenderName=John2&ReceiverName=Johnny2&Content=Aga&ListofAttachementsIds=[moon]");
-	    testDelete("https://ecse321-group12.herokuapp.com/students/John2");
+		testCreate("https://ecse321-group12.herokuapp.com/students/John2");  //Create sender
+		testCreate("https://ecse321-group12.herokuapp.com/employers/Johnny2"); //Create receiver		
+		testCreate("https://ecse321-group12.herokuapp.com/createDocument?UserName=Blah&DocumentId=sun&Type=CV"); //Create a document
+    	testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Sam1&SenderName=John2&ReceiverName=Johnny2&Content=Yolo&ListofAttachementsIds=[moon]");
+	   // testDelete("https://ecse321-group12.herokuapp.com/students/John2");
 	    //testDelete("https://ecse321-group12.herokuapp.com/students/Johnny2");
-	    testDelete("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Aga1");
-	}*/
+	    //testDelete("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Sam1");
+	}
+	
+	@Test
+	void testGetMessage() {
+		testGet("https://ecse321-group12.herokuapp.com/Message?MessageId=Hello");
+		
+		}
+	
+	@Test
+	void testDeleteMessage() {
+		testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Hellow&SenderName=Cat&ReceiverName=Bloch&Content=Yolo&ListofAttachementsIds=[moon]");
+		testDelete("https://ecse321-group12.herokuapp.com/Messafe?MessageId=Hellow");
+	}
+	
+	@Test
+	void testSentMessages() {
+		testGet("https://ecse321-group12.herokuapp.com/SentMessages?SenderName=John2");
+	}
+	
 	
 	@Test
 	void testDeleteSystem() {	
-		testDelete("https://ecse321-group12.herokuapp.com/coopsystem");
+		testDelete("https://ecse321-group12.herokuapp.com/coopsystem");  //Clears the whole database 
 	}
 	@Test
 	void testCreateEventNotification() {
@@ -73,13 +112,45 @@ class interfaceTest {
 		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?EventNotificationId=HelloWorld");
 	
 	}	
-	@Test
-	void setEventNotificationSettings() {
+	
+	
 		
+	
+	@Test
+	void testSetEventNotificationSettings() {
+		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");
+		
+		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?EventNotificationId=HelloWorld");
+		
+		                                               ///setEventSettings?EventNotificationId={enId}&Type={type}&Location={location}&Date={date}&StartTime={startTime}&EndTime={endTime}
 		testCreate("https://ecse321-group12.herokuapp.com/setEventSettings?EventNotificationId=HelloWorld&Type=conferece&Location=Amsterdam&Date=2019-02-21&StartTime=13:10:00&EndTime=18:30:00");
 	
-	}	
-	//send url of query
+	}
+	
+	@Test
+	void testGetEventNotification() {
+		
+		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications");
+		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications?EventNotificationId=HelloWorld");
+		
+	}
+	
+	@Test
+	void testDeleteNotification() {
+		
+		testDelete("https://ecse321-group12.herokuapp.com/Event?EentId=HelloWorld");
+	}
+	
+	@Test
+	void testCreateJob() {
+		testCreate("https://ecse321-group12.herokuapp.com/students/Dog");
+		testCreate("https://ecse321-group12.herokuapp.com/employers/SamSam");
+		testCreate("https://ecse321-group12.herokuapp.com/newJob?JobId=manager&EmployerName=SamSam&StudentName=Dog");
+		
+	}
+	
+	
+	//send URL of query
 	void queryService(String s) {	
     			
 		testGet(s);
