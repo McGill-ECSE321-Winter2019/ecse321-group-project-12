@@ -89,7 +89,7 @@ public class TestCoopSystemService {
 	private static final String USERNAME  = "ALI";
 	private static final String PASSWORD = "12345";
 	
-	@Before
+	@Before // setting the mock.
 	public void setupMock() {
 		coopjob = mock(CoopJob.class);
 		student = mock(Student.class);
@@ -97,12 +97,12 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@After
+	@After // clearing the database after every test to make it simple.
 	public void clearDatabase() {
 		service.clear();
 	}
 	
-	@Test
+	@Test // testing login
 	public void testLogin() {
 		service.createCoopSystem();
 		String student1="May";
@@ -115,14 +115,14 @@ public class TestCoopSystemService {
 		assertEquals(true,service.login(student1, PASSWORD));
 	}
 	
-	@Test
+	@Test // testing to receive coop system
 	public void testGetCoopSystem() {
 		service.createCoopSystem();
 		assertNotNull(service.getCoopSystem());
 		
 	}
 	
-	@Test
+	@Test // testing deleting coop system
 	public void testDeleteCoopSystem() {
 		service.createCoopSystem();
 		assertNotNull(service.getCoopSystem());
@@ -132,7 +132,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing creating student
 	public void testCreateStudent() {
 		service.createCoopSystem();
 		String student1="May";
@@ -141,7 +141,7 @@ public class TestCoopSystemService {
 		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
 	}
 	
-	@Test
+	@Test // testing receiving a student after the creation
 	public void testGetStudent() {
 		service.createCoopSystem();
 		String student1="May";
@@ -151,7 +151,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing to get an employer or student which are coopusers in this case we cover student
 	public void testGetCoopUser() {
 		service.createCoopSystem();
 		String student1="May";
@@ -160,7 +160,7 @@ public class TestCoopSystemService {
 		assertEquals(student1,service.getCoopUser(student1).getUsername());
 	}
 	
-	@Test
+	@Test // testing to get the list of the students
 	public void testGetAllStudents() {
 		service.createCoopSystem();
 		String student1="May";
@@ -171,7 +171,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // testing to get the list of the coopusers
 	public void testGetAllCoopUsers() {
 		service.createCoopSystem();
 		String student1="May";
@@ -182,7 +182,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing of creating an employer
 	public void testCreateEmployer() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -193,7 +193,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing to receive the existing employer
 	public void testGetEmployer() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -204,7 +204,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test //  testing to get the list of the employers
 	public void testGetAllEmployers() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -215,7 +215,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing to delete a student
 	public void testDeleteStudent() {
 		service.createCoopSystem();
 		String student1="May";
@@ -226,7 +226,7 @@ public class TestCoopSystemService {
 		assertNull(service.getStudent(student1));
 	}
 	
-	@Test
+	@Test // testing of deletion of an employer
 	public void testDeleteEmployer() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -237,7 +237,7 @@ public class TestCoopSystemService {
 		assertNull(service.getEmployer(employer1));
 	}
 	
-	@Test
+	@Test // testing to set a password to a coopuser
 	public void testSetPassword() {
 		service.createCoopSystem();
 		String student1="May";
@@ -258,7 +258,7 @@ public class TestCoopSystemService {
 	}
 	*/
 	
-	@Test
+	@Test // testing of student permission setup
 	public void testSetStudentPermissions() {
 		service.createCoopSystem();
 		String student1="May";
@@ -272,7 +272,7 @@ public class TestCoopSystemService {
 	}
 	
 
-	@Test
+	@Test // finding coopusername by his username with this test.
 	public void testFindCoopUserByUsername() {
 		service.createCoopSystem();
 		String student1="May";
@@ -281,7 +281,7 @@ public class TestCoopSystemService {
 		assertEquals(student1,service.findCoopUserByUsername(student1).getUsername());
 	}
 	
-	@Test
+	@Test // finding student by his username with this test.
 	public void testFindStudentByUsername() {
 		service.createCoopSystem();
 		String student1="May";
@@ -290,7 +290,7 @@ public class TestCoopSystemService {
 		assertEquals(student1,service.findStudentByUsername(student1).getUsername());
 	}
 	
-	@Test
+	@Test //finding employer by his username with this test.
 	public void testFindEmployertByUsername() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -299,7 +299,7 @@ public class TestCoopSystemService {
 		assertEquals(employer1,service.findEmployerByUsername(employer1).getUsername());
 	}
 	
-	@Test
+	@Test //deleting coopuser with this test.
 	public void testDeleteCoopuser() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -310,7 +310,7 @@ public class TestCoopSystemService {
 		assertNull(service.getCoopUser(employer1));
 	}
 	
-	@Test
+	@Test // testing to find an event notificaiton by its name
 	public void testFindEventNotificationByName() {
 		service.createCoopSystem();
 		String eventNotif = "Meeting Soon";
@@ -320,7 +320,7 @@ public class TestCoopSystemService {
 	
 	}
 	
-	@Test
+	@Test // test of finding all event notificaitons
 	public void testFindAllEventNotifications() {
 		service.createCoopSystem();
 		String eventNotif = "Meeting Soon";
@@ -331,7 +331,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // test to create a message
 	public void testCreateMessage() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -343,7 +343,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.findMessageByMessageId(USERNAME).getMessageId());
 	}
 	
-	@Test
+	@Test // testing to find a message by its id.
 	public void testFindMessageById() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -355,7 +355,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.findMessageByMessageId(USERNAME).getMessageId());
 	}
 	
-	@Test
+	@Test // testing to find a message by its sender.
 	public void testFindMessagesBySender() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -367,7 +367,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.findMessagesBySender(employer1).get(0).getMessageId());
 	}
 	
-	@Test
+	@Test // testing to find a message by its receiver.
 	public void testFindMessagesByReceiver() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -379,7 +379,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.findMessagesByReceiver(employer2).get(0).getMessageId());
 	}
 	
-	@Test
+	@Test // testing to get the lsit of all the messages.
 	public void testGetAllMessages() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -391,7 +391,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.getAllMessages().get(0).getMessageId());
 	}
 	
-	@Test
+	@Test // testing to find a message by its sender and its receiver.
 	public void testFindMessagesBySenderAndReceiver() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -403,7 +403,7 @@ public class TestCoopSystemService {
 		assertEquals(USERNAME, service.findMessagesBySenderAndReceiver(employer1, employer2).get(0).getMessageId());
 	}
 
-	@Test
+	@Test // deleting a message in this test
 	public void testDeleteMessage() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -418,7 +418,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // finding a coopjob by its id in this test.
 	public void testFindCoopJobById() {
 		service.createCoopSystem();
 		String student1="May";
@@ -443,7 +443,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // setting coopjob state in this test.
 	public void testSetCoopJobState() {
 		service.createCoopSystem();
 		String student1="May";
@@ -471,7 +471,7 @@ public class TestCoopSystemService {
 		assertEquals(state1, service.findCoopJobByJobId(jobId).getState());
 	}
 	
-	@Test
+	@Test // testing to get all of the documents in this test.
 	public void testGetAllDocuments() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -484,7 +484,7 @@ public class TestCoopSystemService {
 		
 		
 	}
-	@Test
+	@Test // try to get personal documents by its student in this test.
 	public void testGetPersonalDocumentsByStudent() {
 		service.createCoopSystem();
 		String docId = "1";
@@ -502,7 +502,7 @@ public class TestCoopSystemService {
 		assertEquals(docId,service.getPersonalDocumentsByStudent(student).get(0).getDocumentId());
 	}
 	
-	@Test
+	@Test // testing to get authered documents.
 	public void testGetAuthoredDocuments() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -516,7 +516,7 @@ public class TestCoopSystemService {
 		
 		
 	}
-	@Test
+	@Test // test of getting attachments
 	public void testGetAttachments() {
 		service.createCoopSystem();
 		String employer1="May";
@@ -539,7 +539,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // test of getting coopjob documents.
 	public void testGetCoopJobDocuments() {
 		service.createCoopSystem();
 		String student1="May";
@@ -561,7 +561,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // test to get archived interns.
 	public void testGetArchivedInterns() {
 		service.createCoopSystem();
 		String student1="May";
@@ -577,7 +577,7 @@ public class TestCoopSystemService {
 		assertEquals(student1,service.getArchivedInterns(employer1).get(0).getUsername());	
 	}
 	
-	@Test
+	@Test // test of getting intern documents.
 	public void testGetInternDocuments() {
 		service.createCoopSystem();
 		String student1="May";
@@ -599,7 +599,7 @@ public class TestCoopSystemService {
 		assertEquals(docId,service.getInternDocuments(employer1, student1).get(0).getDocumentId());
 	}
 	
-	@Test
+	@Test // test of finding coopjob by its employer, student and date.
 	public void testFindCoopJobByEmployerAndStudentAndDate() {
 		service.createCoopSystem();
 		String student1="May";
@@ -632,7 +632,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // sample test.
 	public void donothing(){
 		service.createCoopSystem();
 		service.createStudent("May");
@@ -642,7 +642,7 @@ public class TestCoopSystemService {
 		assertEquals("May",s.getUsername());
 	}
 	
-	@Test
+	@Test // testing of sample creation.
 	public void testCreate() {
 		service.createCoopSystem();
 		assertEquals(0,service.getAllCoopUsers().size());
@@ -660,7 +660,7 @@ public class TestCoopSystemService {
 		assertEquals(0,service.getAllCoopUsers().size());
 	}
 	
-	@Test
+	@Test // another sample creation test.
 	public void TestCreate3() {
 		service.createCoopSystem();
 		String student1="May";
@@ -694,7 +694,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // another sample creation test.
 	public void TestCreate2() {
 		service.createCoopSystem();
 		String student1="May";
@@ -719,7 +719,7 @@ public class TestCoopSystemService {
 	}
 	
 
-	@Test
+	@Test // testing of creating of coopjob.
 	public void testCreateCoopJob() {
 		service.createCoopSystem();
 		String student1="May";
@@ -745,7 +745,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // finding coopjobs in this test.
 	public void testFindCoopJobs() {
 		service.createCoopSystem();
 		String student1="May";
@@ -770,7 +770,7 @@ public class TestCoopSystemService {
 		
 	}
 
-	@Test
+	@Test // deleting a coopjob in this test.
 	public void testDeleteCoopJob() {
 		service.createCoopSystem();
 		String student1="May";
@@ -788,7 +788,7 @@ public class TestCoopSystemService {
 		
 		
 	}
-	
+	 // setting a coopjob setting in this test.
 	@Test public void testSetCoopJobSettings() {
 		service.createCoopSystem();
 		String jobId = "Cleaning2";
@@ -817,7 +817,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test 
+	@Test // testing to add a document to an existing coopjob.
 	public void testAddDocumentToCoopJob() {
 		service.createCoopSystem();
 		String jobId = "Cleaning2";
@@ -842,7 +842,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // trying to test getting all coopjobs in this test.
 	public void testGetAllCoopJobs() {
 		service.createCoopSystem();
 		String jobId = "Cleaning2";
@@ -858,7 +858,7 @@ public class TestCoopSystemService {
 	
 	
 	
-	@Test
+	@Test // test of creation of document.
 	public void testCreateDocument() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -872,7 +872,7 @@ public class TestCoopSystemService {
 		
 	}
 	
-	@Test
+	@Test // testing to set personal document.
 	public void testSetPersonalDocument() {
 		service.createCoopSystem();
 		String 	employer = "holo";
@@ -898,7 +898,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	@Test
+	@Test // testing to find documents.
 	public void testFindDocuments() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -912,7 +912,7 @@ public class TestCoopSystemService {
 
 	}
 	
-	@Test
+	@Test // test of finding documents by its author.
 	public void testFindDocumentsByAuthor() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -930,7 +930,7 @@ public class TestCoopSystemService {
 		assertEquals(docs.get(0).getDocumentId(), authored.get(0).getDocumentId());
 	}
 	
-	@Test
+	@Test // testing the deletion of a document.
 	public void testDeleteDocument() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -946,7 +946,7 @@ public class TestCoopSystemService {
 		assertEquals(0, service.getAllDocuments().size());
 	}
 	
-	@Test
+	@Test // testing to delete all of the documents.
 	public void testDeleteAllDocuments() {
 		service.createCoopSystem();
 		String 	authorName = "holo";
@@ -963,7 +963,7 @@ public class TestCoopSystemService {
 		assertEquals(0, service.getAllDocuments().size());
 	}
 	
-	@Test
+	@Test // testing the creation of event notification.
 	public void testCreateEventNotification() {
 		service.createCoopSystem();
 		String eventNotif = "Meeting Soon";
@@ -975,7 +975,7 @@ public class TestCoopSystemService {
 	
 	
 	
-	@Test
+	@Test // testing to delete an event notification.
 	public void testDeleteEventNotification() {
 		service.createCoopSystem();
 		String eventNotif = "Meeting Soon";
@@ -989,7 +989,7 @@ public class TestCoopSystemService {
 	}
 	
 	
-	 @Test
+	 @Test // setting an event notificaton in this test.
 	public void testSetEventNotification() {
 		service.createCoopSystem();
 		String eventNotif = "Meeting Soon";
