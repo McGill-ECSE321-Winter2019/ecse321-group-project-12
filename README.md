@@ -14,9 +14,6 @@ Development Team:
 Sameen Mahtab
 
 
-Mahin Anwar
-
-
 Mostafa Abdelwahab
 
 
