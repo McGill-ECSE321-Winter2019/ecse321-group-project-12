@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.coop;
+package ca.mcgill.ecse321.coop.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
