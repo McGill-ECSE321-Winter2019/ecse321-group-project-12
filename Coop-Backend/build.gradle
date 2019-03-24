@@ -36,6 +36,6 @@ dependencies {
 
 test {
 	filter{
-		includeTestsMatching "ca.mcgill.ecse321.cooperator.coop.integration.*"
+		includeTestsMatching "ca.mcgill.ecse321.coop.integration.*"
 	}
 }
