@@ -2,7 +2,3 @@ task stage () {
     dependsOn ':Coop-Backend:assemble'
 }
 
-task integrationTests() {
-	dependsOn ':Coop-Backend:test'
-}
-
