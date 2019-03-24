@@ -34,8 +34,4 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
-	filter{
-		includeTestsMatching "ca.mcgill.ecse321.coop.integration.*"
-	}
-}
+
