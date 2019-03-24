@@ -11,7 +11,7 @@ import java.net.URL;
 import org.junit.*;
 import org.junit.jupiter.api.Test;
 
-class interfaceTest {
+public class interfaceTest {
 	
 	@Test
 	void testCreateSystem() {
