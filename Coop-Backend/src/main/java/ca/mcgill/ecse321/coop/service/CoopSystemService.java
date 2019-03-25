@@ -449,7 +449,7 @@ public class CoopSystemService {
 
 
 		s.getEventNotifications().add(e);
-		for(Employer em: employerRepository.findAll())
+		for(Employer em: this.getAllEmployers())
 		{
 			em.getEventNotifications().add(e);  //add this event notification to the list of notifications for all employers
 			employerRepository.save(em);
