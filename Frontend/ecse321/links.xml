@@ -1,31 +1,11 @@
 <pages>
     <link>
-        <title>Document Management</title>
-        <url>documentmanagement.php</url>
-    </link>
-    <link>
-        <title>Document Search</title>
-        <url>documentsearch.php</url>
-    </link>
-    <link>
-        <title>Employer Management</title>
-        <url>
-            employermanagement.php
-        </url>
-    </link>
-    <link>
         <title>Employer Search</title>
         <url>employersearch.php</url>
     </link>
     <link>
         <title>Job Management</title>
         <url>jobmanagement.php</url>
-    </link>
-    <link>
-        <title>Job Search</title>
-        <url>
-            jobsearch.php
-        </url>
     </link>
     <link>
         <title>Send Message</title>
@@ -57,4 +37,23 @@
             yourjobs.php
         </url>
     </link>
+    <link>
+        <title>Job Management</title>
+        <url>
+            jobmanagement.php
+        </url>
+    </link>
+    <link>
+        <title>Tax Forms</title>
+        <url>
+            taxForms.php
+        </url>
+    </link>
+    <link>
+        <title>Home</title>
+        <url>
+            index.php
+        </url>
+    </link>
 </pages>
+
