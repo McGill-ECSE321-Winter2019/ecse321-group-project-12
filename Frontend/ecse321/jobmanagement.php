@@ -18,7 +18,6 @@ if(!isset($_SESSION['id'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-
         <title>McGill MyCoop</title>
 
         <!-- Custom fonts for this template-->
@@ -39,11 +38,11 @@ if(!isset($_SESSION['id'])) {
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class=" d-flex align-items-center justify-content-center" style="color: white">
                 <div class="sidebar-brand-icon">
                     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/29/McGill_University_CoA.svg/800px-McGill_University_CoA.svg.png" style="height: 50px">
                 </div>
-                <div class="sidebar-brand-text mx-2">McGill <sup>MyCoop</sup></div>
+                <div class="sidebar-brand-text mx-2">McGill <sup>My-Coop</sup></div>
             </a>
 
             <!-- Divider -->
@@ -64,19 +63,7 @@ if(!isset($_SESSION['id'])) {
                 Panel
             </div>
 
-            <!-- Nav Item - Document Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-folder-open"></i>
-                    <span>Documents</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="documentsearch.php">Document Search</a>
-                        <a class="collapse-item" href="documentmanagement.php">Document Management</a>
-                    </div>
-                </div>
-            </li>
+
 
             <!-- Nav Item - Student Collapse Menu -->
             <li class="nav-item">
@@ -86,7 +73,7 @@ if(!isset($_SESSION['id'])) {
                 </a>
                 <div id="collapseStudent" class="collapse" aria-labelledby="headingStudent" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="studentsearch.php">Student Search</a>
+                        <a class="collapse-item" href="studentsearch.php">Student Records</a>
                         <a class="collapse-item" href="studentmanagement.php">Student Management</a>
                     </div>
                 </div>
@@ -101,7 +88,6 @@ if(!isset($_SESSION['id'])) {
                 <div id="collapseEmployer" class="collapse" aria-labelledby="headingEmployer" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="employersearch.php">Employer Search</a>
-                        <a class="collapse-item" href="employermanagement.php">Employer Management</a>
                     </div>
                 </div>
             </li>
@@ -129,8 +115,19 @@ if(!isset($_SESSION['id'])) {
                 <div id="collapseJobs" class="collapse" aria-labelledby="headingJob" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="yourjobs.php">Your Jobs</a>
-                        <a class="collapse-item" href="jobsearch.php">Job Search</a>
                         <a class="collapse-item" href="jobmanagement.php">Job Management</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTax" aria-expanded="true" aria-controls="collapseTax">
+                    <i class="fas fa-pager"></i>
+                    <span>Tax forms</span>
+                </a>
+                <div id="collapseTax" class="collapse" aria-labelledby="headingTax" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="taxForms.php">Download Tax Forms</a>
                     </div>
                 </div>
             </li>
@@ -139,7 +136,6 @@ if(!isset($_SESSION['id'])) {
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -159,70 +155,49 @@ if(!isset($_SESSION['id'])) {
 
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" size="30" onkeyup="showResult(this.value)">
+
                             <div class="input-group-append">
+                                <script>
+                                    function showResult(str) {
+                                        if (str.length==0) {
+                                            document.getElementById("livesearch").innerHTML="";
+                                            document.getElementById("livesearch").style.border="0px";
+                                            return;
+                                        }
+                                        if (window.XMLHttpRequest) {
+                                            // code for IE7+, Firefox, Chrome, Opera, Safari
+                                            xmlhttp=new XMLHttpRequest();
+                                        } else {  // code for IE6, IE5
+                                            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                                        }
+                                        xmlhttp.onreadystatechange=function() {
+                                            if (this.readyState==4 && this.status==200) {
+                                                document.getElementById("livesearch").innerHTML=this.responseText;
+                                                document.getElementById("livesearch").style.border="1px solid #A5ACB2";
+                                            }
+                                        }
+                                        xmlhttp.open("GET","livesearch.php?q="+str,true);
+                                        xmlhttp.send();
+                                    }
+                                </script>
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
                         </div>
+                        <div id="livesearch"></div>
                     </form>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
 
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
+                        <button class=" btn btn-primary btn-user btn-block" style="color: red" >
+                            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?> ! </h7>
+                        </button>
 
 
 
@@ -259,28 +234,19 @@ if(!isset($_SESSION['id'])) {
                                         </button>
                                     </form>
                                 </div>
+                                <?php if(isset($_SESSION['jobsuc'])) {
+                                    echo ("<div class=\"alert alert-success\">
+                                            <strong>Success!</strong> 
+                                            </div>");
+
+                                }
+
+                                unset($_SESSION['jobsuc']);
+
+                                ?>
                             </div>
                         </div>
 
-
-                        <div class="col-lg-7">
-                            <div class="  p-5">
-                                <div class="border border border-primary">
-                                    <div class=" text-center" >
-                                        <h1 class="h4 text-gray-900 mb-4">Delete a Job</h1>
-                                    </div>
-                                    <form class=" user" method="post" action="">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" name="deletejob" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter a student name">
-                                        </div>
-                                        <br><br>
-                                        <button class=" btn btn-primary btn-user btn-block" type="submit" name="submitbutdelete">
-                                            Delete Job
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Content Row -->
@@ -418,7 +384,8 @@ if (isset($_POST['submitbut'])) {
         }
 
         if (strpos($resultstring, $_POST['jobname']) !== false) {
-            print("Succesful");
+            $_SESSION['jobsuc'] = 1;
+                header("Refresh:0");
         } else {
             echo("There was an error please check your input");
         }

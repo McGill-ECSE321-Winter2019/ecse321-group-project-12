@@ -38,11 +38,11 @@ if(!isset($_SESSION['id'])) {
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+      <a class=" d-flex align-items-center justify-content-center" style="color: white">
         <div class="sidebar-brand-icon">
           <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/29/McGill_University_CoA.svg/800px-McGill_University_CoA.svg.png" style="height: 50px">
         </div>
-        <div class="sidebar-brand-text mx-2">McGill <sup>MyCoop</sup></div>
+        <div class="sidebar-brand-text mx-2">McGill <sup>My-Coop</sup></div>
       </a>
 
       <!-- Divider -->
@@ -63,19 +63,7 @@ if(!isset($_SESSION['id'])) {
         Panel
       </div>
 
-      <!-- Nav Item - Document Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-folder-open"></i>
-          <span>Documents</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="documentsearch.php">Document Search</a>
-            <a class="collapse-item" href="documentmanagement.php">Document Management</a>
-          </div>
-        </div>
-      </li>
+
 
       <!-- Nav Item - Student Collapse Menu -->
       <li class="nav-item">
@@ -85,7 +73,7 @@ if(!isset($_SESSION['id'])) {
         </a>
         <div id="collapseStudent" class="collapse" aria-labelledby="headingStudent" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="studentsearch.php">Student Search</a>
+            <a class="collapse-item" href="studentsearch.php">Student Records</a>
             <a class="collapse-item" href="studentmanagement.php">Student Management</a>
           </div>
         </div>
@@ -100,7 +88,6 @@ if(!isset($_SESSION['id'])) {
         <div id="collapseEmployer" class="collapse" aria-labelledby="headingEmployer" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="employersearch.php">Employer Search</a>
-            <a class="collapse-item" href="employermanagement.php">Employer Management</a>
           </div>
         </div>
       </li>
@@ -128,7 +115,6 @@ if(!isset($_SESSION['id'])) {
             <div id="collapseJobs" class="collapse" aria-labelledby="headingJob" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="yourjobs.php">Your Jobs</a>
-                    <a class="collapse-item" href="jobsearch.php">Job Search</a>
                     <a class="collapse-item" href="jobmanagement.php">Job Management</a>
                 </div>
             </div>
@@ -209,56 +195,9 @@ if(!isset($_SESSION['id'])) {
           <ul class="navbar-nav ml-auto">
 
 
-
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-              </a>
-              <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-              </div>
-            </li>
-
+            <button class=" btn btn-primary btn-user btn-block" style="color: red" >
+            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?> ! </h7>
+            </button>
 
 
 
@@ -280,15 +219,29 @@ if(!isset($_SESSION['id'])) {
                   <div class="  p-5">
                       <div class="border border border-primary">
                           <div class=" text-center" >
-                              <h1 class="h4 text-gray-900 mb-4">Notficiations</h1>
+                              <h1 class="h4 text-gray-900 mb-4">Notifications</h1>
                           </div>
                           <form  method="post" action="">
                               <input type="text" class="form-control form-control-user" name="notifinput"  value="<?php if(isset($_SESSION['notif'])) { echo $_SESSION['notif']; } ?>"  id="exampleInputEmail" aria-describedby="emailHelp" style="height: 200px" >
                               <br class="br-1"><br>
                           </form>
+                          <form action="index.php">
+                              <input class="btn-group btn-outline-danger" type="submit" value="Show me upcoming events!" />
+                          </form>
                       </div>
                   </div>
+                  <?php if(isset($_SESSION['successchangepass'])) {
+                      echo ("<div class=\"alert alert-success\">
+                                            <strong>Success!</strong> 
+                                            </div>");
+
+                  }
+
+                  unset($_SESSION['successchangepass']);
+
+                  ?>
               </div>
+
               <div class="col-lg-6">
                   <div class="  p-5">
                       <style>
@@ -304,6 +257,7 @@ if(!isset($_SESSION['id'])) {
 
 
                       <button id="btn11" class="btn-group btn-outline-danger" onclick="myFunction()">Change Password</button>
+
                       <br>
                       <div id="myDIV" style="display: none">
 
@@ -501,6 +455,7 @@ if (strpos($emailcheck, "adminer@mcgill.ca") !== false && strpos($emailcheck2, "
 
         $cSession5 = curl_init();
         curl_setopt($cSession5, CURLOPT_URL, $createnotif);
+        curl_setopt($cSession5 , CURLOPT_POST, 1);
         curl_setopt($cSession5, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($cSession5, CURLOPT_HEADER, false);
         $result5 = curl_exec($cSession5);
@@ -573,7 +528,9 @@ if (isset($_POST['submitpass'])) {
             $passcheck = $converter->password;
 
             if (strpos($passcheck, $_POST['newpassword']) !== false) {
-                print("Succesful");
+                //print("Succesful");
+                $_SESSION['successchangepass'] = 1;
+                header("Refresh:0");
             } else {
                 echo("There was an error please check your input");
             }
