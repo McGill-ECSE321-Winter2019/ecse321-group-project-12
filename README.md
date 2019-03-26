@@ -46,3 +46,18 @@ _https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Proj
 
 Project Report for deliverable 2:
 _https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-2_
+
+
+
+
+## Deliverable 3
+
+|Team member's name|Total hours Approx|Main Responsibility                                             |
+|------------------|------------------|----------------------------------------------------------------|
+|Ishraq Hossain    |    25            |Architecture Modeling, Integration, Project Management          |
+|Gorkem Yalcinoz   |    27            |Implementation of Frontend, Integration of Backend Services     |
+|Sameen Mahtab     |    26            |Integration of Backend Services, Build System and CI            |
+|Mostafa Abdelwahab|    7             |Implementation of Frontend                                      |
+
+Project Report for deliverable 3:
+_https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-3_
