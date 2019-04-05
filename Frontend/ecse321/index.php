@@ -2,6 +2,8 @@
 session_start();
 ob_start();
 
+if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
+if (isset($_SESSION['refreshHandler2']))unset($_SESSION['refreshHandler2']);
 if(!isset($_SESSION['id'])) {
 
     header('location:login.php');
@@ -130,9 +132,10 @@ if(!isset($_SESSION['id'])) {
                     <a class="collapse-item" href="taxForms.php">Download Tax Forms</a>
                 </div>
             </div>
+
         </li>
 
-      <!-- Sidebar Toggler (Sidebar) -->
+       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
@@ -157,7 +160,7 @@ if(!isset($_SESSION['id'])) {
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" size="30" onkeyup="showResult(this.value)">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" style="height: 40px; " onkeyup="showResult(this.value)">
 
                 <div class="input-group-append">
                   <script>
@@ -183,7 +186,7 @@ if(!isset($_SESSION['id'])) {
                           xmlhttp.send();
                       }
                   </script>
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="button" >
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
@@ -196,10 +199,8 @@ if(!isset($_SESSION['id'])) {
 
 
             <button class=" btn btn-primary btn-user btn-block" style="color: red" >
-            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?> ! </h7>
+            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?>  </h7>
             </button>
-
-
 
           </ul>
 
@@ -217,16 +218,16 @@ if(!isset($_SESSION['id'])) {
           <div class="row">
               <div class="col-lg-6">
                   <div class="  p-5">
-                      <div class="border border border-primary">
+                      <div class="border border ">
                           <div class=" text-center" >
                               <h1 class="h4 text-gray-900 mb-4">Notifications</h1>
                           </div>
                           <form  method="post" action="">
-                              <input type="text" class="form-control form-control-user" name="notifinput"  value="<?php if(isset($_SESSION['notif'])) { echo $_SESSION['notif']; } ?>"  id="exampleInputEmail" aria-describedby="emailHelp" style="height: 200px" >
+                              <textarea type="text" class="form-control form-control-user" name="notifinput"  value="<?php if(isset($_SESSION['notif'])) { echo $_SESSION['notif']; } ?>"  id="exampleInputEmail" aria-describedby="emailHelp" style="height: 200px" ><?php if(isset($_SESSION['notif'])) { echo $_SESSION['notif']; } ?> </textarea>
                               <br class="br-1"><br>
                           </form>
                           <form action="index.php">
-                              <input class="btn-group btn-outline-danger" type="submit" value="Show me upcoming events!" />
+                              <input class="btn-group  btn-primary btn-user" style="border-radius: 10px;" type="submit" value="Show me upcoming events" />
                           </form>
                       </div>
                   </div>
@@ -256,7 +257,7 @@ if(!isset($_SESSION['id'])) {
                       </head>
 
 
-                      <button id="btn11" class="btn-group btn-outline-danger" onclick="myFunction()">Change Password</button>
+                      <button id="btn11" class="btn-group  btn-primary btn-user" style="border-radius: 10px;" onclick="myFunction()">Change Password</button>
 
                       <br>
                       <div id="myDIV" style="display: none">

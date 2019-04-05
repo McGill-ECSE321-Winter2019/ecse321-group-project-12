@@ -2,6 +2,8 @@
 session_start();
 ob_start();
 
+if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
+if (isset($_SESSION['refreshHandler2']))unset($_SESSION['refreshHandler2']);
 if(!isset($_SESSION['id'])) {
 
     header('location:login.php');
@@ -159,7 +161,7 @@ if(!isset($_SESSION['id'])) {
                 <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" size="30" onkeyup="showResult(this.value)">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" style="height: 40px; " onkeyup="showResult(this.value)">
 
                         <div class="input-group-append">
                             <script>
@@ -198,7 +200,7 @@ if(!isset($_SESSION['id'])) {
 
 
                     <button class=" btn btn-primary btn-user btn-block" style="color: red" >
-                        <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?> ! </h7>
+                        <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?>  </h7>
                     </button>
 
 
@@ -358,6 +360,7 @@ if (isset($_POST['getsentmessages'])) {
 
     $resultstring="";
     $resultstring2="";
+    $resultstring3="";
 
     foreach ($converter as $key =>$value) {
         $resultstring2 = $resultstring2 . ", " . ($value->senderName).", ";
@@ -367,6 +370,12 @@ if (isset($_POST['getsentmessages'])) {
 
         $resultstring = $resultstring . ", " . ($value->content).", ";
     }
+
+    foreach ($converter as $key =>$value) {
+        $resultstring3 = $resultstring3 . " " . ($value->receiverName).", ";
+    }
+
+    $resultstring3_ar = explode(', ', $resultstring3);
     $resultstring2_ar = explode(', ', $resultstring2);
 
     $resultstring_ar = explode(', ', $resultstring);
@@ -382,7 +391,7 @@ if (isset($_POST['getsentmessages'])) {
 
     print($fnloutput);
 
-    if (empty($resultstring)) { $_SESSION['sentmessages'] = "Your did not send any messages yet!";} else {$_SESSION['sentmessages'] = $fnloutput;}
+    if (empty($resultstring)) { $_SESSION['sentmessages'] = "You did not send any messages yet!";} else {$_SESSION['sentmessages'] = "To: ".$resultstring3.$fnloutput;}
 
 
     header("Refresh:0");

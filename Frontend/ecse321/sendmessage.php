@@ -206,180 +206,205 @@ if(!isset($_SESSION['id'])) {
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
+            <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Your Jobs</h1>
-                    </div>
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">Send Message</h1>
+                </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="  p-5">
-                                <div class="border border">
-                                    <div class=" text-center" >
-                                        <h1 class="h4 text-gray-900 mb-4"> <?php echo $_SESSION['username']?>'s Jobs</h1>
+                <!-- Content Row -->
+                <div class="row">
+                    <div class="col-lg-8 messege-right p-3 border">
+                        <div class="row m-0">
+                            <div class="col-lg-12 bg-dark text-white">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <h1 class="pt-2">New Message</h1>
                                     </div>
-                                    <form class=" user" method="post" action="">
-                                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="6" ><?php if(isset($_SESSION['yourjobs'])) { echo $_SESSION['yourjobs']; } ?> </textarea>
-                                        <br>
-                                        <button class=" btn btn-primary btn-user btn-block" type="submit" name="submit">
-                                            See your jobs!
-                                        </button>
-                                    </form>
+                                    <div class="col-lg-6 pt-2 message-box-icon">
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                    </div>
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-
-                            <!-- Color System -->
-                            <div class="row">
-
+                            <div class="col-lg-12 p-0 message-box-input">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <input type="text" name="receiver" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Recipient's Username">
+                                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                    </div>
+                                    <div class="co-lg-12 message-box-last-content p-2">
+                                        <button type="submit" name="send" class="btn btn-primary btn-sm pl-3 pr-3">Send</button>
+                                    </div>
+                                </form>
                             </div>
+                        </div>
+                        <?php if(isset($_SESSION['sendmessagesuccess'])) {
+                            echo ("<div class=\"alert alert-success\">
+                                            <strong>Success!</strong> 
+                                            </div>");
+
+                        }
+
+                        unset($_SESSION['sendmessagesuccess']);
+
+                        ?>
+                    </div>
+
+
+                </div>
+
+                <!-- Content Row -->
+
+                <div class="row">
+
+                </div>
+
+                <!-- Content Row -->
+                <div class="row">
+
+                    <!-- Content Column -->
+                    <div class="col-lg-6 mb-4">
+
+
+                        <!-- Color System -->
+                        <div class="row">
 
                         </div>
 
-                        <div class="col-lg-6 mb-4">
-
-
-                        </div>
                     </div>
 
-                </div>
-                <!-- /.container-fluid -->
+                    <div class="col-lg-6 mb-4">
 
-            </div>
-            <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; McGill MyCoop System</span>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+
+            </div>
+            <!-- /.container-fluid -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; McGill MyCoop System</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+</div>
+<!-- End of Page Wrapper -->
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
-                </div>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.php">Logout</a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+<!-- Page level plugins -->
+<script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+<!-- Page level custom scripts -->
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
 
-    </body>
+</body>
 
-    </html>
+</html>
 
 
 <?php
+if (isset($_POST['send'])) {
+    if (!empty($_POST['message'])) {
 
-if (isset($_POST['submit'])) {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $messageId= '';
+        $max = strlen($characters) - 1;
+        for ($i = 0; $i < 20; $i++) {
+            $messageId .= $characters[mt_rand(0, $max)];
+        }
+      //  print($messageId);
+        $messageToSend = '';
+        $messageToSend = str_replace(" ","+",$_POST['message']);
 
-    $checkjobs = 'https://ecse321-group12.herokuapp.com/employers/'.$_SESSION['username'];
+        $addmessage = 'https://ecse321-group12.herokuapp.com/newMessage?MessageId='.$messageId.'&SenderName='.$_SESSION['username'].'&ReceiverName='.$_POST['receiver'].'&Content='.$messageToSend.'&ListofAttachementsIds=null';
+
+        // $_POST['addDoc'] = $addDoc;
+
+        $cSession = curl_init();
+        curl_setopt($cSession,CURLOPT_URL,$addmessage);
+        curl_setopt($cSession, CURLOPT_POST, 1); // add this line for post method
+        curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($cSession,CURLOPT_HEADER, false);
+        $result=curl_exec($cSession);
+        curl_close($cSession);
+        //  echo $result;
+
+        $getmessage = 'https://ecse321-group12.herokuapp.com/Message?MessageId='.$messageId;
+
+        $cSession2 = curl_init();
+
+        curl_setopt($cSession2,CURLOPT_URL,$getmessage);
+        curl_setopt($cSession2,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($cSession2,CURLOPT_HEADER, false);
+        $result2=curl_exec($cSession2);
+        curl_close($cSession2);
+        // echo $result2;
+
+        $converter = json_decode($result2);
+        $messagecheck = $converter->senderName;
+
+        if (strpos($messagecheck, $_SESSION['username']) !== false) {
+            echo("success");
+            $_SESSION['sendmessagesuccess'] = 1 ;
+            header("Refresh:0");
+        } else {
+            echo("There was an error please check your input");
+        }
 
 
-    $cSession = curl_init();
-    curl_setopt($cSession,CURLOPT_URL,$checkjobs);
-    curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($cSession,CURLOPT_HEADER, false);
-    $result=curl_exec($cSession);
-    curl_close($cSession);
-    echo $result;
 
-    $converter = json_decode($result);
-    $conv_array = array($converter->coopJobsIds);
 
-    print_r($conv_array);
 
-    $resultstring = "";
-
-    foreach($conv_array['0'] as $result1) {
-        $resultstring = $resultstring.$result1.", ";
-        // echo $result1, '<br>';
     }
-/*
-    $resultstring = "";
-
-    foreach ($converter as $key => $value) {
-
-        $resultstring = $resultstring."  ".($value->coopJobsIds);
-    }
-
-*/
-
-    if (empty($converter->coopJobsIds)) { $_SESSION['yourjobs'] = "You did not share any jobs yet!";} else { $_SESSION['yourjobs'] =" Your Jobs: ".$resultstring;}
-
-
-  //  $_SESSION['yourjobs'] = " Your Jobs: ".$resultstring;
-
-    header("Refresh:0");
-
-
-
-
-
-
 }
-
 
 ?>

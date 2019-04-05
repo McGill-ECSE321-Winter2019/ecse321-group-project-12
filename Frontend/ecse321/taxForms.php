@@ -1,17 +1,16 @@
 <?php
-session_start();
-ob_start();
+    session_start();
+    ob_start();
 
-
-if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
 if (isset($_SESSION['refreshHandler2']))unset($_SESSION['refreshHandler2']);
+if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
+    if(!isset($_SESSION['id'])) {
+        
+        header('location:login.php');
+    }
+    
+    ?>
 
-if(!isset($_SESSION['id'])) {
-
-    header('location:login.php');
-}
-
-?>
 
 
 <!DOCTYPE html>
@@ -217,39 +216,37 @@ if(!isset($_SESSION['id'])) {
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Inbox</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Download form</h1>
                 </div>
+
+<!-- Content Row -->
+<div class="row">
+<div class="col-lg-7">
+<div class="  p-5">
+<div class="border border">
+<div class=" text-center" >
+<h1 class="h4 text-gray-900 mb-4">Tax credit form</h1>
+</div>
+<form class=" user" method="post" action="">
+<div class="form-group">
+</div>
+
+
+
+<button class=" btn btn-primary btn-user btn-block" type="submit" name="submitbutsearch">
+Download
+</button>
+</form>
+</div>
+</div>
+</div>
+
+</div>
 
                 <!-- Content Row -->
                 <div class="row">
-                    <div class="col-lg-8 messege-right p-3 border">
-                        <div class="row m-0">
-                            <div class="col-lg-12 bg-dark text-white">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h1 class="pt-2">Messages</h1>
-                                    </div>
-                                    <div class="col-lg-6 pt-2 message-box-icon">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 p-0 message-box-input">
-                                <form method="post">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="6" ><?php if(isset($_SESSION['messages'])) { echo $_SESSION['messages']; } ?> </textarea>
-                                    </div>
-                                    <div class="co-lg-12 message-box-last-content p-2">
-                                        <button type="submit" name="getmessages" class="btn btn-primary btn-sm pl-3 pr-3">Check Messages</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
-
 
                 <!-- Content Row -->
 
@@ -344,56 +341,13 @@ if(!isset($_SESSION['id'])) {
 
 </html>
 
-<?php
-if (isset($_POST['getmessages'])) {
-
-    $message = 'https://ecse321-group12.herokuapp.com/ReceivedMessages?ReceiverName='.$_SESSION['username'];
-
-
-    $cSession = curl_init();
-    curl_setopt($cSession,CURLOPT_URL,$message);
-    curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($cSession,CURLOPT_HEADER, false);
-    $result=curl_exec($cSession);
-    curl_close($cSession);
-  //  echo $result;
-
-    $converter = json_decode($result);
-
-    $resultstring="";
-    $resultstring2="";
-
-    foreach ($converter as $key =>$value) {
-        $resultstring2 = $resultstring2 . ", " . ($value->senderName).", ";
-    }
-
-    foreach ($converter as $key => $value) {
-
-        $resultstring = $resultstring . ", " . ($value->content).", ";
-    }
-    $resultstring2_ar = explode(', ', $resultstring2);
-
-    $resultstring_ar = explode(', ', $resultstring);
-
-   // print_r($resultstring);
-  //  print_r($resultstring2);
-    $fnloutput ="";
-
-    foreach($resultstring_ar as $id=>$Name)
-    {
-        $fnloutput = $fnloutput.$resultstring2_ar[$id].": " . $Name."\r";
-    }
-
-    if (empty($resultstring)) { $_SESSION['messages'] = "Your inbox is empty";} else {$_SESSION['messages'] = $fnloutput;}
-   // print($resultstring);
+    
+    <?php
+        if (isset($_POST['submitbutsearch'])) {
+    
+                
+                header('Location: https://drive.google.com/uc?export=download&id=1RCd5yYorwtiSjSuaxOp3MAxGnG-0CabX');
+            }
 
 
-    header("Refresh:0");
-
-
-
-
-
-
-}
-?>
+        ?>

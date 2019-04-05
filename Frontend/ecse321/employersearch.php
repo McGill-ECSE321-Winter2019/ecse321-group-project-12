@@ -1,17 +1,18 @@
 <?php
-session_start();
-ob_start();
+    session_start();
+    ob_start();
 
 
 if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
-if (isset($_SESSION['refreshHandler2']))unset($_SESSION['refreshHandler2']);
 
-if(!isset($_SESSION['id'])) {
 
-    header('location:login.php');
-}
+    if(!isset($_SESSION['id'])) {
+        
+        header('location:login.php');
+    }
+    
+    ?>
 
-?>
 
 
 <!DOCTYPE html>
@@ -210,46 +211,201 @@ if(!isset($_SESSION['id'])) {
                 </ul>
 
             </nav>
-            <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Inbox</h1>
+                    <h1 class="h3 mb-0 text-gray-800">Employer Search</h1>
                 </div>
 
                 <!-- Content Row -->
-                <div class="row">
-                    <div class="col-lg-8 messege-right p-3 border">
-                        <div class="row m-0">
-                            <div class="col-lg-12 bg-dark text-white">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h1 class="pt-2">Messages</h1>
-                                    </div>
-                                    <div class="col-lg-6 pt-2 message-box-icon">
+                <div class="row" <?php  if(isset($_SESSION['refreshHandler2'])){ echo " style=\" display: none; \"  " ; } else echo " style=\" display: block; \"  " ;  ?>>
+                    <div class="col-md-12" >
+                        <form type="hidden" method="get" >
+                            <div class="card" >
+                                <div class="card-header"  >
+                                    <strong class="card-title">Student Directory</strong>
+                                </div>
+                                <div class="card-body">
+                                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
 
-                                    </div>
+                                        <?php
+                                        $sira = 1;
+                                        echo "<thead> <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>CoopJobs</th>";
+
+                                        $showAllStud = 'https://ecse321-group12.herokuapp.com/employers';
+
+
+                                        $cSessionS = curl_init();
+                                        curl_setopt($cSessionS,CURLOPT_URL,$showAllStud);
+                                        curl_setopt($cSessionS,CURLOPT_RETURNTRANSFER,true);
+                                        curl_setopt($cSessionS,CURLOPT_HEADER, false);
+                                        $resultSs=curl_exec($cSessionS);
+                                        curl_close($cSessionS);
+                                        //   echo $resultSs;
+
+                                        $converterSs = json_decode($resultSs);
+                                        $resultstringSs = "";
+
+                                        foreach ($converterSs as $key => $value) {
+
+                                            $resultstringSs = $resultstringSs.($value->username).", ";
+                                        }
+                                        $userNames_r = explode(', ', $resultstringSs);
+
+                                        /*     $resultstringNn = "";
+                                             foreach ($converterSs as $key => $value) {
+
+                                                 $resultstringNn = $resultstringNn.($value->coopJobsIds).", ";
+                                             }
+
+                                             //       $_SESSION['studentsSs'] = " Student Usernames: ".$resultstringSs;
+
+                                             $coopJobIds = explode(', ', $resultstringNn);
+
+                                             //  print_r($userNames_r);
+
+                                             // header("Refresh:0");
+                                         */
+
+
+                                        foreach($userNames_r as $key) {
+                                            $idmc = '';
+                                            $characters = '0123456789';
+                                            $randomId = '';
+                                            $max = strlen($characters) - 1;
+                                            for ($i = 0; $i < 3; $i++) {
+                                                $randomId .= $characters[mt_rand(0, $max)];
+                                            }
+                                            $idmc = '260' . $randomId . ',';
+
+                                            //     print $idmc;
+                                        }
+                                        $idArray = explode(', ', $idmc);
+                                        //     print_r($idArray);
+
+                                        $acc = 10;
+                                        $bb = -1;
+                                        foreach ($userNames_r as $key) { $bb++; }
+
+                                        for ($k =0; $k < $bb; $k++) {
+
+                                            echo "<tr>";
+                                            echo "<td>";
+                                            echo $userNames_r[$k];
+                                            echo "</td>";
+                                            echo "<td>";
+
+                                            $characters = 'abcdefghijklmnopqrstuvwxyz';
+                                            $email = '';
+                                            $max = strlen($characters) - 1;
+
+                                            for ($i = 0; $i < 6; $i++) {
+                                                $email .= $characters[mt_rand(0, $max)];
+                                            }
+                                            echo $email.'@hotmail.com';
+
+                                            echo "</td>";
+                                            echo "<td>";
+
+                                            $checkjobs = 'https://ecse321-group12.herokuapp.com/employers/'.$userNames_r[$k];
+
+
+                                            $cSession = curl_init();
+                                            curl_setopt($cSession,CURLOPT_URL,$checkjobs);
+                                            curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
+                                            curl_setopt($cSession,CURLOPT_HEADER, false);
+                                            $result=curl_exec($cSession);
+                                            curl_close($cSession);
+                                            // echo $result;
+
+                                            $converter = json_decode($result);
+                                            $conv_array = array($converter->coopJobsIds);
+
+                                            //   print_r($conv_array);
+
+                                            $resultstring = "";
+
+                                            foreach($conv_array['0'] as $result1) {
+                                                $resultstring = $resultstring.$result1.", ";
+                                                // echo $result1, '<br>';
+                                            }
+                                            /*
+                                                $resultstring = "";
+
+                                                foreach ($converter as $key => $value) {
+
+                                                    $resultstring = $resultstring."  ".($value->coopJobsIds);
+                                                }
+
+                                            */
+
+                                            if (empty($converter->coopJobsIds)) { $_SESSION['searchJobs'] = "No Jobs";} else { $_SESSION['searchJobs']= $resultstring;}
+
+
+                                            //  $_SESSION['yourjobs'] = " Your Jobs: ".$resultstring;
+                                            echo $_SESSION['searchJobs'];
+
+
+
+
+
+                                            echo "</td>";
+                                            echo "<tr>";
+                                            $sira++;
+                                            $acc++;
+                                        }
+
+                                        ?>
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="col-lg-12 p-0 message-box-input">
-                                <form method="post">
-                                    <div class="form-group">
-                                        <textarea name="message" class="form-control" id="exampleFormControlTextarea1" rows="6" ><?php if(isset($_SESSION['messages'])) { echo $_SESSION['messages']; } ?> </textarea>
-                                    </div>
-                                    <div class="co-lg-12 message-box-last-content p-2">
-                                        <button type="submit" name="getmessages" class="btn btn-primary btn-sm pl-3 pr-3">Check Messages</button>
-                                    </div>
-                                </form>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" style="position: center">
+                    <div class="col-lg-7" >
+                        <div class="  p-5"  id="no space">
+                            <div class="border border">
+                                <div class=" text-center" >
+                                    <h1 class="h4 text-gray-900 mb-4">Search for an Employer</h1>
+                                 </div>
+                                 <form class=" user" method="post" action="">
+                                     <div class="form-group">
+                                         <input type="text" class="form-control form-control-user" name="empIdSearch" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter the employer name">
+                                     </div>
+                                     <h1 class="h5 text-gray-900 mb-4"> Result:</h1>
+
+                                     <input type="text" class="form-control form-control-user" name="resultsearch" value="<?php if(isset($_SESSION['employerusername'])) { echo $_SESSION['employerusername']; } ?>" id="exampleInputEmail">
+                                     <br>
+                                    <button class=" btn btn-primary btn-user btn-block" type="submit" name="submitbutsearch">
+                                     Search Employer
+                                    </button>
+                                 </form>
                             </div>
                         </div>
                     </div>
 
-
                 </div>
 
+
+                <!-- Content Row -->
+                <div class="row">
+
+
+
+
+
+
+
+                </div>
 
                 <!-- Content Row -->
 
@@ -345,55 +501,49 @@ if(!isset($_SESSION['id'])) {
 </html>
 
 <?php
-if (isset($_POST['getmessages'])) {
+    if (isset($_POST['submitbutsearch'])) {
+        
+        $showEmp = 'https://ecse321-group12.herokuapp.com/employers/'.$_POST['empIdSearch'];
+        
+        
+        $cSession = curl_init();
+        curl_setopt($cSession,CURLOPT_URL,$showEmp);
+        curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
+        curl_setopt($cSession,CURLOPT_HEADER, false);
+        $result=curl_exec($cSession);
+        curl_close($cSession);
+       // echo $result;
+        
+        $converter = json_decode($result);
+        $resulstring = $converter->username;
 
-    $message = 'https://ecse321-group12.herokuapp.com/ReceivedMessages?ReceiverName='.$_SESSION['username'];
+        if (isset($resulstring) != false) {
+            $printer = "Employer " . $resulstring . " exists in the system";
+            $_SESSION['employerusername'] = $printer;
+            $_SESSION['refreshHandler2'] = 1;
 
+            header("Refresh:0");
+        } else {
+            $printer = "Employer " . $_POST['empIdSearch'] . " does not exists in the system";
+            $_SESSION['employerusername'] = $printer;
+            $_SESSION['refreshHandler2'] = 1;
 
-    $cSession = curl_init();
-    curl_setopt($cSession,CURLOPT_URL,$message);
-    curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($cSession,CURLOPT_HEADER, false);
-    $result=curl_exec($cSession);
-    curl_close($cSession);
-  //  echo $result;
-
-    $converter = json_decode($result);
-
-    $resultstring="";
-    $resultstring2="";
-
-    foreach ($converter as $key =>$value) {
-        $resultstring2 = $resultstring2 . ", " . ($value->senderName).", ";
-    }
-
-    foreach ($converter as $key => $value) {
-
-        $resultstring = $resultstring . ", " . ($value->content).", ";
-    }
-    $resultstring2_ar = explode(', ', $resultstring2);
-
-    $resultstring_ar = explode(', ', $resultstring);
-
-   // print_r($resultstring);
-  //  print_r($resultstring2);
-    $fnloutput ="";
-
-    foreach($resultstring_ar as $id=>$Name)
-    {
-        $fnloutput = $fnloutput.$resultstring2_ar[$id].": " . $Name."\r";
-    }
-
-    if (empty($resultstring)) { $_SESSION['messages'] = "Your inbox is empty";} else {$_SESSION['messages'] = $fnloutput;}
-   // print($resultstring);
+            header("Refresh:0");
+        }
 
 
-    header("Refresh:0");
+        
+        
+            
+        }
+        else {
+            $_SESSION['studentsSingleSearch'] = "There was an error please check your input";
+           // header("Refresh:0");
+             }
+    
+    
+    
+    
+    
+    ?>
 
-
-
-
-
-
-}
-?>

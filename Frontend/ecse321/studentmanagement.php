@@ -2,6 +2,9 @@
 session_start();
 ob_start();
 
+if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
+if (isset($_SESSION['refreshHandler2']))unset($_SESSION['refreshHandler2']);
+
 if(!isset($_SESSION['id'])) {
 
     header('location:login.php');
@@ -157,7 +160,7 @@ if(!isset($_SESSION['id'])) {
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
 
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" size="30" onkeyup="showResult(this.value)">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" style="height: 40px; " onkeyup="showResult(this.value)">
 
                             <div class="input-group-append">
                                 <script>
@@ -196,7 +199,7 @@ if(!isset($_SESSION['id'])) {
 
 
                         <button class=" btn btn-primary btn-user btn-block" style="color: red" >
-                            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?> ! </h7>
+                            <h7 style="color: white"> Welcome <?php echo($_SESSION['username']) ?>  </h7>
                         </button>
 
 
@@ -218,7 +221,7 @@ if(!isset($_SESSION['id'])) {
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="  p-5">
-                            <div class="border border border-primary">
+                            <div class="border border ">
                                 <div class=" text-center" >
                                     <h1 class="h4 text-gray-900 mb-4">Add a Student </h1>
                                 </div>
@@ -248,7 +251,7 @@ if(!isset($_SESSION['id'])) {
 
                     <div class="col-lg-7">
                         <div class="  p-5">
-                            <div class="border border border-primary">
+                            <div class="border border ">
                                 <div class=" text-center" >
                                     <h1 class="h4 text-gray-900 mb-4">Delete a Student</h1>
                                 </div>

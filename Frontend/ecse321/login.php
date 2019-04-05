@@ -79,7 +79,9 @@ if(isset($_SESSION['id'])) {
                   <div class="text-center">
                     <a class="small" href="forgot-password.php">Forgot Password?</a>
                   </div>
-
+                    <?php  if(isset($_SESSION['accesDenied'])) echo" <br> <div class=\"alert alert-danger\">
+                                            <strong>Username or password is incorrect.</strong> 
+                                            </div>" ?>
                 </div>
               </div>
             </div>
@@ -118,18 +120,21 @@ if (isset($_GET['submit'])) {
         curl_setopt($cSession,CURLOPT_HEADER, false);
         $result=curl_exec($cSession);
         curl_close($cSession);
-        echo $result;
+     //   echo $result;
 
         if($result == 'true'){
             $_SESSION['id'] = 1;
             $_SESSION['username'] = $_GET['username'];
             header('location:index.php');
         } else if($result == 'false') {
-            echo('<div> <i>Error</i> </div>');
+           $_SESSION['accesDenied'] = 1;
+
         }
 
 
 
     }
+
 }
+
 ?>
