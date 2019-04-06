@@ -1,1 +1,1 @@
-web: php -S 0.0.0.0:$8095 Frontend/ecse321/
+web: php -S 0.0.0.0:8095 Frontend/ecse321/
