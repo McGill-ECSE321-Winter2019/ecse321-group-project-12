@@ -22,4 +22,4 @@ matrix:
         provider: heroku
         api_key:
             secure: lBb48EzrymI/xLgmWKJGfZx2jt656XRgrGNBLj5svtl4F/TGn7qUuB8orodI9UjCsllCub84GWOPERGCYX3SRTrtgpolrjIhROOeZErxY+awnS2y7rQU+4U2qA5wMqMsmMeQBt0lothUjXf7y7YTsg7zx06AiWdVe3p0scUsZ/5UQJrKu8a745SqE22cB1vpn5kbwQij3DxyiiXZmFLyO2/OurGUZi2iJkF3bVDAvVdMSuENcbIq420l1QFVNgOPB2SPuI8l8B6RDcnJPfTwjqn/632uPsoJuBZCRdLEt3+x4rPFOSGT0ecIIeaVG8Hf3UOES4ualRoZLAFokM/i0susI9MmWkij2rwoebuc7929YF+I/yLpcPcm6JGcq7yHtJ4yBsYEFZMztAP6To3MLPPXzsW3p/tQNOd47Siz6ZWW6WlLiDHfh4Ck7+qUmlLy0GbQFfcLTfkjv62IY00C3f7cBPAYUL3///qifzNt4ZLOQfKI6SQEN/8R49JAQxK3Fy9TU79+mebB7+s55LUXYktxGpCMJsmhEiA2Y8HgCE2mmpw2jMSHtmHY4Rv+LAH/xlW7JFZv8WV2V8zsl/rs47h+6kGaLkyosBVejYtzTuzau0hLcuPecyP8GQoPDN71ZnY+IIY1MUzwuYX3ttIASJGkpl72Ghmq4aogufrWe84=
-        app: ecse321-front-321
+        app: front12-321
