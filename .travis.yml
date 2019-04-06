@@ -1,8 +1,25 @@
-language: java
-script:
-- ./gradlew build
-deploy:
-  provider: heroku
-  api_key:
-    secure: Qj+vhSu20fg5qEUHA1LET3/9I9ZZSw3gD00fRs955P1/ERPLD6WX0M122036G8NjY8yJ1cv299PPnuO2MDVwD+mOxh3VMN8yVE+nspr+le3yB1AT8DBXgxPwY9gJFvzwIiG4QvZqLxVAnlgBuBrNpFNJQ3mEGiurrnSnMHMMbpyaZpL8nou9CjjVwu06zuuBJ5AYfr9OZcAQM6oPOp/LDz0HMZ73gBy+GXVjhpvR8sS8va3tHxy3TiZgAObiZ/6Fk9ldqiQu7klOGnGECTaSdwiwj0/7pBepi72qXb07+Rbasl85um30PdHFVwzXHrWefmr0x0LL4feaiK5MWbWj15+hNDQzTRF0tidCS9uqR2oXGaCP2nBWkCe30L09E88QJkZiA8T69J9IvGWviR4Z3Z6Mb44ES+0BnADmDB/BhRJG8qaZxPIUoZtv93Ocl7viWC/fnKBkalIFoTKJGWFamqxWW1YHXa31dP78XvgG+iKd9bZ1iFpWOUMRdUfturw11DVjtRmya3Zv/dcI7XSXDJZS6m0Ng0BLDs9DF+2rC8OX3b7OvM0y9uEIG49BA/Nh5gLrmka+YPDbZ22l9IXjSTm/16udpbUWzGOJkc9+4l2KOgeGSNirAlWQXzV8i7QKihWuGzoy/EU02rao8CYhlytcah+WStADQKfgz+rGPJo=
-  app: ecse321-group12
+matrix:
+  include:
+    - language: java
+      
+      script:
+        - "./gradlew build"
+
+    - language: php
+      script: skip
+
+    - stage: deploy to backend app
+      script: skip
+      deploy:
+        provider: heroku
+        api_key:
+            secure: lBb48EzrymI/xLgmWKJGfZx2jt656XRgrGNBLj5svtl4F/TGn7qUuB8orodI9UjCsllCub84GWOPERGCYX3SRTrtgpolrjIhROOeZErxY+awnS2y7rQU+4U2qA5wMqMsmMeQBt0lothUjXf7y7YTsg7zx06AiWdVe3p0scUsZ/5UQJrKu8a745SqE22cB1vpn5kbwQij3DxyiiXZmFLyO2/OurGUZi2iJkF3bVDAvVdMSuENcbIq420l1QFVNgOPB2SPuI8l8B6RDcnJPfTwjqn/632uPsoJuBZCRdLEt3+x4rPFOSGT0ecIIeaVG8Hf3UOES4ualRoZLAFokM/i0susI9MmWkij2rwoebuc7929YF+I/yLpcPcm6JGcq7yHtJ4yBsYEFZMztAP6To3MLPPXzsW3p/tQNOd47Siz6ZWW6WlLiDHfh4Ck7+qUmlLy0GbQFfcLTfkjv62IY00C3f7cBPAYUL3///qifzNt4ZLOQfKI6SQEN/8R49JAQxK3Fy9TU79+mebB7+s55LUXYktxGpCMJsmhEiA2Y8HgCE2mmpw2jMSHtmHY4Rv+LAH/xlW7JFZv8WV2V8zsl/rs47h+6kGaLkyosBVejYtzTuzau0hLcuPecyP8GQoPDN71ZnY+IIY1MUzwuYX3ttIASJGkpl72Ghmq4aogufrWe84=
+        app: ecse321-group12
+
+    - stage: deploy to frontend app
+      script: skip
+      deploy:
+        provider: heroku
+        api_key:
+            secure: lBb48EzrymI/xLgmWKJGfZx2jt656XRgrGNBLj5svtl4F/TGn7qUuB8orodI9UjCsllCub84GWOPERGCYX3SRTrtgpolrjIhROOeZErxY+awnS2y7rQU+4U2qA5wMqMsmMeQBt0lothUjXf7y7YTsg7zx06AiWdVe3p0scUsZ/5UQJrKu8a745SqE22cB1vpn5kbwQij3DxyiiXZmFLyO2/OurGUZi2iJkF3bVDAvVdMSuENcbIq420l1QFVNgOPB2SPuI8l8B6RDcnJPfTwjqn/632uPsoJuBZCRdLEt3+x4rPFOSGT0ecIIeaVG8Hf3UOES4ualRoZLAFokM/i0susI9MmWkij2rwoebuc7929YF+I/yLpcPcm6JGcq7yHtJ4yBsYEFZMztAP6To3MLPPXzsW3p/tQNOd47Siz6ZWW6WlLiDHfh4Ck7+qUmlLy0GbQFfcLTfkjv62IY00C3f7cBPAYUL3///qifzNt4ZLOQfKI6SQEN/8R49JAQxK3Fy9TU79+mebB7+s55LUXYktxGpCMJsmhEiA2Y8HgCE2mmpw2jMSHtmHY4Rv+LAH/xlW7JFZv8WV2V8zsl/rs47h+6kGaLkyosBVejYtzTuzau0hLcuPecyP8GQoPDN71ZnY+IIY1MUzwuYX3ttIASJGkpl72Ghmq4aogufrWe84=
+        app: ecse321-front-321
