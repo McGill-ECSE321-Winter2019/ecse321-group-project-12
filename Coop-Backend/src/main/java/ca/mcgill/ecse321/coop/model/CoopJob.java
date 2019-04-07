@@ -107,5 +107,15 @@ public class CoopJob {
 	public String getJobId() {
 		return this.jobId;
 	}
+	
+	private String description;
+
+	public void setDescription(String value) {
+		this.description = value;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
 
 }

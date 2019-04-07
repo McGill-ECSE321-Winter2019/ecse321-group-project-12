@@ -66,6 +66,16 @@ public class CoopController {
 		service.deleteSystem();  
 	}
 	
+	@PostMapping(value = { "/studentsf", "/studentsf/" }) //create a new student
+	public StudentDto createStudentf(@RequestParam(name = "userName") String userName,
+	@RequestParam(name = "mcgillid") String mcgillid,
+	@RequestParam(name = "email") String email) throws IllegalArgumentException {
+		// @formatter:on
+		Student s=service.createStudentf(userName,mcgillid,email);
+		if(s==null) {throw new IllegalArgumentException();}
+		return convertToDtob(s); 
+	}
+	
 	@PostMapping(value = { "/students/{userName}", "/students/{userName}/" }) //create a new student
 	public StudentDto createStudent(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
@@ -159,6 +169,17 @@ public class CoopController {
 			@RequestParam(name = "Password") String password) throws IllegalArgumentException {
 		// @formatter:on
 		service.setPassword(userName,password);
+		CoopUser s= service.findCoopUserByUsername(userName);
+		if(s==null) {throw new IllegalArgumentException();}
+		return convertToDtoa(s); 
+	}
+	
+	
+	@PostMapping(value = { "/setEmail", "/setEmail/" }) //set the password
+	public CoopUserDto setEmail(@RequestParam(name = "Username") String userName,
+			@RequestParam(name = "Email") String email) throws IllegalArgumentException {
+		// @formatter:on
+		service.setEmail(userName,email);
 		CoopUser s= service.findCoopUserByUsername(userName);
 		if(s==null) {throw new IllegalArgumentException();}
 		return convertToDtoa(s); 
@@ -337,6 +358,15 @@ public class CoopController {
 			) throws IllegalArgumentException {
 		// @formatter:on
 		return convertToDto(service.createCoopJob(jobId,employerName,studentName));	
+		
+	}
+	
+	@PostMapping(value = { "/newJobf", "/newJobf/" }) //create a new coopjob
+	public CoopJobDto createJobf(@RequestParam(name = "JobId") String jobId,
+			@RequestParam(name = "EmployerName") String employerName, @RequestParam(name = "StudentName") String studentName
+			@RequestParam(name = "description") String description) throws IllegalArgumentException {
+		// @formatter:on
+		return convertToDto(service.createCoopJobf(jobId,employerName,studentName,description));	
 		
 	}
 	
@@ -554,6 +584,7 @@ public class CoopController {
 		jobD.employerName=job.getEmployer().getUsername();
 		jobD.coopSystemName=job.getCoopSystem().getId();
 		jobD.name=job.getName();
+		jobD.description=job.getDescription();
 		jobD.startDate=(Date) job.getStartDate().clone();
 		jobD.endDate=(Date) job.getEndDate().clone();
 		jobD.jobId= job.getJobId();
@@ -591,6 +622,7 @@ public class CoopController {
 		uD.coopSystemName=u.getCoopSystem().getId();
 		uD.username=u.getUsername();
 		uD.password=u.getPassword();
+		uD.email=u.getEmail();
 		
 		uD.authoredDocumentsIds= new HashSet<String>();
 		for(Document doc : service.findDocumentsByAuthor(u.getUsername())){
@@ -649,6 +681,9 @@ public class CoopController {
 		uD.coopSystemName=u.getCoopSystem().getId();
 		uD.username=u.getUsername();
 		uD.password=u.getPassword();
+		uD.mcgillid=u.getMcgillid();
+		uD.email=u.getEmail();
+		
 		
 		uD.authoredDocumentsIds= new HashSet<String>();
 		for(Document doc : service.findDocumentsByAuthor(u.getUsername())){

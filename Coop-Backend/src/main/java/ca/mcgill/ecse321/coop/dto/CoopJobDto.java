@@ -21,7 +21,7 @@ public class CoopJobDto {
 
 	public String name;
 
-	
+	public String description;
 
 	public Date startDate;
 

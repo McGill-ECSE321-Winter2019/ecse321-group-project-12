@@ -11,7 +11,7 @@ public abstract class CoopUserDto {
 	
 	public Set<String> authoredDocumentsIds;
 
-	
+	public String email;
 
 	public String password;
 

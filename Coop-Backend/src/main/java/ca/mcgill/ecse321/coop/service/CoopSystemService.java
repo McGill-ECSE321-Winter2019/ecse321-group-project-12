@@ -87,8 +87,37 @@ public class CoopSystemService {
 	@Transactional
 	public void deleteSystem() //delete the only system we have
 	{
-		coopSystemRepository.deleteAll();
+		clear();
 	}
+	
+	@Transactional
+	public Student createStudentf (String username,String mcgillid, String email) //create a student with unique username
+	{	//make sure this username is unique for any employer of student
+		if(mcgillid==null || email==null || username==null || studentRepository.existsById(username) || employerRepository.existsById(username) ||coopUserRepository.existsById(username) ) //check the username not used before
+		{
+			return null;
+		}
+		Student s =new Student();
+		s.setUsername(username);
+		s.setMcgillid(mcgillid);
+		s.setEmail(email);
+		CoopSystem coopSystem= getCoopSystem();
+		s.setCoopSystem(coopSystem);  //set its top level containing class to the one we are using
+		s.setAuthoredDocuments(new HashSet<Document>());
+		s.setCoopJobs(new HashSet<CoopJob>());
+		s.setPersonalDocuments(new HashSet<Document>());
+		s.setReceivedMessages(new HashSet<Message>());
+		s.setSentMessages(new HashSet<Message>());
+		
+		coopSystem.getCoopUsers().add(s); // add it to the list of users in the system isntance
+		coopSystemRepository.save(coopSystem);
+		studentRepository.save(s);
+		coopUserRepository.save(s);
+		
+		return s;
+	}
+	
+	
 	
 	@Transactional
 	public Student createStudent (String username) //create a student with unique username
@@ -147,6 +176,16 @@ public class CoopSystemService {
 		CoopUser s=getCoopUser(username);
 		if(s==null) {return;}
 		s.setPassword(password);
+		saveCoopUser(s);
+	}
+	
+	@Transactional
+	public void setEmail(String username, String email) //set the password for a CoopUser
+	{
+		if(username==null || email==null) {return;}
+		CoopUser s=getCoopUser(username);
+		if(s==null) {return;}
+		s.setEmail(email);
 		saveCoopUser(s);
 	}
 	
@@ -648,6 +687,39 @@ public class CoopSystemService {
 		if(student==null || employer==null){return null;}
 		CoopJob job =new CoopJob();
 		job.setJobId(jobId);
+		job.setEmployer(employer);
+		job.setIntern(student);
+		job.setCoopSystem(c);
+		job.setCoopJobDocuments(new HashSet<Document>());
+		
+		employer.getCoopJobs().add(job);
+		student.getCoopJobs().add(job);
+		c.getCoopJobs().add(job);
+		if(!employer.getArchivedInterns().contains(student)){ // if this the first time this student does a coop
+															// a coop with this employer, add this employer to
+															//archived interns
+			employer.getArchivedInterns().add(student);
+		}
+		coopJobRepository.save(job);
+		coopSystemRepository.save(c);
+		studentRepository.save(student);coopUserRepository.save(student);
+		employerRepository.save(employer);coopUserRepository.save(employer);
+		return job;
+	}
+	
+	@Transactional // create a coopob
+	public CoopJob createCoopJobf(String jobId, String employerName, String studentName,String description)
+	{
+		if(jobId==null|| employerName==null || studentName==null || coopJobRepository.existsById(jobId) ) {
+		return null;
+		}
+		Student student=getStudent(studentName);
+		Employer employer=getEmployer(employerName);
+		CoopSystem c=getCoopSystem();
+		if(student==null || employer==null){return null;}
+		CoopJob job =new CoopJob();
+		job.setJobId(jobId);
+		job.setDescription(description);
 		job.setEmployer(employer);
 		job.setIntern(student);
 		job.setCoopSystem(c);

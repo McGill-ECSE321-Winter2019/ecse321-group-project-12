@@ -51,5 +51,15 @@ public class Student extends CoopUser {
 	public boolean isAllowTranscript() {
 		return this.allowTranscript;
 	}
+	
+	private String mcgillid;
+
+	public void setMcgillid(String value) {
+		this.mcgillid = value;
+	}
+
+	public String getMcgillid() {
+		return this.mcgillid;
+	}
 
 }

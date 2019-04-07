@@ -46,6 +46,16 @@ public abstract class CoopUser {
 	public String getPassword() {
 		return this.password;
 	}
+	
+	private String email;
+
+	public void setEmail(String value) {
+		this.email = value;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
 
 	private String username;
 

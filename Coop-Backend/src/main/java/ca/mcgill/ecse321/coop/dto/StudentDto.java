@@ -15,5 +15,6 @@ public class StudentDto extends CoopUserDto {
 	public boolean allowCV = false;
 
 	public boolean allowTranscript = false;
+	public String mcgillid;
 
 }
