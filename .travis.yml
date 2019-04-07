@@ -1,12 +1,8 @@
 matrix:
   include:
     - language: java
-      
       script:
         - "./gradlew build"
-
-    - language: php
-      script: skip
 
     - stage: deploy to backend app
       script: skip
