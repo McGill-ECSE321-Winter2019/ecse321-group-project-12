@@ -13,62 +13,67 @@ import org.junit.jupiter.api.Test;
 
 public class interfaceTest {
 	
-	@Test
+	
+	@Test 
 	void testCreateSystem() {
-		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");
+		testCreate("https://ecse321-group12.herokuapp.com/coopsystem"); //Create a coopsystem
 	}
 	
 	@Test
 	void testCreateStudent() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/Mahtab");
-		testDelete("https://ecse321-group12.herokuapp.com/students/Mahtab");
+		testCreate("https://ecse321-group12.herokuapp.com/students/Mahtab"); //Create a student
+		testDelete("https://ecse321-group12.herokuapp.com/students/Mahtab"); //Delete that student
 	}
 	
 	
 	@Test
 	void testCreateEmployer() {
-		testCreate("https://ecse321-group12.herokuapp.com/employers/Brown");
-		testDelete("https://ecse321-group12.herokuapp.com/employers/Brown");
+		testCreate("https://ecse321-group12.herokuapp.com/employers/Brown"); //Create an employer
+		testDelete("https://ecse321-group12.herokuapp.com/employers/Brown"); //Delete that employer
 	}	
 	
 
 	
 	@Test
 	void testSetPassword() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/Richard");
-		testCreate("https://ecse321-group12.herokuapp.com/setPassword?Username=Richard&Password=1234");
-		//queryService("https://ecse321-group12.herokuapp.com/students/Richard");
-		testDelete("https://ecse321-group12.herokuapp.com/students/Richard");
+		testCreate("https://ecse321-group12.herokuapp.com/students/Richard"); //Create a student
+		testCreate("https://ecse321-group12.herokuapp.com/setPassword?"
+				+ "Username=Richard&Password=1234"); //Create password for that student
+		testDelete("https://ecse321-group12.herokuapp.com/students/Richard"); //Delete that student
 	}	
 	@Test
 	void testCreateDocument() {
-		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");
-		testCreate("https://ecse321-group12.herokuapp.com/students/Cat");
-		testCreate("https://ecse321-group12.herokuapp.com/createDocument?DocumentId=moon&UserName=Cat&Type=CV");
-		testDelete("https://ecse321-group12.herokuapp.com/students/Cat");
+		testCreate("https://ecse321-group12.herokuapp.com/coopsystem"); //Create a CoopSystem
+		testCreate("https://ecse321-group12.herokuapp.com/students/Cat"); //Create a student
+		testCreate("https://ecse321-group12.herokuapp.com/createDocument?"
+				+ "DocumentId=moon&UserName=Cat&Type=CV"); //Create a document for that student
+		testDelete("https://ecse321-group12.herokuapp.com/students/Cat"); //Delete the student
 	}	
 	
 	@Test
 	void testDeleteDocument() {
-		testDelete("https://ecse321-group12.herokuapp.com/deleteDocument?DocumentId=moon");
+		testDelete("https://ecse321-group12.herokuapp.com/deleteDocument?"
+				+ "DocumentId=moon"); //Delete the document created in the previous test
 	}
 	@Test
 	void testSetPreferencesStudentPreferences() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/John1");
-		testCreate("https://ecse321-group12.herokuapp.com/studentPreferences?StudentName=John1&AllowCV=false&AllowTranscript=true");
-        testDelete("https://ecse321-group12.herokuapp.com/students/John1");
+		testCreate("https://ecse321-group12.herokuapp.com/students/John1"); //Create a student
+		testCreate("https://ecse321-group12.herokuapp.com/studentPreferences?"
+				+ "StudentName=John1&AllowCV=false&AllowTranscript=true"); //set the preferences for that student
+        testDelete("https://ecse321-group12.herokuapp.com/students/John1");//Delete that student
 	}
 	@Test
 	void testSetPreferencesStudentPersonal() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/Johnny1");
-		testCreate("https://ecse321-group12.herokuapp.com/studentPersonal?StudentName=Johnny1&PersonalDocumentsIds=moon");
-        testDelete("https://ecse321-group12.herokuapp.com/students/Johnny1");
+		testCreate("https://ecse321-group12.herokuapp.com/students/Johnny1");// Create a student
+		testCreate("https://ecse321-group12.herokuapp.com/studentPersonal?"
+				+ "StudentName=Johnny1&PersonalDocumentsIds=moon"); //Set personal preferences for that student
+        testDelete("https://ecse321-group12.herokuapp.com/students/Johnny1");//Delete that student
 	}	
 	
 	@Test
 	void testGetCoopuser() {
-		testCreate("https://ecse321-group12.herokuapp.com/employers/blue");
-		testGet("https://ecse321-group12.herokuapp.com/coopusers/blue");  
+		testCreate("https://ecse321-group12.herokuapp.com/employers/blue"); //Create a coopuser
+		testGet("https://ecse321-group12.herokuapp.com/coopusers/blue");  //Get that coopuser
 		
 	}
 	
@@ -77,28 +82,28 @@ public class interfaceTest {
 	void testCreateAndSendMessage() {
 		testCreate("https://ecse321-group12.herokuapp.com/students/John2");  //Create sender
 		testCreate("https://ecse321-group12.herokuapp.com/employers/Johnny2"); //Create receiver		
-		testCreate("https://ecse321-group12.herokuapp.com/createDocument?UserName=Blah&DocumentId=sun&Type=CV"); //Create a document
-    	testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Sam1&SenderName=John2&ReceiverName=Johnny2&Content=Yolo&ListofAttachementsIds=[moon]");
-	   // testDelete("https://ecse321-group12.herokuapp.com/students/John2");
-	    //testDelete("https://ecse321-group12.herokuapp.com/students/Johnny2");
-	    //testDelete("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Sam1");
+		testCreate("https://ecse321-group12.herokuapp.com/createDocument?UserName=Blah"
+				+ "&DocumentId=sun&Type=CV"); //Create a document
+    	testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Sam1&"
+    			+ "SenderName=John2&ReceiverName=Johnny2&Content=Yolo&ListofAttachementsIds=[moon]");//Send a message
 	}
 	
 	@Test
 	void testGetMessage() {
-		testGet("https://ecse321-group12.herokuapp.com/Message?MessageId=Hello");
+		testGet("https://ecse321-group12.herokuapp.com/Message?MessageId=Hello"); //Get a message
 		
 		}
 	
 	@Test
 	void testDeleteMessage() {
-		testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Hellow&SenderName=Cat&ReceiverName=Bloch&Content=Yolo&ListofAttachementsIds=[moon]");
-		testDelete("https://ecse321-group12.herokuapp.com/Messafe?MessageId=Hellow");
+		testCreate("https://ecse321-group12.herokuapp.com/newMessage?MessageId=Hellow&SenderName=Cat"
+				+ "&ReceiverName=Bloch&Content=Yolo&ListofAttachementsIds=[moon]"); //Create a message
+		testDelete("https://ecse321-group12.herokuapp.com/Messafe?MessageId=Hellow");//Delete that message
 	}
 	
 	@Test
 	void testSentMessages() {
-		testGet("https://ecse321-group12.herokuapp.com/SentMessages?SenderName=John2");
+		testGet("https://ecse321-group12.herokuapp.com/SentMessages?SenderName=John2"); //get list of sent messages
 	}
 	
 	
@@ -109,7 +114,8 @@ public class interfaceTest {
 	@Test
 	void testCreateEventNotification() {
 
-		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?EventNotificationId=HelloWorld");
+		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?"
+				+ "EventNotificationId=HelloWorld");//Create an event notification
 	
 	}	
 	
@@ -118,19 +124,19 @@ public class interfaceTest {
 	
 	@Test
 	void testSetEventNotificationSettings() {
-		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");
-		
-		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?EventNotificationId=HelloWorld");
-		
-		                                               ///setEventSettings?EventNotificationId={enId}&Type={type}&Location={location}&Date={date}&StartTime={startTime}&EndTime={endTime}
-		testCreate("https://ecse321-group12.herokuapp.com/setEventSettings?EventNotificationId=HelloWorld&Type=conferece&Location=Amsterdam&Date=2019-02-21&StartTime=13:10:00&EndTime=18:30:00");
-	
+		testCreate("https://ecse321-group12.herokuapp.com/coopsystem");	//create a coopsystem
+		testCreate("https://ecse321-group12.herokuapp.com/createEventNotification?"
+				+ "EventNotificationId=HelloWorld");                    // Create notification  
+		testCreate("https://ecse321-group12.herokuapp.com/setEventSettings?EventNotificationId=HelloWorld&"
+				+ "Type=conferece&Location="
+				+ "Amsterdam&Date=2019-02-21&StartTime=13:10:00&EndTime=18:30:00"); //Set notification settings
+	 
 	}
 	
 	@Test
 	void testGetEventNotification() {
 		
-		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications");
+		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications"); //
 		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications?EventNotificationId=HelloWorld");
 		
 	}
