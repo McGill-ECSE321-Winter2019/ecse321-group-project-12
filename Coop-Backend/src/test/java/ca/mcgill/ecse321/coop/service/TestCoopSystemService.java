@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.coop.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
@@ -13,14 +12,12 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.*;
-
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-//
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.junit.Before;
@@ -36,11 +33,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-//
 import ca.mcgill.ecse321.coop.dao.*;
 import ca.mcgill.ecse321.coop.model.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -48,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestCoopSystemService {
 
 	@Autowired
-	private CoopSystemService service;
+	private CoopSystemService service; 
 
 	@Autowired
 	private CoopJobRepository coopJobRepository;
