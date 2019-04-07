@@ -136,7 +136,8 @@ public class interfaceTest {
 	@Test
 	void testGetEventNotification() {
 		
-		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications"); //
+		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications"); //get the notification that was
+		                                                                        //created in the previous test
 		testGet("https://ecse321-group12.herokuapp.com/getEventNotifications?EventNotificationId=HelloWorld");
 		
 	}
@@ -144,14 +145,16 @@ public class interfaceTest {
 	@Test
 	void testDeleteNotification() {
 		
-		testDelete("https://ecse321-group12.herokuapp.com/Event?EentId=HelloWorld");
+		testDelete("https://ecse321-group12.herokuapp.com/Event?EentId=HelloWorld");//Delete the notification 
+		                                                                            //that was created in the previous test
 	}
 	
 	@Test
 	void testCreateJob() {
-		testCreate("https://ecse321-group12.herokuapp.com/students/Dog");
-		testCreate("https://ecse321-group12.herokuapp.com/employers/SamSam");
-		testCreate("https://ecse321-group12.herokuapp.com/newJob?JobId=manager&EmployerName=SamSam&StudentName=Dog");
+		testCreate("https://ecse321-group12.herokuapp.com/students/Dog"); //Create a new student
+		testCreate("https://ecse321-group12.herokuapp.com/employers/SamSam");//Create a new employer
+		testCreate("https://ecse321-group12.herokuapp.com/newJob?JobId=manager"//Create a job
+				+ "&EmployerName=SamSam&StudentName=Dog");
 		
 	}
 	
@@ -177,7 +180,6 @@ public class interfaceTest {
                     + httpConnection.getResponseCode());
             }
 
-            //System.out.println(httpConnection.getResponseCode());
             httpConnection.disconnect();            
           } catch (MalformedURLException e) {
             e.printStackTrace();
