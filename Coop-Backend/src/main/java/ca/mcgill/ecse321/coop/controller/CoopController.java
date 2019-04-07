@@ -109,7 +109,7 @@ public class CoopController {
 		return sys.getEmail(); 
 	}
 	
-	@GetMapping(value = { "/mcgillid/{userName}", "/mcgill/{userName}/" }) // retieve a mcgill id of a student
+	@GetMapping(value = { "/mcgillid/{userName}", "/mcgillid/{userName}/" }) // retieve a mcgill id of a student
 	public String getMcgillid(@PathVariable("userName") String userName) throws IllegalArgumentException {
 		// @formatter:on
 		Student sys=service.findStudentByUsername(userName);
