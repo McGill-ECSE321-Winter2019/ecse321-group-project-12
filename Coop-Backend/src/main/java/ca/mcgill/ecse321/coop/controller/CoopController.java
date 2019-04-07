@@ -363,7 +363,7 @@ public class CoopController {
 	
 	@PostMapping(value = { "/newJobf", "/newJobf/" }) //create a new coopjob
 	public CoopJobDto createJobf(@RequestParam(name = "JobId") String jobId,
-			@RequestParam(name = "EmployerName") String employerName, @RequestParam(name = "StudentName") String studentName
+			@RequestParam(name = "EmployerName") String employerName, @RequestParam(name = "StudentName") String studentName,
 			@RequestParam(name = "description") String description) throws IllegalArgumentException {
 		// @formatter:on
 		return convertToDto(service.createCoopJobf(jobId,employerName,studentName,description));	
