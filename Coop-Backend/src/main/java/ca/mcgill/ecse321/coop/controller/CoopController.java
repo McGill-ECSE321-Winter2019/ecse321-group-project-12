@@ -100,6 +100,24 @@ public class CoopController {
 		return convertToDtoa(sys); 
 	}
 	
+	
+	@GetMapping(value = { "/email/{userName}", "/email/{userName}/" }) //retrieve an email of a user
+	public String getEmail(@PathVariable("userName") String userName) throws IllegalArgumentException {
+		// @formatter:on
+		CoopUser sys=service.findCoopUserByUsername(userName);
+		if(sys==null) {throw new IllegalArgumentException();}
+		return sys.getEmail(); 
+	}
+	
+	@GetMapping(value = { "/mcgillid/{userName}", "/mcgill/{userName}/" }) // retieve a mcgill id of a student
+	public String getMcgillid(@PathVariable("userName") String userName) throws IllegalArgumentException {
+		// @formatter:on
+		Student sys=service.findStudentByUsername(userName);
+		if(sys==null) {throw new IllegalArgumentException();}
+		return sys.getMcgillid(); 
+	}
+	
+	
 	@GetMapping(value = { "/students", "/students/" }) //retrieve all students
 	public ArrayList<StudentDto> getStudents() throws IllegalArgumentException {
 		// @formatter:on
