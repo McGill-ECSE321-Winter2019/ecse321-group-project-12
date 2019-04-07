@@ -74,13 +74,13 @@ public class CoopSystemService {
 	}
 
 	/**
-	 * We want to make sure that we only have one coop system
-	 * we always look for one with the String id "Main data"
+	 * We want to make sure that we only have one coop system we always look for one
+	 * with the String id "Main data"
+	 * 
 	 * @return
 	 */
 	@Transactional
-	public CoopSystem getCoopSystem() 
-	{
+	public CoopSystem getCoopSystem() {
 		if (coopSystemRepository.existsById("Main data")) {
 			return coopSystemRepository.findById("Main data").get();
 		}
@@ -91,13 +91,13 @@ public class CoopSystemService {
 	 * delete the only system we have
 	 */
 	@Transactional
-	public void deleteSystem() 
-	{
+	public void deleteSystem() {
 		clear();
 	}
 
 	/**
-	 * Create a student and make sure it is unique for every employer
+	 * Create a student.
+	 * 
 	 * @param username
 	 * @param mcgillid
 	 * @param email
@@ -107,8 +107,9 @@ public class CoopSystemService {
 	public Student createStudentf(String username, String mcgillid, String email) {
 		if (mcgillid == null || email == null || username == null || studentRepository.existsById(username)
 				|| employerRepository.existsById(username) || coopUserRepository.existsById(username)) // check the
-																									   // username is not
-																									   // used before
+																										// username is
+																										// not
+																										// used before
 		{
 			return null;
 		}
@@ -133,14 +134,14 @@ public class CoopSystemService {
 	}
 
 	/**
-	 * Create a student with unique username
-	 * Make sure this username is unique for any employer of student
+	 * Create a student with unique username Make sure this username is unique for
+	 * any employer of student
+	 * 
 	 * @param username
 	 * @return
 	 */
 	@Transactional
-	public Student createStudent(String username) 
-	{                                             
+	public Student createStudent(String username) {
 		if (username == null || studentRepository.existsById(username) || employerRepository.existsById(username)
 				|| coopUserRepository.existsById(username)) // check the username is not used before
 		{
@@ -166,6 +167,7 @@ public class CoopSystemService {
 
 	/**
 	 * Create a new Employer
+	 * 
 	 * @param username
 	 * @return
 	 */
@@ -196,12 +198,12 @@ public class CoopSystemService {
 
 	/**
 	 * Set the password for a CoopUser
+	 * 
 	 * @param username
 	 * @param password
 	 */
 	@Transactional
-	public void setPassword(String username, String password) 
-	{
+	public void setPassword(String username, String password) {
 		if (username == null || password == null) {
 			return;
 		}
@@ -215,11 +217,12 @@ public class CoopSystemService {
 
 	/**
 	 * Set the email for a CoopUser
+	 * 
 	 * @param username
 	 * @param email
 	 */
 	@Transactional
-	public void setEmail(String username, String email) // 
+	public void setEmail(String username, String email) //
 	{
 		if (username == null || email == null) {
 			return;
@@ -234,16 +237,17 @@ public class CoopSystemService {
 
 	/**
 	 * Find a coopuser by its username
+	 * 
 	 * @param username
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public CoopUser getCoopUser(String username) {
 		if (username == null) {
 			return null;
 		}
 		if (studentRepository.existsById(username)) {
-			return studentRepository.findById(username).get();		
+			return studentRepository.findById(username).get();
 		} else if (employerRepository.existsById(username)) {
 			return employerRepository.findById(username).get();
 		}
@@ -252,6 +256,7 @@ public class CoopSystemService {
 
 	/**
 	 * Find a student by its username
+	 * 
 	 * @param username
 	 * @return
 	 */
@@ -265,14 +270,14 @@ public class CoopSystemService {
 		}
 		return null;
 	}
-	
 
 	/**
 	 * Find employer by username
+	 * 
 	 * @param username
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public Employer getEmployer(String username) {
 		if (username == null) {
 			return null;
@@ -285,9 +290,10 @@ public class CoopSystemService {
 
 	/**
 	 * Save a coopuser to the corresponding repository
+	 * 
 	 * @param s
 	 */
-	@Transactional // 
+	@Transactional
 	public void saveCoopUser(CoopUser s) {
 		if (s == null) {
 			return;
@@ -300,15 +306,15 @@ public class CoopSystemService {
 			employerRepository.save((Employer) s);
 		}
 	}
-	
 
 	/**
 	 * Set the privacy settings for the student
+	 * 
 	 * @param username
 	 * @param allowCV
 	 * @param allowTranscript
 	 */
-	@Transactional 
+	@Transactional
 	public void setStudentPermissions(String username, boolean allowCV, boolean allowTranscript) {
 		if (username == null) {
 			return;
@@ -330,8 +336,7 @@ public class CoopSystemService {
 	 * Get list of all users
 	 */
 	@Transactional
-	public ArrayList<CoopUser> getAllCoopUsers() 
-	{
+	public ArrayList<CoopUser> getAllCoopUsers() {
 		ArrayList<CoopUser> listOfUsers = new ArrayList<CoopUser>();
 		CoopSystem coopSystem = coopSystemRepository.findById("Main data").get();
 		Set<CoopUser> dummy = coopSystem.getCoopUsers(); // get the list of allusers from coopsystem
@@ -343,11 +348,11 @@ public class CoopSystemService {
 
 	/**
 	 * Get list of all students
+	 * 
 	 * @return
 	 */
 	@Transactional
-	public ArrayList<Student> getAllStudents()  
-	{
+	public ArrayList<Student> getAllStudents() {
 		Iterable<Student> dummy = studentRepository.findAll(); // get all students in the student repository
 		ArrayList<Student> toReturn = new ArrayList<Student>();
 		for (Student s : dummy) {
@@ -358,11 +363,11 @@ public class CoopSystemService {
 
 	/**
 	 * Get list of all employers
+	 * 
 	 * @return
 	 */
 	@Transactional
-	public ArrayList<Employer> getAllEmployers() 
-	{
+	public ArrayList<Employer> getAllEmployers() {
 		Iterable<Employer> dummy = employerRepository.findAll();
 		ArrayList<Employer> toReturn = new ArrayList<Employer>();
 		for (Employer e : dummy) {
@@ -373,12 +378,12 @@ public class CoopSystemService {
 
 	/**
 	 * Find a user by its id
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@Transactional
-	public CoopUser findCoopUserByUsername(String id)  
-	{
+	public CoopUser findCoopUserByUsername(String id) {
 		ArrayList<CoopUser> setOfUsers = getAllCoopUsers();
 		CoopUser foundUser = null;
 		for (CoopUser a : setOfUsers) // seearch in all coopusers
@@ -393,12 +398,12 @@ public class CoopSystemService {
 
 	/**
 	 * Find a Student by the username
+	 * 
 	 * @param username
 	 * @return
 	 */
 	@Transactional
-	public Student findStudentByUsername(String username)  
-	{
+	public Student findStudentByUsername(String username) {
 		if (username == null) {
 			return null;
 		}
@@ -411,12 +416,12 @@ public class CoopSystemService {
 
 	/**
 	 * Find an employer by the username
+	 * 
 	 * @param username
 	 * @return
 	 */
 	@Transactional
-	public Employer findEmployerByUsername(String username) 
-	{
+	public Employer findEmployerByUsername(String username) {
 		if (username == null) {
 			return null;
 		}
@@ -428,9 +433,10 @@ public class CoopSystemService {
 
 	/**
 	 * delete a student with a specific username
+	 * 
 	 * @param username
 	 */
-	@Transactional 
+	@Transactional
 	public void deleteStudent(String username) {
 		Student a = getStudent(username);
 		if (a == null) {
@@ -449,7 +455,7 @@ public class CoopSystemService {
 	 * Delete all students in repository
 	 */
 	@Transactional
-	public void deleteAllStudents() { 
+	public void deleteAllStudents() {
 
 		for (Student s : studentRepository.findAll()) {
 			deleteStudent(s.getUsername());
@@ -458,10 +464,11 @@ public class CoopSystemService {
 
 	/**
 	 * Delete a specific employer
+	 * 
 	 * @param username
 	 */
 	@Transactional
-	public void deleteEmployer(String username) {  
+	public void deleteEmployer(String username) {
 		Employer a = getEmployer(username);
 		if (a != null) {
 			employerRepository.delete(a);
@@ -470,11 +477,11 @@ public class CoopSystemService {
 
 	/**
 	 * Delete any type of user
+	 * 
 	 * @param username
 	 */
 	@Transactional
-	public void deleteCoopUser(String username) 
-	{
+	public void deleteCoopUser(String username) {
 		CoopUser a = getCoopUser(username);
 		if (a != null) {
 			if (a instanceof Student) // if this is a student
@@ -489,12 +496,12 @@ public class CoopSystemService {
 
 	/**
 	 * Set personal documents
+	 * 
 	 * @param username
 	 * @param docIds
 	 */
 	@Transactional
-	public void setPersonalDocuments(String username, ArrayList<String> docIds) 
-	{
+	public void setPersonalDocuments(String username, ArrayList<String> docIds) {
 		if (username == null) {
 			return;
 		}
@@ -519,12 +526,13 @@ public class CoopSystemService {
 
 	/**
 	 * Create a new document
+	 * 
 	 * @param documentId
 	 * @param authorUsername
 	 * @param type
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public Document createDocument(String documentId, String authorUsername, DocumentType type) { // unique id
 		if (documentId == null || documentRepository.existsById(documentId) || authorUsername == null) {
 			return null;
@@ -552,12 +560,12 @@ public class CoopSystemService {
 
 	/**
 	 * Find documents by document id
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@Transactional
-	public Document findDocumentByDocumentId(String id) 
-	{
+	public Document findDocumentByDocumentId(String id) {
 		if (id == null) {
 			return null;
 		}
@@ -569,12 +577,12 @@ public class CoopSystemService {
 
 	/**
 	 * Find documents by author
+	 * 
 	 * @param authorUsername
 	 * @return
 	 */
 	@Transactional
-	public ArrayList<Document> findDocumentsByAuthor(String authorUsername) 
-	{
+	public ArrayList<Document> findDocumentsByAuthor(String authorUsername) {
 		if (authorUsername == null) {
 			return null;
 		}
@@ -589,11 +597,11 @@ public class CoopSystemService {
 
 	/**
 	 * Delete the document, taking into account referential integrity
+	 * 
 	 * @param id
 	 */
 	@Transactional
-	public void deleteDocument(String id) 
-	{
+	public void deleteDocument(String id) {
 		if (id == null) {
 			return;
 		}
@@ -634,12 +642,12 @@ public class CoopSystemService {
 
 	/**
 	 * Create a new event notification
+	 * 
 	 * @param id
 	 * @return
 	 */
 	@Transactional
-	public EventNotification createEventNotification(String id) 
-	{ // unique id
+	public EventNotification createEventNotification(String id) { // unique id
 		if (id == null || eventNotificationRepository.existsById(id)) {
 			return null;
 		}
@@ -651,7 +659,7 @@ public class CoopSystemService {
 		s.getEventNotifications().add(e);
 		for (Employer em : this.getAllEmployers()) {
 			em.getEventNotifications().add(e); // add this event notification to the list of notifications for all
-											   // employers
+												// employers
 			employerRepository.save(em);
 		}
 
@@ -662,6 +670,7 @@ public class CoopSystemService {
 
 	/**
 	 * Set the settings of a specific event notification
+	 * 
 	 * @param eventName
 	 * @param typeEvent
 	 * @param location
@@ -703,6 +712,7 @@ public class CoopSystemService {
 
 	/**
 	 * Find a specific event notification
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -720,6 +730,7 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of all event notifications
+	 * 
 	 * @return
 	 */
 	@Transactional
@@ -735,10 +746,11 @@ public class CoopSystemService {
 
 	/**
 	 * Delete a specific event notification by eventname
+	 * 
 	 * @param eventname
 	 */
 	@Transactional
-	public void deleteEventNotification(String eventname) {  
+	public void deleteEventNotification(String eventname) {
 		if (eventname == null) {
 			return;
 		}
@@ -765,10 +777,9 @@ public class CoopSystemService {
 
 	}
 
-	              
-	                 
 	/**
 	 * Create a new message
+	 * 
 	 * @param messageId
 	 * @param senderName
 	 * @param receiverName
@@ -776,7 +787,7 @@ public class CoopSystemService {
 	 * @param attachementNames
 	 * @return
 	 */
-	@Transactional   
+	@Transactional
 	public Message createMessage(String messageId, String senderName, String receiverName, String content,
 			ArrayList<String> attachementNames) { // unique id, sender and receiver exist
 		if (messageId == null || senderName == null || receiverName == null
@@ -788,7 +799,7 @@ public class CoopSystemService {
 
 		Message m = new Message();
 		CoopSystem c = getCoopSystem();
-		m.setMessageId(messageId);        
+		m.setMessageId(messageId);
 		m.setSender(sender);
 		m.setReceiver(receiver);
 		m.setCoopSystem(c);
@@ -818,10 +829,11 @@ public class CoopSystemService {
 
 	/**
 	 * Find a specific message
+	 * 
 	 * @param id
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public Message findMessageByMessageId(String id) {
 		if (id == null) {
 			return null;
@@ -834,10 +846,11 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of sent messages
+	 * 
 	 * @param senderName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<Message> findMessagesBySender(String senderName) {
 		if (senderName == null) {
 			return null;
@@ -856,10 +869,11 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of incoming messages
+	 * 
 	 * @param receiverName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<Message> findMessagesByReceiver(String receiverName) {
 		if (receiverName == null) {
 			return null;
@@ -875,9 +889,10 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of all messages
+	 * 
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<Message> getAllMessages() {
 		ArrayList<Message> list = new ArrayList<Message>();
 		for (Message m : messageRepository.findAll()) {
@@ -888,11 +903,12 @@ public class CoopSystemService {
 
 	/**
 	 * Messages between sender and receiver
+	 * 
 	 * @param senderName
 	 * @param receiverName
 	 * @return
 	 */
-	@Transactional  
+	@Transactional
 	public ArrayList<Message> findMessagesBySenderAndReceiver(String senderName, String receiverName) {
 		if (receiverName == null || senderName == null) {
 			return null;
@@ -915,9 +931,10 @@ public class CoopSystemService {
 
 	/**
 	 * Delete a specific message
+	 * 
 	 * @param messageId
 	 */
-	@Transactional  
+	@Transactional
 	public void deleteMessage(String messageId) {
 		if (messageId == null) {
 			return;
@@ -929,13 +946,14 @@ public class CoopSystemService {
 	}
 
 	/**
-	 * Creates a new Coop job               
+	 * Creates a new Coop job
+	 * 
 	 * @param jobId
 	 * @param employerName
 	 * @param studentName
 	 * @return
-	 */              
-	@Transactional 
+	 */
+	@Transactional
 	public CoopJob createCoopJob(String jobId, String employerName, String studentName) {
 		if (jobId == null || employerName == null || studentName == null || coopJobRepository.existsById(jobId)) {
 			return null;
@@ -969,6 +987,7 @@ public class CoopSystemService {
 		coopUserRepository.save(employer);
 		return job;
 	}
+
 	/**
 	 * 
 	 * @param jobId
@@ -977,7 +996,7 @@ public class CoopSystemService {
 	 * @param description
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public CoopJob createCoopJobf(String jobId, String employerName, String studentName, String description) {
 		if (jobId == null || employerName == null || studentName == null || coopJobRepository.existsById(jobId)) {
 			return null;
@@ -1015,10 +1034,11 @@ public class CoopSystemService {
 
 	/**
 	 * find a specific coopjob
+	 * 
 	 * @param id
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public CoopJob findCoopJobByJobId(String id) {
 		if (id == null) {
 			return null;
@@ -1031,10 +1051,11 @@ public class CoopSystemService {
 
 	/**
 	 * find coopjobs by employer
+	 * 
 	 * @param employerName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<CoopJob> findCoopJobsByEmployer(String employerName) {
 		if (employerName == null) {
 			return null;
@@ -1050,13 +1071,14 @@ public class CoopSystemService {
 		}
 		return list;
 	}
-    
+
 	/**
 	 * find coopjobs by student
+	 * 
 	 * @param studentName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<CoopJob> findCoopJobsByStudent(String studentName) {
 		if (studentName == null) {
 			return null;
@@ -1072,14 +1094,15 @@ public class CoopSystemService {
 		}
 		return list;
 	}
-   
+
 	/**
 	 * find the coopjobs between an employer and a student
+	 * 
 	 * @param employerName
 	 * @param studentName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<CoopJob> findCoopJobsByEmployerAndStudent(String employerName, String studentName) {
 		if (studentName == null || employerName == null) {
 			return null;
@@ -1098,9 +1121,10 @@ public class CoopSystemService {
 		}
 		return list;
 	}
-    
+
 	/**
 	 * Delete a specific coop job.
+	 * 
 	 * @param jobId
 	 */
 	@Transactional
@@ -1113,13 +1137,14 @@ public class CoopSystemService {
 
 	/**
 	 * set the settings for a coop job
+	 * 
 	 * @param jobId
 	 * @param startDate
 	 * @param endDate
 	 * @param name
 	 * @param state
 	 */
-	@Transactional // 
+	@Transactional //
 	public void setCoopJobSettings(String jobId, Date startDate, Date endDate, String name, CoopState state) {
 		CoopJob job = findCoopJobByJobId(jobId);
 		if (job == null || endDate.compareTo(startDate) <= 0) { // chnage nothing if job is null, or enddate<=startDate
@@ -1137,14 +1162,14 @@ public class CoopSystemService {
 		coopJobRepository.save(job);
 
 	}
-	
-	
-    /**
-     *  set the state of a coopJob
-     * @param jobId
-     * @param state
-     */
-	@Transactional 
+
+	/**
+	 * set the state of a coopJob
+	 * 
+	 * @param jobId
+	 * @param state
+	 */
+	@Transactional
 	public void setCoopJobState(String jobId, CoopState state) {
 		CoopJob job = findCoopJobByJobId(jobId);
 		if (job == null) { // chnage nothing if job is null, or enddate<=startDate
@@ -1157,13 +1182,14 @@ public class CoopSystemService {
 		coopJobRepository.save(job);
 
 	}
-   
+
 	/**
 	 * upload documents to the coopob
+	 * 
 	 * @param jobId
 	 * @param documentId
 	 */
-	@Transactional  
+	@Transactional
 	public void addDocumentToCoopJob(String jobId, String documentId) {
 		CoopJob job = findCoopJobByJobId(jobId);
 		Document d = findDocumentByDocumentId(documentId);
@@ -1176,6 +1202,7 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of all coop jobs
+	 * 
 	 * @return
 	 */
 	@Transactional
@@ -1190,6 +1217,7 @@ public class CoopSystemService {
 
 	/**
 	 * Return a list of all documents
+	 * 
 	 * @return
 	 */
 	@Transactional
@@ -1204,6 +1232,7 @@ public class CoopSystemService {
 
 	/**
 	 * Get the personal documents of a specific student
+	 * 
 	 * @param studentName
 	 * @return
 	 */
@@ -1223,6 +1252,7 @@ public class CoopSystemService {
 
 	/**
 	 * Return documents by a specific author
+	 * 
 	 * @param username
 	 * @return
 	 */
@@ -1258,10 +1288,10 @@ public class CoopSystemService {
 		}
 		return list;
 	}
-	
 
 	/**
-	 * Return specific coop job documents 
+	 * Return specific coop job documents
+	 * 
 	 * @param jobId
 	 * @return
 	 */
@@ -1281,10 +1311,11 @@ public class CoopSystemService {
 
 	/**
 	 * Get the list of students who worked for an employer
+	 * 
 	 * @param employerUserName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public ArrayList<Student> getArchivedInterns(String employerUserName) {
 		Employer em = getEmployer(employerUserName);
 		if (em == null) {
@@ -1299,10 +1330,11 @@ public class CoopSystemService {
 
 	/**
 	 * Get the personal documents of all interns
+	 * 
 	 * @param employerUserName
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public HashMap<String, ArrayList<Document>> getInternsDocuments(String employerUserName) {
 		ArrayList<Student> interns = getArchivedInterns(employerUserName);
 		if (interns == null) {
@@ -1333,6 +1365,7 @@ public class CoopSystemService {
 
 	/**
 	 * Get the documents for a specific intern
+	 * 
 	 * @param employerUserName
 	 * @param studentUserName
 	 * @return
@@ -1348,6 +1381,7 @@ public class CoopSystemService {
 
 	/**
 	 * Login if password is correct
+	 * 
 	 * @param username
 	 * @param password
 	 * @return
@@ -1366,12 +1400,13 @@ public class CoopSystemService {
 
 	/**
 	 * Find a coop job between an employer and a student
+	 * 
 	 * @param employerName
 	 * @param studentName
 	 * @param endDate
 	 * @return
 	 */
-	@Transactional 
+	@Transactional
 	public CoopJob findCoopJobByEmployerAndStudentAndEndDate(String employerName, String studentName, Date endDate) {
 		if (studentName == null || employerName == null) {
 			return null;
@@ -1394,6 +1429,7 @@ public class CoopSystemService {
 
 	/**
 	 * Find the events in the upcoming X days
+	 * 
 	 * @param x
 	 * @return
 	 */
