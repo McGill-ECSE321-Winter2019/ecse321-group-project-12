@@ -61,3 +61,18 @@ _https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Proj
 
 Project Report for deliverable 3:
 _https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-3_
+
+
+
+## Deliverable 4 & 5
+
+|Team member's name|Total hours Approx|Main Responsibility                                             |
+|------------------|------------------|----------------------------------------------------------------|
+|Ishraq Hossain    |    12            |Presentation slides, User Documentation, Project Management     |
+|Gorkem Yalcinoz   |    11            |User Experience, Final integration                              |
+|Sameen Mahtab     |    10             |Code Review and Code Quality                                   |
+|Mostafa Abdelwahab|    9             |Build System, CI and Delivery                                   |
+
+Project Report for deliverable 4 & 5:
+_https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-12/wiki/Project-Report-for-Sprint-4_
+
