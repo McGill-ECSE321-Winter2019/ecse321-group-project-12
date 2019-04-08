@@ -242,12 +242,9 @@ if(!isset($_SESSION['id'])) {
                                         curl_setopt($cSessionS,CURLOPT_HEADER, false);
                                         $resultSs=curl_exec($cSessionS);
                                         curl_close($cSessionS);
-                                        //   echo $resultSs;
 
                                         $converterSs = json_decode($resultSs);
                                         $resultstringSs = "";
-                                        $resultstringEmail = "";
-                                        $resultstringMcGillId = "";
 
                                         foreach ($converterSs as $key => $value) {
 
@@ -255,34 +252,23 @@ if(!isset($_SESSION['id'])) {
                                         }
 
 
-                                        foreach ($converterSs as $key => $value) {
-
-                                            $resultstringEmail = $resultstringEmail.($value->email).", ";
-                                        }
-
-                                        foreach ($converterSs as $key => $value) {
-
-                                            $resultstringMcGillId = $resultstringMcGillId.($value->mcgillid).", ";
-                                        }
-
-                                        //       $_SESSION['studentsSs'] = " Student Usernames: ".$resultstringSs;
-
                                         $userNames_r = explode(', ', $resultstringSs);
 
-                                        $userEmails_r = explode(', ', $resultstringEmail);
 
-                                        $userMcGillId_r = explode (', ', $resultstringMcGillId);
+                                        foreach($userNames_r as $key) {
+                                            $idmc = '';
+                                            $characters = '0123456789';
+                                            $randomId = '';
+                                            $max = strlen($characters) - 1;
+                                            for ($i = 0; $i < 3; $i++) {
+                                                $randomId .= $characters[mt_rand(0, $max)];
+                                            }
+                                            $idmc = '260' . $randomId . ',';
 
-
-
-                                        //  print_r($userNames_r);
-
-                                        // header("Refresh:0");
-
-
-
-                                     //   $idArray = explode(', ', $idmc);
-                                        //     print_r($idArray);
+                                            
+                                        }
+                                        $idArray = explode(', ', $idmc);
+                                
 
                                         $acc = 10;
                                         $bb = -1;
@@ -297,14 +283,29 @@ if(!isset($_SESSION['id'])) {
                                             echo "<td>";
 
 
-                                            echo $userMcGillId_r[$k];
+                                            for ($i = 0; $i < 6; $i++) {
+                                                $change = $randomId.$acc;
+                                                $change = $randomId.$characters[mt_rand(0, $max)];
+                                            }
+
+                                            $var = '260' . $change.$acc;
+
+                                            echo $var;
                                             echo "</td>";
 
 
 
                                             echo "<td>";
 
-                                            echo $userEmails_r[$k];
+                                            $characters2 = 'abcdefghijklmnopqrstuvwxyz';
+                                            $email2 = '';
+                                            $max2 = strlen($characters2) - 1;
+
+                                            for ($l = 0; $l < 6; $l++) {
+                                                $email2 .= $characters2[mt_rand(0, $max2)];
+                                            }
+                                            echo $email2.'@mail.mcgill.ca';
+
                                             echo "</td>";
 
 
@@ -398,7 +399,6 @@ if(!isset($_SESSION['id'])) {
                                 </button>
                                 <div>
                                     <br>
-                                    <br>
                                     <form method="post" enctype="multipart/form-data" style="display: none;" id="confirm">
                                         <button class=" btn btn-primary btn-user btn-block order-sm-2 " style="width: 200px;" type="submit" name="uploadeval"> Upload Student Evaluation</button>
                                         <input type="file" name="myfile">
@@ -446,10 +446,7 @@ if(!isset($_SESSION['id'])) {
 
                 </div>
 
-                <!-- Content Row -->
-
-
-
+       
                 <!-- Content Row -->
                 <div class="row">
 
@@ -565,10 +562,6 @@ if (isset($_POST['submitbutsearch'])) {
         header("Refresh:0");
 
 
-
-
-
-
 } elseif (isset($_POST['submitbutsearch2'])){
 
     $searchStud = 'https://ecse321-group12.herokuapp.com/students/'.$_POST['studentidsearch'];
@@ -584,19 +577,16 @@ if (isset($_POST['submitbutsearch'])) {
 
     $converter = json_decode($result);
     $studidcheck2 = $converter->username;
-   // $doccheck = $converter->authoredDocumentsIds;
+
 
     if (strpos($studidcheck2, $_POST['studentidsearch']) !== false) {
         $resultstring = "";
-       // foreach ($converter as $key => $value) {
+      
 
-       //     $resultstring = $resultstring."  ".($value->authoredDocumentsIds);
-       // }
-
-        $_SESSION['studentsSingleSearch'] = "Student ".$studidcheck2." exists in the system";//.$doccheck." files in the system.";
+        $_SESSION['studentsSingleSearch'] = "Student ".$studidcheck2." exists in the system";
         $_SESSION['studenusername'] = $studidcheck2;
         header("Refresh:0");
-        // print("Succesful");
+     
 
     } else {
         $_SESSION['studentsSingleSearch'] = "There was an error please check your input";
@@ -614,7 +604,6 @@ if (isset($_POST['downloadproof'])) {
 }
 
 if(isset($_POST['uploadeval'])){
-   // header("Refresh:0");
     $_SESSION['studentconfirmation'] = 'Confirmed';
     unset($_SESSION['refreshHandler']);
     header("Refresh:0");
