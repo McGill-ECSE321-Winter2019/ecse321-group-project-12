@@ -356,7 +356,6 @@ if (isset($_POST['getmessages'])) {
     curl_setopt($cSession,CURLOPT_HEADER, false);
     $result=curl_exec($cSession);
     curl_close($cSession);
-  //  echo $result;
 
     $converter = json_decode($result);
 
@@ -375,8 +374,6 @@ if (isset($_POST['getmessages'])) {
 
     $resultstring_ar = explode(', ', $resultstring);
 
-   // print_r($resultstring);
-  //  print_r($resultstring2);
     $fnloutput ="";
 
     foreach($resultstring_ar as $id=>$Name)
@@ -385,9 +382,7 @@ if (isset($_POST['getmessages'])) {
     }
 
     if (empty($resultstring)) { $_SESSION['messages'] = "Your inbox is empty";} else {$_SESSION['messages'] = $fnloutput;}
-   // print($resultstring);
-
-
+  
     header("Refresh:0");
 
 
