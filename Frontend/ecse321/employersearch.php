@@ -500,21 +500,13 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
             $_SESSION['refreshHandler2'] = 1;
 
             header("Refresh:0");
-        }
-
-
+                }
         
-        
-            
-        }
+    }
         else {
             $_SESSION['studentsSingleSearch'] = "There was an error please check your input";
     
              }
-    
-    
-    
-    
-    
+
     ?>
 

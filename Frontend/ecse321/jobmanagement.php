@@ -389,7 +389,6 @@ if (isset($_POST['submitbut'])) {
 
         foreach($conv_array['0'] as $result1) {
             $resultstring = $resultstring.$result1.", ";
-            // echo $result1, '<br>';
         }
 
         if (strpos($resultstring, $_POST['jobname']) !== false) {
@@ -398,10 +397,6 @@ if (isset($_POST['submitbut'])) {
         } else {
             echo("There was an error please check your input");
         }
-
-
-
-
 
     } else print("Please check that student name exists and the job doesnt exist in the system.");
 }
