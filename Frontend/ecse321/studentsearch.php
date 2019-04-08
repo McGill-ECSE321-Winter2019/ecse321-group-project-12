@@ -564,11 +564,8 @@ if (isset($_POST['submitbutsearch'])) {
 
 
 } elseif (isset($_POST['submitbutsearch2'])){
-
-    $studSearchName = '';
-    $studSearchName = str_replace(" ","+",$_POST['studentidsearch']);
-    
-    $searchStud = 'https://ecse321-group12.herokuapp.com/students/'.$studSearchName;
+  
+    $searchStud = 'https://ecse321-group12.herokuapp.com/students/'.$_POST['studentidsearch'];
 
 
     $cSession = curl_init();
