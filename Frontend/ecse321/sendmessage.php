@@ -361,13 +361,13 @@ if (isset($_POST['send'])) {
         for ($i = 0; $i < 20; $i++) {
             $messageId .= $characters[mt_rand(0, $max)];
         }
-      //  print($messageId);
+    
         $messageToSend = '';
         $messageToSend = str_replace(" ","+",$_POST['message']);
 
         $addmessage = 'https://ecse321-group12.herokuapp.com/newMessage?MessageId='.$messageId.'&SenderName='.$_SESSION['username'].'&ReceiverName='.$_POST['receiver'].'&Content='.$messageToSend.'&ListofAttachementsIds=null';
 
-        // $_POST['addDoc'] = $addDoc;
+ 
 
         $cSession = curl_init();
         curl_setopt($cSession,CURLOPT_URL,$addmessage);
@@ -376,7 +376,7 @@ if (isset($_POST['send'])) {
         curl_setopt($cSession,CURLOPT_HEADER, false);
         $result=curl_exec($cSession);
         curl_close($cSession);
-        //  echo $result;
+     
 
         $getmessage = 'https://ecse321-group12.herokuapp.com/Message?MessageId='.$messageId;
 
@@ -387,7 +387,7 @@ if (isset($_POST['send'])) {
         curl_setopt($cSession2,CURLOPT_HEADER, false);
         $result2=curl_exec($cSession2);
         curl_close($cSession2);
-        // echo $result2;
+       
 
         $converter = json_decode($result2);
         $messagecheck = $converter->senderName;
