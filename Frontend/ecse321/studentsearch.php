@@ -538,7 +538,8 @@ if(!isset($_SESSION['id'])) {
 
 <?php
 if (isset($_POST['submitbutsearch'])) {
-
+            
+    
         $showStud = 'https://ecse321-group12.herokuapp.com/students';
 
 
@@ -564,7 +565,10 @@ if (isset($_POST['submitbutsearch'])) {
 
 } elseif (isset($_POST['submitbutsearch2'])){
 
-    $searchStud = 'https://ecse321-group12.herokuapp.com/students/'.$_POST['studentidsearch'];
+    $studSearchName = '';
+    $studSearchName = str_replace(" ","+",$_POST['studentidsearch']);
+    
+    $searchStud = 'https://ecse321-group12.herokuapp.com/students/'.$studSearchName;
 
 
     $cSession = curl_init();
