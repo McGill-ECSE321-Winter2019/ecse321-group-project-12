@@ -380,8 +380,6 @@ if (isset($_POST['getsentmessages'])) {
 
     $resultstring_ar = explode(', ', $resultstring);
 
-    // print_r($resultstring);
-    //  print_r($resultstring2);
     $fnloutput ="";
 
     foreach($resultstring_ar as $id=>$Name)
