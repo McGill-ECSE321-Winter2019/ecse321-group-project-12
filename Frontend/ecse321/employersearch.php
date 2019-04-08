@@ -226,7 +226,7 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
                         <form type="hidden" method="get" >
                             <div class="card" >
                                 <div class="card-header"  >
-                                    <strong class="card-title">Student Directory</strong>
+                                    <strong class="card-title">Employer Directory</strong>
                                 </div>
                                 <div class="card-body">
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
