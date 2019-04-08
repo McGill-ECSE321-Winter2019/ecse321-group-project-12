@@ -62,6 +62,7 @@ include ("class.phpmailer.php");
                                     <div class="form-group">
                                         <input  type="text" name="username" class="form-control form-control-user"  aria-describedby="emailHelp" placeholder="Enter Your Username"  >
                                         <br>
+                                        <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Your Email Address..." value="<?php if(isset($_POST['email'])) { echo $_POST['email']; } ?>" >
                                     </div>
                                     <button name="submit" type="submit" class="btn btn-primary btn-flat m-b-15" style=" width: 100%">Reset Password</button>
                                 </form>
@@ -97,18 +98,7 @@ include ("class.phpmailer.php");
 
 <?php
 if(isset($_POST['submit'])) {
-    $getEmail = 'https://ecse321-group12.herokuapp.com/email/'.$_POST['username'];
-
-    $cSession0 = curl_init();
-    curl_setopt($cSession0,CURLOPT_URL,$getEmail);
-    curl_setopt($cSession0,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($cSession0,CURLOPT_HEADER, false);
-    $result0=curl_exec($cSession0);
-    curl_close($cSession0);
-
-    $email = $result0;
-
-
+    $email = $_POST['email'];
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     $randomPassword = '';
     $max = strlen($characters) - 1;
@@ -130,7 +120,7 @@ if(isset($_POST['submit'])) {
 
         //Recipients
         $mail->setFrom('ecse321-group12@hotmail.com', 'McGill MyCoop System');
-        if (isset($email)) {
+        if (isset($_POST['email'])) {
             $mail->addAddress($email); // Add a recipient
         }
         //Content
@@ -138,29 +128,7 @@ if(isset($_POST['submit'])) {
         $mail->Subject = 'New Password ';
         $mail->Body = "Your new password: " . $randomPassword;
         $mail->send();
-        /* echo "<script>    swal({
-                 title: \"Success\",
-             text: \"Your new password is sent\",
-             type: \"success\",
-             confirmButtonColor: '#DD6B55',
-                 confirmButtonText: 'Okay',
-             });</script>";
-         } catch (Exception $e) {
-         echo "<script>    swal({
-                 title: \"Failure\",
-             text: \"There was an error during the process please report to the admin.\",
-             type: \"error\",
-             confirmButtonColor: '#DD6B55',
-                 confirmButtonText: 'Okay',
-             });</script>", $mail->ErrorInfo;
-         }else echo "<script>    swal({
-                 title: \"İşlem Başarısız\",
-             text: \"Lütfen geçerli bir e-mail adresi girin.\",
-             type: \"error\",
-             confirmButtonColor: '#DD6B55',
-                 confirmButtonText: 'Tamam',
-             });</script>"
-       */
+
     } catch (Exception $e) {
         echo "<script>    swal({
                title: \"Failure\",
@@ -171,22 +139,17 @@ if(isset($_POST['submit'])) {
            });</script>", $mail->ErrorInfo;
     }
 
-    if(isset($email)) {
 
-        $setPass = 'https://ecse321-group12.herokuapp.com/setPassword?Username='.$_POST['username'].'&Password='.$randomPassword;
+    $setPass = 'https://ecse321-group12.herokuapp.com/setPassword?Username='.$_POST['username'].'&Password='.$randomPassword;
 
-        // $_POST['addDoc'] = $addDoc;
+    $cSession = curl_init();
+    curl_setopt($cSession,CURLOPT_URL,$setPass);
+    curl_setopt($cSession, CURLOPT_POST, 1); // add this line for post method
+    curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
+    curl_setopt($cSession,CURLOPT_HEADER, false);
+    $result=curl_exec($cSession);
+    curl_close($cSession);
 
-        $cSession = curl_init();
-        curl_setopt($cSession, CURLOPT_URL, $setPass);
-        curl_setopt($cSession, CURLOPT_POST, 1); // add this line for post method
-        curl_setopt($cSession, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($cSession, CURLOPT_HEADER, false);
-        $result = curl_exec($cSession);
-        curl_close($cSession);
-    }else {
-        print "Error in the username section";
-    }
 
 }
 ?>
