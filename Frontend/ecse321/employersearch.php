@@ -376,11 +376,6 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
                 <div class="row">
 
 
-
-
-
-
-
                 </div>
 
                 <!-- Content Row -->
