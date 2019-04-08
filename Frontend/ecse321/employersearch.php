@@ -251,36 +251,12 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
 
                                         $converterSs = json_decode($resultSs);
                                         $resultstringSs = "";
-                                        $resultstringMail = "";
 
                                         foreach ($converterSs as $key => $value) {
 
                                             $resultstringSs = $resultstringSs.($value->username).", ";
                                         }
-                                        foreach ($converterSs as $key => $value) {
-
-                                            $resultstringMail = $resultstringMail.($value->email).", ";
-                                        }
-
                                         $userNames_r = explode(', ', $resultstringSs);
-
-                                        $userMail_r = explode(', ', $resultstringMail);
-
-                                        /*     $resultstringNn = "";
-                                             foreach ($converterSs as $key => $value) {
-
-                                                 $resultstringNn = $resultstringNn.($value->coopJobsIds).", ";
-                                             }
-
-                                             //       $_SESSION['studentsSs'] = " Student Usernames: ".$resultstringSs;
-
-                                             $coopJobIds = explode(', ', $resultstringNn);
-
-                                             //  print_r($userNames_r);
-
-                                             // header("Refresh:0");
-                                         */
-
 
                                         foreach($userNames_r as $key) {
                                             $idmc = '';
@@ -292,7 +268,7 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
                                             }
                                             $idmc = '260' . $randomId . ',';
 
-                                            //     print $idmc;
+                                        //     print $idmc;
                                         }
                                         $idArray = explode(', ', $idmc);
                                         //     print_r($idArray);
@@ -309,8 +285,14 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
                                             echo "</td>";
                                             echo "<td>";
 
+                                            $characters = 'abcdefghijklmnopqrstuvwxyz';
+                                            $email = '';
+                                            $max = strlen($characters) - 1;
 
-                                            echo $userMail_r[$k];
+                                            for ($i = 0; $i < 6; $i++) {
+                                                $email .= $characters[mt_rand(0, $max)];
+                                            }
+                                            echo $email.'@hotmail.com';
 
                                             echo "</td>";
                                             echo "<td>";
@@ -337,15 +319,7 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
                                                 $resultstring = $resultstring.$result1.", ";
                                                 // echo $result1, '<br>';
                                             }
-                                            /*
-                                                $resultstring = "";
 
-                                                foreach ($converter as $key => $value) {
-
-                                                    $resultstring = $resultstring."  ".($value->coopJobsIds);
-                                                }
-
-                                            */
 
                                             if (empty($converter->coopJobsIds)) { $_SESSION['searchJobs'] = "No Jobs";} else { $_SESSION['searchJobs']= $resultstring;}
 
