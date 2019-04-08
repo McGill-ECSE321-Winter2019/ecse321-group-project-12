@@ -356,12 +356,8 @@ if (isset($_POST['submitbut'])) {
         $newJobName = '';
         $newJobName = str_replace(" ","+",$_POST['jobname']);
 
-        $studJobName = '';
-        $studJobName = str_replace(" ","+",$_POST['studname']);
+        $addStud = 'https://ecse321-group12.herokuapp.com/newJob?JobId='.$newJobName.'&EmployerName='.$_SESSION['username'].'&StudentName='.$_POST['studname'];
 
-        $addStud = 'https://ecse321-group12.herokuapp.com/newJob?JobId='.$newJobName.'&EmployerName='.$_SESSION['username'].'&StudentName='.$studJobName;
-
-        // $_POST['addDoc'] = $addDoc;
 
         $cSession = curl_init();
         curl_setopt($cSession,CURLOPT_URL,$addStud);
@@ -370,7 +366,7 @@ if (isset($_POST['submitbut'])) {
         curl_setopt($cSession,CURLOPT_HEADER, false);
         $result=curl_exec($cSession);
         curl_close($cSession);
-        //  echo $result;
+      
 
 
         $checkjobs = 'https://ecse321-group12.herokuapp.com/employers/'.$_SESSION['username'];
@@ -409,53 +405,6 @@ if (isset($_POST['submitbut'])) {
 
     } else print("Please check that student name exists and the job doesnt exist in the system.");
 }
-/*
-elseif (isset($_POST['submitbutdelete'])) {
-    if (isset($_POST['deletestudent'])) {
-        $deleteStud = 'https://ecse321-group12.herokuapp.com/students/'.$_POST['deletestudent'];
-
-        // $_POST['addDoc'] = $addDoc;
-
-        $cSession = curl_init();
-        curl_setopt($cSession,CURLOPT_URL,$deleteStud);
-        curl_setopt($cSession, CURLOPT_CUSTOMREQUEST, "DELETE"); // add this line for delete method
-        curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($cSession,CURLOPT_HEADER, false);
-        $result=curl_exec($cSession);
-        curl_close($cSession);
-        //  echo $result;
-
-        $getStud = 'https://ecse321-group12.herokuapp.com/getDocument?DocumentId='.$_POST['deletestudent'];
-
-        $cSession2 = curl_init();
-
-        curl_setopt($cSession2,CURLOPT_URL,$getStud);
-        curl_setopt($cSession2,CURLOPT_RETURNTRANSFER,true);
-        curl_setopt($cSession2,CURLOPT_HEADER, false);
-        $result2=curl_exec($cSession2);
-        curl_close($cSession2);
-        //echo $result2;
-
-        $converter = json_decode($result2);
-        $studidcheck = $converter->username;
-
-        if (strpos($studidcheck, $_POST['deletestudent']) == false) {
-            print("Succesful");
-        } else {
-            echo("There was an error during the process");
-        }
-
-
-
-
-
-    }
-
-
-
-}
-*/
-
 
 
 ?>
