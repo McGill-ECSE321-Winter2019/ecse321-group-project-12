@@ -364,8 +364,11 @@ if (isset($_POST['send'])) {
     
         $messageToSend = '';
         $messageToSend = str_replace(" ","+",$_POST['message']);
+        
+        $realReceiver = '';
+        $realReceiver = str_replace(" ","+",$_POST['receiver']);
 
-        $addmessage = 'https://ecse321-group12.herokuapp.com/newMessage?MessageId='.$messageId.'&SenderName='.$_SESSION['username'].'&ReceiverName='.$_POST['receiver'].'&Content='.$messageToSend.'&ListofAttachementsIds=null';
+        $addmessage = 'https://ecse321-group12.herokuapp.com/newMessage?MessageId='.$messageId.'&SenderName='.$_SESSION['username'].'&ReceiverName='.$realReceiver.'&Content='.$messageToSend.'&ListofAttachementsIds=null';
 
  
 
