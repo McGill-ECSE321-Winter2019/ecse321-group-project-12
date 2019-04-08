@@ -483,7 +483,7 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
         curl_setopt($cSession,CURLOPT_HEADER, false);
         $result=curl_exec($cSession);
         curl_close($cSession);
-       // echo $result;
+       
         
         $converter = json_decode($result);
         $resulstring = $converter->username;
@@ -509,7 +509,7 @@ if (isset($_SESSION['refreshHandler']))unset($_SESSION['refreshHandler']);
         }
         else {
             $_SESSION['studentsSingleSearch'] = "There was an error please check your input";
-           // header("Refresh:0");
+    
              }
     
     
