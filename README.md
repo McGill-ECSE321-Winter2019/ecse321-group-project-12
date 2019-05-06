@@ -1,4 +1,5 @@
-# ECSE321 Project Group 12
+#  PLEASE MAKE IT PUBLIC
+#ECSE321 Project Group 12
 
 Team Members:
 
