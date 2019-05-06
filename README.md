@@ -1,5 +1,7 @@
-#  PLEASE MAKE IT PUBLIC
-#ECSE321 Project Group 12
+#  ECSE321 Project Group 12
+
+We would like to make our project public and visible
+
 
 Team Members:
 
